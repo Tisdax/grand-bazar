@@ -1,10 +1,10 @@
 package model;
 
 public class Locality {
-    private String zip_code, name;
+    private String zipCode, name;
 
     public Locality(String zip_code, String name) {
-        this.zip_code = zip_code;
+        this.zipCode = zip_code;
         this.name = name;
     }
 }
