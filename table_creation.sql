@@ -24,8 +24,8 @@ CREATE TABLE address (
 	locality_zip_code VARCHAR(12),
     locality_name VARCHAR(30),
     street VARCHAR(50),
-    house_number NUMERIC(4),
-    postal_box_number NUMERIC(3),
+    house_number INT,
+    postal_box_number INT,
     CONSTRAINT locality_fk foreign key (locality_zip_code, locality_name) references locality (zip_code, name),
     CONSTRAINT address_pk primary key (locality_zip_code, locality_name, street, house_number)
 );
@@ -37,7 +37,7 @@ CREATE TABLE type (
 );
 
 CREATE TABLE customer (
-	id NUMERIC(7),
+	id INT,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     birthdate DATE NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE customer (
     address_locality_zip_code VARCHAR(12) NOT NULL,
     address_locality_name VARCHAR(30) NOT NULL,
     address_street VARCHAR (50) NOT NULL,
-    address_house_number NUMERIC(4) NOT NULL,
+    address_house_number INT NOT NULL,
     type VARCHAR(10) NOT NULL,
     CONSTRAINT customer_pk PRIMARY KEY (id),
     CONSTRAINT customer_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
@@ -56,23 +56,23 @@ CREATE TABLE customer (
 );
 
 CREATE TABLE loyalty_card (
-	number NUMERIC(6),
-    total_points NUMERIC(7) NOT NULL,
+	number INT,
+    total_points INT NOT NULL,
     is_valid BOOLEAN NOT NULL,
-    customer NUMERIC(7) NOT NULL,
+    customer INT NOT NULL,
     CONSTRAINT loyalty_card_pk PRIMARY KEY (number),
     CONSTRAINT loyalty_card_customer_fk FOREIGN KEY (customer) REFERENCES customer(id)
 );
 
 CREATE TABLE employee (
-	id NUMERIC(3),
+	id INT,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
-    manager_id NUMERIC(3),
+    manager_id INT,
     address_locality_zip_code VARCHAR(12) NOT NULL,
     address_locality_name VARCHAR(30) NOT NULL,
     address_street VARCHAR (50) NOT NULL,
-    address_house_number NUMERIC(4) NOT NULL,
+    address_house_number INT NOT NULL,
     CONSTRAINT employee_pk PRIMARY KEY (id),
     CONSTRAINT manager_id_fk FOREIGN KEY (manager_id) REFERENCES employee(id),
 	CONSTRAINT employee_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number)
@@ -86,17 +86,17 @@ CREATE TABLE `position` (
 
 CREATE TABLE role (
 	position VARCHAR(10),
-    employee NUMERIC(3),
+    employee INT,
     CONSTRAINT role_pk PRIMARY KEY (position, employee),
 	CONSTRAINT position_fk FOREIGN KEY (position) REFERENCES `position`(id),
     CONSTRAINT role_employee_fk FOREIGN KEY (employee) REFERENCES employee(id)
 );
 
 CREATE TABLE sale (
-	number NUMERIC(4),
-    customer NUMERIC(7),
+	number INT,
+    customer INT,
     date DATE NOT NULL,
-    employee NUMERIC(3) NOT NULL,
+    employee INT NOT NULL,
     CONSTRAINT sale_pk PRIMARY KEY (number, customer),
     CONSTRAINT sale_customer_fk FOREIGN KEY (customer) REFERENCES customer(id),
     CONSTRAINT sale_employee_fk FOREIGN KEY (employee) REFERENCES employee(id)
@@ -111,24 +111,24 @@ CREATE TABLE category (
 CREATE TABLE product (
 	id VARCHAR(10),
     name VARCHAR(30) NOT NULL,
-    net_price NUMERIC(6,2) NOT NULL,
-    vat_percentage NUMERIC(2) NOT NULL,
-    loyalty_points_nb NUMERIC(4) NOT NULL,
+    net_price DECIMAL(6,2) NOT NULL,
+    vat_percentage INT NOT NULL,
+    loyalty_points_nb INT NOT NULL,
     is_edible BOOLEAN NOT NULL,
-    min_quantity NUMERIC(4),
-    promotion_min_quantity NUMERIC(4),
+    min_quantity INT,
+    promotion_min_quantity INT,
     sale_date DATE,
-    time_before_removing NUMERIC(2),
+    time_before_removing INT,
     category VARCHAR(30) NOT NULL,
     CONSTRAINT product_pk PRIMARY KEY (id),
     CONSTRAINT product_category_fk FOREIGN KEY (category) REFERENCES category(name)
 );
 
 CREATE TABLE command_line (
-	sale_number NUMERIC(4),
-    sale_customer NUMERIC(7),
+	sale_number INT,
+    sale_customer INT,
     product VARCHAR(10),
-    quantity NUMERIC(3) NOT NULL,
+    quantity INT NOT NULL,
     CONSTRAINT command_line_pk PRIMARY KEY (sale_number, sale_customer, product),
     CONSTRAINT command_line_sale_fk FOREIGN KEY (sale_number, sale_customer) REFERENCES sale(number, customer),
     CONSTRAINT command_line_product_fk FOREIGN KEY (product) REFERENCES product(id)
@@ -136,8 +136,8 @@ CREATE TABLE command_line (
 
 CREATE TABLE promotion (
 	id VARCHAR(10),
-    min_quantity NUMERIC(2) NOT NULL,
-    reduction_percentage NUMERIC(2) NOT NULL,
+    min_quantity INT NOT NULL,
+    reduction_percentage INT NOT NULL,
     product VARCHAR(10) NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
@@ -146,16 +146,16 @@ CREATE TABLE promotion (
 );
 
 CREATE TABLE shelf (
-	id NUMERIC(3),
+	id INT,
     is_refrigirated BOOLEAN NOT NULL,
     CONSTRAINT shelf_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE stock (
-	shelf NUMERIC(3),
-    shelf_level NUMERIC(2),
+	shelf INT,
+    shelf_level INT,
     product VARCHAR(10),
-    quantity NUMERIC(3) NOT NULL,
+    quantity INT NOT NULL,
     CONSTRAINT stock_pk PRIMARY KEY (shelf, shelf_level, product),
     CONSTRAINT stock_shelf_fk FOREIGN KEY (shelf) REFERENCES shelf(id),
     CONSTRAINT stock_product_fk FOREIGN KEY (product) REFERENCES product(id)
