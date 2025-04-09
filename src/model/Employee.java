@@ -9,4 +9,8 @@ public class Employee extends Person {
         this.manager = manager;
         this.address = address;
     }
+
+    public Employee(Integer id) {
+        this(id, null, null, null, null);
+    }
 }

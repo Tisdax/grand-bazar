@@ -11,4 +11,8 @@ public class LoyaltyCard {
         this.isValid = isValid;
         this.customer = customer;
     }
+
+    public LoyaltyCard(Integer number) {
+        this(number, null, null, null);
+    }
 }

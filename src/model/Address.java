@@ -11,4 +11,8 @@ public class Address {
         this.houseNumber = houseNumber;
         this.postal_box_number = postal_box_number;
     }
+
+    public Address(Locality locality, String street, Integer houseNumber) {
+        this(locality, street, houseNumber, null);
+    }
 }

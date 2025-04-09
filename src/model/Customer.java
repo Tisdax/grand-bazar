@@ -19,4 +19,8 @@ public class Customer extends Person {
         this.address = address;
         this.customerType = customerType;
     }
+
+    public Customer(Integer id) {
+        this(id, null, null, null, null, null, null, null, null, null);
+    }
 }
