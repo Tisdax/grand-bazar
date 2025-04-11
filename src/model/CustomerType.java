@@ -7,8 +7,4 @@ public class CustomerType {
         this.name = name;
         this.description = description;
     }
-
-    public CustomerType(String name) {
-        this(name, null);
-    }
 }
