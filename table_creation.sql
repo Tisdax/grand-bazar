@@ -93,11 +93,11 @@ CREATE TABLE role (
 );
 
 CREATE TABLE sale (
-	number INT,
+	id INT,
     customer INT,
     date DATE NOT NULL,
     employee INT NOT NULL,
-    CONSTRAINT sale_pk PRIMARY KEY (number, customer),
+    CONSTRAINT sale_pk PRIMARY KEY (id),
     CONSTRAINT sale_customer_fk FOREIGN KEY (customer) REFERENCES customer(id),
     CONSTRAINT sale_employee_fk FOREIGN KEY (employee) REFERENCES employee(id)
 );
@@ -125,12 +125,11 @@ CREATE TABLE product (
 );
 
 CREATE TABLE command_line (
-	sale_number INT,
-    sale_customer INT,
+	sale INT,
     product VARCHAR(10),
     quantity INT NOT NULL,
-    CONSTRAINT command_line_pk PRIMARY KEY (sale_number, sale_customer, product),
-    CONSTRAINT command_line_sale_fk FOREIGN KEY (sale_number, sale_customer) REFERENCES sale(number, customer),
+    CONSTRAINT command_line_pk PRIMARY KEY (sale, product),
+    CONSTRAINT command_line_sale_fk FOREIGN KEY (sale) REFERENCES sale(id),
     CONSTRAINT command_line_product_fk FOREIGN KEY (product) REFERENCES product(id)
 );
 

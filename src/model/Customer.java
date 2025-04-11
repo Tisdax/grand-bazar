@@ -3,11 +3,10 @@ package model;
 import java.time.LocalDate;
 
 public class Customer extends Person {
-    private String phone, email, vatNumber;
+    private String phone, email, vatNumber, typeName;
     private LocalDate birthdate;
     private Boolean isSubscribedToNewsLetter;
     private Address address;
-    private CustomerType customerType;
 
     public Customer(Integer id, String lastName, String firstName, String phone, String email, String vatNumber, LocalDate birthdate, Boolean isSubscribedToNewsLetter, Address address, CustomerType customerType) {
         super(id, lastName, firstName);
@@ -17,7 +16,7 @@ public class Customer extends Person {
         this.birthdate = birthdate;
         this.isSubscribedToNewsLetter = isSubscribedToNewsLetter;
         this.address = address;
-        this.customerType = customerType;
+        this.typeName = customerType;
     }
 
     public Customer(Integer id) {
