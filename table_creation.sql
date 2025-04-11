@@ -78,7 +78,7 @@ CREATE TABLE employee (
 	CONSTRAINT employee_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number)
 );
 
-CREATE TABLE `position` (
+CREATE TABLE `function` (
 	id VARCHAR(10),
     name VARCHAR(40) NOT NULL,
     CONSTRAINT function_pk PRIMARY KEY (id)
@@ -88,7 +88,7 @@ CREATE TABLE role (
 	position VARCHAR(10),
     employee INT,
     CONSTRAINT role_pk PRIMARY KEY (position, employee),
-	CONSTRAINT position_fk FOREIGN KEY (position) REFERENCES `position`(id),
+	CONSTRAINT position_fk FOREIGN KEY (position) REFERENCES `function`(id),
     CONSTRAINT role_employee_fk FOREIGN KEY (employee) REFERENCES employee(id)
 );
 

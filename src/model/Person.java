@@ -8,7 +8,6 @@ public class Person {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
-        this.houseNumber = houseNumber;
         this.addressStreet = addressStreet;
         this.localityZipCode = localityZipCode;
         this.localityName = localityName;
