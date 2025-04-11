@@ -7,8 +7,4 @@ public class ProductCategory {
         this.name = name;
         this.description = description;
     }
-
-    public ProductCategory(String name) {
-        this(name, null);
-    }
 }

@@ -17,8 +17,4 @@ public class Sale {
     public Sale(Integer id, LocalDate date, Employee employee) {
         this(id, null, date, employee);
     }
-
-    public Sale(Integer id, Customer customer) {
-        this(id, customer, null, null);
-    }
 }
