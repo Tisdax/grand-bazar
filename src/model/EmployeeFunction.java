@@ -8,8 +8,4 @@ public class EmployeeFunction {
         this.id = id;
         this.name = name;
     }
-
-    public EmployeeFunction(Integer id) {
-        this(id, null);
-    }
 }
