@@ -12,7 +12,7 @@ public class Product {
     public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Integer minQuantity, Integer promotionMinQuantity, Integer timeBeforeRemoving, Boolean isEdible, LocalDate saleDate, String categoryName) {
         this.id = id;
         this.name = name;
-        this.netPrice = netPrice;
+        setNetPrice(netPrice);
         this.vatPercentage = vatPercentage;
         this.loyaltyPointsNb = loyaltyPointsNb;
         this.minQuantity = minQuantity;
@@ -25,5 +25,12 @@ public class Product {
 
     public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, String categoryName) {
         this(id, name, netPrice, vatPercentage, loyaltyPointsNb, null, null, null, isEdible, null, categoryName);
+    }
+
+    public void setNetPrice(Double netPrice) {
+        if (netPrice < 0)
+            this.netPrice = (double)0;
+        else
+            this.netPrice = netPrice;
     }
 }
