@@ -1,15 +1,15 @@
 package model;
 
-public class Position {
+public class EmployeeFunction {
     private Integer id;
     private String name;
 
-    public Position(Integer id, String name) {
+    public EmployeeFunction(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Position(Integer id) {
+    public EmployeeFunction(Integer id) {
         this(id, null);
     }
 }
