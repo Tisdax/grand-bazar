@@ -1,4 +1,5 @@
 package userInterface;
 
-public class AnimationThread {
+public class AnimationThread extends Thread {
+
 }
