@@ -85,10 +85,10 @@ CREATE TABLE `function` (
 );
 
 CREATE TABLE role (
-	position VARCHAR(10),
+    `function` VARCHAR(10),
     employee INT,
-    CONSTRAINT role_pk PRIMARY KEY (position, employee),
-	CONSTRAINT position_fk FOREIGN KEY (position) REFERENCES `function`(id),
+    CONSTRAINT role_pk PRIMARY KEY (`function`, employee),
+	CONSTRAINT position_fk FOREIGN KEY (`function`) REFERENCES `function`(id),
     CONSTRAINT role_employee_fk FOREIGN KEY (employee) REFERENCES employee(id)
 );
 
