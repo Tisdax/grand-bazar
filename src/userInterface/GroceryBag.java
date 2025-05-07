@@ -14,7 +14,7 @@ public class GroceryBag {
     }
 
     public void draw(Graphics g) {
-        g.setColor(new Color(133, 96, 16));
+        g.setColor(new Color(203, 145, 74, 255));
         g.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
 }
