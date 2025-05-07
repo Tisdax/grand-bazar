@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS sale;
 DROP TABLE IF EXISTS role;
-DROP TABLE IF EXISTS position;
+DROP TABLE IF EXISTS `function`;
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS loyalty_card;
 DROP TABLE IF EXISTS customer;
@@ -117,7 +117,7 @@ CREATE TABLE product (
     is_edible BOOLEAN NOT NULL,
     min_quantity INT,
     promotion_min_quantity INT,
-    sale_date DATE,
+    sale_date DATE NOT NULL,
     time_before_removing INT,
     category VARCHAR(30) NOT NULL,
     CONSTRAINT product_pk PRIMARY KEY (id),

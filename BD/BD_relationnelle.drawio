@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.16 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.16">
   <diagram name="Page-1" id="VmEbvkP-QN8DwU61iT8K">
-    <mxGraphModel dx="2161" dy="675" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2019" dy="815" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -147,7 +147,7 @@
         <mxCell id="N-J-DAa_A-AP2fqu147I-41" value="promotion_min_quantity [0..1]" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" parent="N-J-DAa_A-AP2fqu147I-33" vertex="1">
           <mxGeometry y="236" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="N-J-DAa_A-AP2fqu147I-42" value="sale_date [0..1]" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" parent="N-J-DAa_A-AP2fqu147I-33" vertex="1">
+        <mxCell id="N-J-DAa_A-AP2fqu147I-42" value="sale_date" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" parent="N-J-DAa_A-AP2fqu147I-33" vertex="1">
           <mxGeometry y="266" width="190" height="30" as="geometry" />
         </mxCell>
         <mxCell id="N-J-DAa_A-AP2fqu147I-43" value="time_before_removing [0..1]" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" parent="N-J-DAa_A-AP2fqu147I-33" vertex="1">
@@ -393,7 +393,7 @@
             <mxPoint x="-994" y="656" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="r1AP5iNDCpU7fxPsClT5-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" target="N-J-DAa_A-AP2fqu147I-77" edge="1" source="r1AP5iNDCpU7fxPsClT5-16">
+        <mxCell id="r1AP5iNDCpU7fxPsClT5-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="r1AP5iNDCpU7fxPsClT5-16" target="N-J-DAa_A-AP2fqu147I-77" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-635" y="670" as="sourcePoint" />
             <Array as="points">
