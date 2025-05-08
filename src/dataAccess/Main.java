@@ -1,5 +1,6 @@
 package dataAccess;
 
+import exceptions.DBAccesException;
 import model.Product;
 
 import java.time.LocalDate;
@@ -9,8 +10,8 @@ public class Main {
     public static void main(String[] args) {
         ProductDBAccess dbAccess = new ProductDBAccess();
         try {
-            dbAccess.deleteProduct("jalja");
-            dbAccess.deleteProduct("baab");
+            System.out.println(dbAccess.deleteProduct("jalja"));
+            System.out.println(dbAccess.deleteProduct("baab"));
 
             dbAccess.addProduct(new Product("baab", "pomme", 15.90, 12, 200, true, LocalDate.of(2025, 05, 07), "fruits"));
             dbAccess.addProduct(new Product("jalja", "orange", 15.90, 12, 200, true, LocalDate.of(2025, 05, 07), "fruits"));

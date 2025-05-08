@@ -1,0 +1,13 @@
+package dataAccess;
+
+import exceptions.DBAccesException;
+import model.Customer;
+
+import java.util.ArrayList;
+
+public interface CustomerDataAccess {
+    public void addCustomer(Customer customer) throws DBAccesException;
+    public int deleteProduct(int customerId) throws  DBAccesException;
+    public void updateCustomer(Customer customer) throws DBAccesException;
+    public ArrayList<Customer> customerList() throws  DBAccesException;
+}

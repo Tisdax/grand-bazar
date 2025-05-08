@@ -1,5 +1,6 @@
 package dataAccess;
 
+import exceptions.DBAccesException;
 import model.*;
 
 import java.sql.*;
@@ -57,7 +58,8 @@ public class ProductDBAccess implements ProductDataAccess {
             throw new DBAccesException(e.getMessage());
         }
     }
-    public void deleteProduct(String productId) throws DBAccesException {
+
+    public int deleteProduct(String productId) throws DBAccesException {
         String sqlInstruction = "delete from product where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -65,13 +67,14 @@ public class ProductDBAccess implements ProductDataAccess {
 
             preparedStatement.setString(1, productId);
 
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
             throw new DBAccesException(e.getMessage());
         }
 
     };
+
     public void updateProduct(Product product) throws DBAccesException {
         String sqlInstruction = "update product set name = ?, net_price = ?, vat_percentage = ?, loyalty_points_nb = ?, is_edible = ?, min_quantity = ?, promotion_min_quantity = ?, sale_date = ?, time_before_removing = ?, category = ? where id = ?";
         try {
@@ -110,18 +113,20 @@ public class ProductDBAccess implements ProductDataAccess {
             throw new DBAccesException(e.getMessage());
         }
     }
+
     public ArrayList<Product> productList() throws DBAccesException {
-        String sqlInstruction = "select * from product";
+        String sqlInstruction = "select * from product"; // mettre en variable de classe
         try {
-            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction); // utiliser une variable connection
             ResultSet data = preparedStatement.executeQuery();
             ArrayList<Product> products = new ArrayList<>();
             Product product;
-            Integer minQuantity, promotionMinQuantity, timeBeforeRemoving;
-            java.sql.Date saleDate;
+            int minQuantity, promotionMinQuantity, timeBeforeRemoving; // verifier si int ou Integer
 
             while (data.next()) {
                 product = new Product(data.getString("id"), data.getString("name"), data.getDouble("net_price"), data.getInt("vat_percentage"), data.getInt("loyalty_points_nb"), data.getBoolean("is_edible"), data.getDate("sale_date").toLocalDate(), data.getString("category"));
+                // constructeur avec juste l'id ?
 
                 minQuantity = data.getInt("min_quantity");
                 if (!data.wasNull())
