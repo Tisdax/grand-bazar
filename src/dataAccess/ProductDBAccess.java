@@ -2,21 +2,114 @@ package dataAccess;
 
 import model.*;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ProductDBAccess implements ProductDataAccess {
-    public void addProduct(String productID) {
+    public void addProduct(Product product) throws DBAccesException {
+        String sqlInstruction = "insert into product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, sale_date, category) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setString(1, product.getId());
+            preparedStatement.setString(2, product.getName());
+            preparedStatement.setDouble(3, product.getNetPrice());
+            preparedStatement.setInt(4, product.getVatPercentage());
+            preparedStatement.setInt(5, product.getLoyaltyPointsNb());
+            preparedStatement.setBoolean(6, product.getEdible());
+            preparedStatement.setDate(7, java.sql.Date.valueOf(product.getSaleDate()));
+            preparedStatement.setString(8, product.getCategoryName());
+
+            preparedStatement.executeUpdate();
+
+            if (product.getMinQuantity() != null) {
+                sqlInstruction = "update product set min_quantity = ? where isbn = ?";
+
+                preparedStatement = connection.prepareStatement(sqlInstruction);
+                preparedStatement.setInt(1, product.getMinQuantity());
+                preparedStatement.setString(2, product.getId());
+
+                preparedStatement.executeUpdate();
+            }
+
+            if (product.getPromotionMinQuantity() != null) {
+                sqlInstruction = "update product set promotion_min_quantity = ? where isbn = ?";
+
+                preparedStatement = connection.prepareStatement(sqlInstruction);
+                preparedStatement.setInt(1, product.getPromotionMinQuantity());
+                preparedStatement.setString(2, product.getId());
+
+                preparedStatement.executeUpdate();
+            }
+
+            if (product.getTimeBeforeRemoving() != null) {
+                sqlInstruction = "update product set time_before_removing = ? where isbn = ?";
+
+                preparedStatement = connection.prepareStatement(sqlInstruction);
+                preparedStatement.setInt(1, product.getTimeBeforeRemoving());
+                preparedStatement.setString(2, product.getId());
+
+                preparedStatement.executeUpdate();
+            }
+        }
+        catch (SQLException e) {
+            throw new DBAccesException(e.getMessage());
+        }
+    }
+    public void deleteProduct(String productId) throws DBAccesException {
+        String sqlInstruction = "delete from product where id = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setString(1, productId);
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DBAccesException(e.getMessage());
+        }
 
     };
-    public void deleteProduct() {
-        // à compléter
-    };
-    public void alterProduct() {
-        // à compléter
-    };
+    public void updateProduct(Product product) throws DBAccesException {
+        String sqlInstruction = "update product set name = ?, net_price = ?, vat_percentage = ?, loyalty_points_nb = ?, is_edible = ?, min_quantity = ?, promotion_min_quantity = ?, sale_date = ?, time_before_removing = ?, category = ? where id = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setString(11, product.getId());
+
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getNetPrice());
+            preparedStatement.setInt(3, product.getVatPercentage());
+            preparedStatement.setInt(4, product.getLoyaltyPointsNb());
+            preparedStatement.setBoolean(5, product.getEdible());
+
+            if (product.getMinQuantity() == null)
+                preparedStatement.setNull(6, Types.INTEGER);
+            else
+                preparedStatement.setInt(6, product.getMinQuantity());
+
+            if (product.getPromotionMinQuantity() == null)
+                preparedStatement.setNull(7, Types.INTEGER);
+            else
+                preparedStatement.setInt(7, product.getPromotionMinQuantity());
+
+            preparedStatement.setDate(8, java.sql.Date.valueOf(product.getSaleDate()));
+
+            if (product.getTimeBeforeRemoving() == null)
+                preparedStatement.setNull(9, Types.INTEGER);
+            else
+                preparedStatement.setInt(9, product.getTimeBeforeRemoving());
+
+            preparedStatement.setString(10, product.getCategoryName());
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DBAccesException(e.getMessage());
+        }
+    }
     public ArrayList<Product> productList() throws DBAccesException {
         String sqlInstruction = "select * from product";
         try {
@@ -24,10 +117,25 @@ public class ProductDBAccess implements ProductDataAccess {
             ResultSet data = preparedStatement.executeQuery();
             ArrayList<Product> products = new ArrayList<>();
             Product product;
+            Integer minQuantity, promotionMinQuantity, timeBeforeRemoving;
+            java.sql.Date saleDate;
 
             while (data.next()) {
-                product = new Product(data.getString("id"), data.getString("name"), data.getDouble("netPrice"), data.getInt("vatPercentage"), data.getInt("loyaltyPointsNb"), data.getBoolean("isEdible"), data.getString("categoryName"));
+                product = new Product(data.getString("id"), data.getString("name"), data.getDouble("net_price"), data.getInt("vat_percentage"), data.getInt("loyalty_points_nb"), data.getBoolean("is_edible"), data.getDate("sale_date").toLocalDate(), data.getString("category"));
 
+                minQuantity = data.getInt("min_quantity");
+                if (!data.wasNull())
+                    product.setMinQuantity(minQuantity);
+
+                promotionMinQuantity = data.getInt("promotion_min_quantity");
+                if (!data.wasNull())
+                    product.setPromotionMinQuantity(promotionMinQuantity);
+
+                timeBeforeRemoving = data.getInt("time_before_removing");
+                if (!data.wasNull())
+                    product.setTimeBeforeRemoving(timeBeforeRemoving);
+
+                products.add(product);
             }
             return products;
         }
