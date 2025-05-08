@@ -61,7 +61,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
         }
     }
 
-    public int deleteProduct(int customerId) throws  DBAccesException {
+    public int deleteCustomer(int customerId) throws  DBAccesException {
         String sqlInstruction = "delete from customer where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -77,7 +77,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
     }
 
     public void updateCustomer(Customer customer) throws DBAccesException {
-        String sqlInstruction = "update product set last_name = ?, first_name = ?, birthdate = ?, phone = ?, email = ?, is_subscribed_to_newsletter = ?, vat_number = ?, address_locality_zip_code = ?, address_locality_name = ?, address_street = ?, address_house_number = ? where id = ?";
+        String sqlInstruction = "update customer set last_name = ?, first_name = ?, birthdate = ?, phone = ?, email = ?, is_subscribed_to_newsletter = ?, vat_number = ?, address_locality_zip_code = ?, address_locality_name = ?, address_street = ?, address_house_number = ?, type = ? where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -109,6 +109,8 @@ public class CustomerDBAccess implements CustomerDataAccess {
             preparedStatement.setString(10, customer.getAddressStreet());
             preparedStatement.setInt(11, customer.getHouseNumber());
             preparedStatement.setString(12, customer.getTypeName());
+
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
             throw new DBAccesException(e.getMessage());
@@ -116,7 +118,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
     }
 
     public ArrayList<Customer> customerList() throws  DBAccesException {
-        String sqlInstruction = "select * from client";
+        String sqlInstruction = "select * from customer";
         try {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction); // utiliser une variable connection
@@ -126,7 +128,7 @@ public class CustomerDBAccess implements CustomerDataAccess {
             String phone, email, vatNumber;
 
             while (data.next()) {
-                customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"), data.getString("address_locality_zip_code"), data.getString("address_locality_name"), data.getString("address_street"), data.getString("address_house_number"), data.getString("type"));
+                customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"), data.getString("address_locality_zip_code"), data.getString("address_locality_name"), data.getString("address_street"), data.getInt("address_house_number"), data.getString("type"));
 
                 phone = data.getString("phone");
                 if (!data.wasNull())

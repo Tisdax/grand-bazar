@@ -31,7 +31,7 @@ CREATE TABLE address (
 );
 
 CREATE TABLE type (
-	name VARCHAR(10),
+	name VARCHAR(20),
     description TEXT NOT NULL,
     CONSTRAINT type_pk primary key(name)
 );
@@ -49,7 +49,7 @@ CREATE TABLE customer (
     address_locality_name VARCHAR(30) NOT NULL,
     address_street VARCHAR (50) NOT NULL,
     address_house_number INT NOT NULL,
-    type VARCHAR(10) NOT NULL,
+    type VARCHAR(20) NOT NULL,
     CONSTRAINT customer_pk PRIMARY KEY (id),
     CONSTRAINT customer_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
     CONSTRAINT customer_type_fk FOREIGN KEY (type) REFERENCES type(name)
@@ -159,3 +159,8 @@ CREATE TABLE stock (
     CONSTRAINT stock_shelf_fk FOREIGN KEY (shelf) REFERENCES shelf(id),
     CONSTRAINT stock_product_fk FOREIGN KEY (product) REFERENCES product(id)
 );
+
+insert into category(name, description) values ("fruits", "c 1 froui");
+insert into locality(zip_code, name) values ("1340", "Ottignies");
+insert into address(locality_zip_code, locality_name, street, house_number) values ("1340", "Ottignies", "Rue du ruisseau", 24);
+insert into type(name, description) values ("particulier", "client particulier sans numéro de tva");
