@@ -1,6 +1,8 @@
 package userInterface;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuBar {
 
@@ -17,6 +19,10 @@ public class MenuBar {
         mainMenu.add(manageMenu);
         mainMenu.addSeparator();
         mainMenu.add(saleMenu);
+
+        manageMenu.addActionListener(e -> {
+            new ProductManagement();
+        });
         return menu;
     }
 }
