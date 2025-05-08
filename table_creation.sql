@@ -160,6 +160,8 @@ CREATE TABLE stock (
     CONSTRAINT stock_product_fk FOREIGN KEY (product) REFERENCES product(id)
 );
 
+
+// pour tests création d objets client et produit
 insert into category(name, description) values ("fruits", "c 1 froui");
 insert into locality(zip_code, name) values ("1340", "Ottignies");
 insert into address(locality_zip_code, locality_name, street, house_number) values ("1340", "Ottignies", "Rue du ruisseau", 24);
