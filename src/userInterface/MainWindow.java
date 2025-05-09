@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private WelcomePanel welcomePanel;
+    private ProductForm productForm;
 
     public MainWindow(){
         super("Accueil");
@@ -16,14 +17,16 @@ public class MainWindow extends JFrame {
 
         addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
+
                 System.exit(0);
             }
         } );
 
         this.setJMenuBar(MenuBar.CreateJMenuBar());
 
+        this.productForm = new ProductForm();
+        this.add(productForm);
         this.welcomePanel = new WelcomePanel();
-        this.add(welcomePanel);
 
         setVisible(true);
     }

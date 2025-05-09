@@ -1,2 +1,4 @@
-package userInterface;public class CustomerForm {
+package userInterface;
+
+public class CustomerForm {
 }
