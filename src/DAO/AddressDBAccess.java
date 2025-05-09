@@ -1,7 +1,7 @@
-package dataAccess;
+package DAO;
 
 import exceptions.DBAccesException;
-import DAOinterfaces.AddressDataAccess;
+import DAOinterfaces.AddressDAO;
 import model.Address;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AddressDBAccess implements AddressDataAccess {
+public class AddressDBAccess implements AddressDAO {
     public void addAddress(Address address) throws DBAccesException {
         String sqlInstruction = "insert into address(locality_zip_code, locality_name, street, house_number) values (?, ?, ?, ?)";
         try {

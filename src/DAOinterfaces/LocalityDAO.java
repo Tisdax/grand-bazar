@@ -5,6 +5,6 @@ import model.Locality;
 
 import java.util.ArrayList;
 
-public interface LocalityDataAccess {
+public interface LocalityDAO {
     public ArrayList<Locality> localitiesList() throws DBAccesException;
 }

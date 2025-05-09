@@ -1,4 +1,4 @@
-package dataAccess;
+package DAO;
 
 import DAOinterfaces.*;
 import exceptions.DBAccesException;
@@ -9,19 +9,19 @@ import java.util.ArrayList;
 
 public class MethodTest {
     public static void main(String[] args) {
-        CustomerDataAccess customerDBAccess = new CustomerDBAccess();
-        ProductDataAccess productDataAccess = new ProductDBAccess();
-        AddressDataAccess addressDataAccess = new AddressDBAccess();
-        CategoryDataAccess categoryDataAccess = new CategoryDBAccess();
-        LocalityDataAccess localityDataAccess = new LocalityDBAccess();
+        CustomerDAO customerDBAccess = new CustomerDBAccess();
+        ProductDAO productDAO = new ProductDBAccess();
+        AddressDAO addressDAO = new AddressDBAccess();
+        CategoryDAO categoryDAO = new CategoryDBAccess();
+        LocalityDAO localityDAO = new LocalityDBAccess();
 
         try {
-            ArrayList<Locality> localities = localityDataAccess.localitiesList();
+            ArrayList<Locality> localities = localityDAO.localitiesList();
             for (Locality locality : localities) {
                 System.out.println(locality.getZipCode() + ", " + locality.getName());
             }
 
-            ArrayList<ProductCategory> categories = categoryDataAccess.categoriesList();
+            ArrayList<ProductCategory> categories = categoryDAO.categoriesList();
             for (ProductCategory category : categories) {
                 System.out.println(category.getName() + ", " + category.getDescription());
             }
@@ -29,14 +29,14 @@ public class MethodTest {
             Address outini = new Address("Rue du ruisseau", "1340", "Ottignies", 24);
             Address lesgensquiontdubloux = new Address("Rue du chêne", "5030", "Gembloux", 7);
 
-            if (!addressDataAccess.exists(outini))
-                addressDataAccess.addAddress(outini);
+            if (!addressDAO.exists(outini))
+                addressDAO.addAddress(outini);
 
-            if (!addressDataAccess.exists(outini))
-                addressDataAccess.addAddress(outini);
+            if (!addressDAO.exists(outini))
+                addressDAO.addAddress(outini);
 
-            if (!addressDataAccess.exists(lesgensquiontdubloux))
-                addressDataAccess.addAddress(lesgensquiontdubloux);
+            if (!addressDAO.exists(lesgensquiontdubloux))
+                addressDAO.addAddress(lesgensquiontdubloux);
 
             System.out.println(customerDBAccess.deleteCustomer(1));
             System.out.println(customerDBAccess.deleteCustomer(2));

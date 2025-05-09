@@ -1,13 +1,13 @@
-package dataAccess;
+package DAO;
 
 import exceptions.DBAccesException;
-import DAOinterfaces.CustomerDataAccess;
+import DAOinterfaces.CustomerDAO;
 import model.Customer;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerDBAccess implements CustomerDataAccess {
+public class CustomerDBAccess implements CustomerDAO {
     public void addCustomer(Customer customer) throws DBAccesException {
         String sqlInstruction = "insert into customer (id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {

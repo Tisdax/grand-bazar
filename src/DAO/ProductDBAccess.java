@@ -1,13 +1,13 @@
-package dataAccess;
+package DAO;
 
 import exceptions.DBAccesException;
-import DAOinterfaces.ProductDataAccess;
+import DAOinterfaces.ProductDAO;
 import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ProductDBAccess implements ProductDataAccess {
+public class ProductDBAccess implements ProductDAO {
     public void addProduct(Product product) throws DBAccesException {
         String sqlInstruction = "insert into product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, sale_date, category) values (?, ?, ?, ?, ?, ?, ?, ?)";
         try {

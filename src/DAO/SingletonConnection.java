@@ -1,4 +1,4 @@
-package dataAccess;
+package DAO;
 
 import exceptions.DBAccesException;
 

@@ -5,6 +5,6 @@ import model.ProductCategory;
 
 import java.util.ArrayList;
 
-public interface CategoryDataAccess {
+public interface CategoryDAO {
     public ArrayList<ProductCategory> categoriesList() throws DBAccesException;
 }
