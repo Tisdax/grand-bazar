@@ -14,10 +14,19 @@ public class SingletonConnection {
             try {
                 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/le_grand_bazar", "root", "legrandbzar");
             }
-            catch (SQLException sqlException) {
-                throw new DBAccesException(sqlException.getMessage());
+            catch (SQLException e) {
+                throw new DBAccesException(e.getMessage());
             }
         }
         return connection;
+    }
+
+    public static void closeConnection() throws DBAccesException{
+        try {
+            connection.close();
+        }
+        catch (SQLException e) {
+            throw new DBAccesException(e.getMessage());
+        }
     }
 }

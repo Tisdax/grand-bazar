@@ -1,6 +1,7 @@
 package dataAccess;
 
 import exceptions.DBAccesException;
+import DAOinterfaces.ProductDataAccess;
 import model.*;
 
 import java.sql.*;
@@ -115,18 +116,18 @@ public class ProductDBAccess implements ProductDataAccess {
     }
 
     public ArrayList<Product> productList() throws DBAccesException {
-        String sqlInstruction = "select * from product"; // mettre en variable de classe
+        String sqlInstruction = "select * from product";
         try {
             Connection connection = SingletonConnection.getInstance();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction); // utiliser une variable connection
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
+
             ArrayList<Product> products = new ArrayList<>();
             Product product;
-            int minQuantity, promotionMinQuantity, timeBeforeRemoving; // verifier si int ou Integer
+            int minQuantity, promotionMinQuantity, timeBeforeRemoving;
 
             while (data.next()) {
                 product = new Product(data.getString("id"), data.getString("name"), data.getDouble("net_price"), data.getInt("vat_percentage"), data.getInt("loyalty_points_nb"), data.getBoolean("is_edible"), data.getDate("sale_date").toLocalDate(), data.getString("category"));
-                // constructeur avec juste l'id ?
 
                 minQuantity = data.getInt("min_quantity");
                 if (!data.wasNull())

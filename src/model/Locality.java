@@ -7,4 +7,12 @@ public class Locality {
         this.zipCode = zip_code;
         this.name = name;
     }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

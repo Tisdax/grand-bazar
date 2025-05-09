@@ -1,4 +1,4 @@
-package dataAccess;
+package DAOinterfaces;
 
 import exceptions.DBAccesException;
 import model.Product;

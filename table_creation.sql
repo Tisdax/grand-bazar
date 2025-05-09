@@ -161,8 +161,10 @@ CREATE TABLE stock (
 );
 
 
-// pour tests création d objets client et produit
+-- pour tests création d objets client et produit
 insert into category(name, description) values ("fruits", "c 1 froui");
+insert into category(name, description) values ("légumes", "c 1 légum");
 insert into locality(zip_code, name) values ("1340", "Ottignies");
-insert into address(locality_zip_code, locality_name, street, house_number) values ("1340", "Ottignies", "Rue du ruisseau", 24);
+insert into locality(zip_code, name) values ("5030", "Gembloux");
 insert into type(name, description) values ("particulier", "client particulier sans numéro de tva");
+insert into type(name, description) values ("professionnel", "client professionnel avec numéro de tva");

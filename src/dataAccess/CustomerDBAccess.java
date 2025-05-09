@@ -1,6 +1,7 @@
 package dataAccess;
 
 import exceptions.DBAccesException;
+import DAOinterfaces.CustomerDataAccess;
 import model.Customer;
 
 import java.sql.*;
