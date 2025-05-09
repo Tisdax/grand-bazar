@@ -15,4 +15,24 @@ public class Address {
     public Address(String street, String localityZipCode, String localityName, Integer houseNumber) {
         this(street, localityZipCode, localityName, houseNumber, null);
     }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getLocalityZipCode() {
+        return localityZipCode;
+    }
+
+    public String getLocalityName() {
+        return localityName;
+    }
+
+    public Integer getHouseNumber() {
+        return houseNumber;
+    }
+
+    public Integer getPostal_box_number() {
+        return postal_box_number;
+    }
 }

@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS sale;
 DROP TABLE IF EXISTS role;
-DROP TABLE IF EXISTS position;
+DROP TABLE IF EXISTS `function`;
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS loyalty_card;
 DROP TABLE IF EXISTS customer;
@@ -31,7 +31,7 @@ CREATE TABLE address (
 );
 
 CREATE TABLE type (
-	name VARCHAR(10),
+	name VARCHAR(20),
     description TEXT NOT NULL,
     CONSTRAINT type_pk primary key(name)
 );
@@ -49,7 +49,7 @@ CREATE TABLE customer (
     address_locality_name VARCHAR(30) NOT NULL,
     address_street VARCHAR (50) NOT NULL,
     address_house_number INT NOT NULL,
-    type VARCHAR(10) NOT NULL,
+    type VARCHAR(20) NOT NULL,
     CONSTRAINT customer_pk PRIMARY KEY (id),
     CONSTRAINT customer_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
     CONSTRAINT customer_type_fk FOREIGN KEY (type) REFERENCES type(name)
@@ -117,7 +117,7 @@ CREATE TABLE product (
     is_edible BOOLEAN NOT NULL,
     min_quantity INT,
     promotion_min_quantity INT,
-    sale_date DATE,
+    sale_date DATE NOT NULL,
     time_before_removing INT,
     category VARCHAR(30) NOT NULL,
     CONSTRAINT product_pk PRIMARY KEY (id),
@@ -159,3 +159,12 @@ CREATE TABLE stock (
     CONSTRAINT stock_shelf_fk FOREIGN KEY (shelf) REFERENCES shelf(id),
     CONSTRAINT stock_product_fk FOREIGN KEY (product) REFERENCES product(id)
 );
+
+
+-- pour tests création d objets client et produit
+insert into category(name, description) values ("fruits", "c 1 froui");
+insert into category(name, description) values ("légumes", "c 1 légum");
+insert into locality(zip_code, name) values ("1340", "Ottignies");
+insert into locality(zip_code, name) values ("5030", "Gembloux");
+insert into type(name, description) values ("particulier", "client particulier sans numéro de tva");
+insert into type(name, description) values ("professionnel", "client professionnel avec numéro de tva");

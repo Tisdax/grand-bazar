@@ -23,8 +23,8 @@ public class Product {
         this.categoryName = categoryName;
     }
 
-    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, String categoryName) {
-        this(id, name, netPrice, vatPercentage, loyaltyPointsNb, null, null, null, isEdible, null, categoryName);
+    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, LocalDate saleDate, String categoryName) {
+        this(id, name, netPrice, vatPercentage, loyaltyPointsNb, null, null, null, isEdible, saleDate, categoryName);
     }
 
     public void setNetPrice(Double netPrice) {
@@ -32,5 +32,65 @@ public class Product {
             this.netPrice = (double)0;
         else
             this.netPrice = netPrice;
+    }
+
+    public void setMinQuantity(Integer minQuantity) {
+        this.minQuantity = minQuantity;
+    }
+
+    public void setPromotionMinQuantity(Integer promotionMinQuantity) {
+        this.promotionMinQuantity = promotionMinQuantity;
+    }
+
+    public void setTimeBeforeRemoving(Integer timeBeforeRemoving) {
+        this.timeBeforeRemoving = timeBeforeRemoving;
+    }
+
+    public void setSaleDate(LocalDate saleDate) {
+        this.saleDate = saleDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public Double getNetPrice() {
+        return netPrice;
+    }
+
+    public Integer getVatPercentage() {
+        return vatPercentage;
+    }
+
+    public Integer getLoyaltyPointsNb() {
+        return loyaltyPointsNb;
+    }
+
+    public Integer getMinQuantity() {
+        return minQuantity;
+    }
+
+    public Integer getPromotionMinQuantity() {
+        return promotionMinQuantity;
+    }
+
+    public Integer getTimeBeforeRemoving() {
+        return timeBeforeRemoving;
+    }
+
+    public Boolean getEdible() {
+        return isEdible;
+    }
+
+    public LocalDate getSaleDate() {
+        return saleDate;
     }
 }
