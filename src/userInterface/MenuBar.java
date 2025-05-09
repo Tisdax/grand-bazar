@@ -2,11 +2,10 @@ package userInterface;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MenuBar {
 
-    public static JMenuBar CreateJMenuBar(){
+    public static JMenuBar CreateJMenuBar(MainWindow mainWindow){
         JMenuBar menu = new JMenuBar();
         JMenu mainMenu;
         JMenuItem manageMenu, saleMenu;
@@ -16,13 +15,19 @@ public class MenuBar {
 
         manageMenu = new JMenuItem("Gestion");
         saleMenu = new JMenuItem("Vente");
+
         mainMenu.add(manageMenu);
         mainMenu.addSeparator();
         mainMenu.add(saleMenu);
 
-        manageMenu.addActionListener(e -> {
-            new ProductManagement();
+        // Listeners
+        manageMenu.addActionListener((ActionEvent e) -> {
+            mainWindow.changePanel("product");
         });
+        saleMenu.addActionListener((ActionEvent e) -> {
+            mainWindow.changePanel("sale");
+        });
+
         return menu;
     }
 }

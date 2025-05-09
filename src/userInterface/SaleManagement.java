@@ -1,11 +1,12 @@
 package userInterface;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class ProductManagement extends JPanel {
+public class SaleManagement extends JPanel {
     private JLabel label;
-    public ProductManagement() {
-        label = new JLabel("Product Management");
+    public SaleManagement() {
+        label = new JLabel("Sale Management");
         this.setLayout(new FlowLayout());
         this.add(label);
     }
