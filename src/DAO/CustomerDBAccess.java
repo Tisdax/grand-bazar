@@ -1,13 +1,17 @@
 package DAO;
 
+import DAOinterfaces.LoyaltyCardDAO;
 import exceptions.DBAccesException;
 import DAOinterfaces.CustomerDAO;
 import model.Customer;
+import model.LoyaltyCard;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerDBAccess implements CustomerDAO {
+    private LoyaltyCardDAO loyaltyCardDAO = new LoyaltyCardDBAccess();
+
     public void addCustomer(Customer customer) throws DBAccesException {
         String sqlInstruction = "insert into customer (id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -68,7 +72,11 @@ public class CustomerDBAccess implements CustomerDAO {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
 
+            loyaltyCardDAO.delete(customerId);
+
             preparedStatement.setInt(1, customerId);
+
+
 
             return preparedStatement.executeUpdate();
         }
