@@ -1,17 +1,13 @@
 package DAO;
 
-import DAOinterfaces.LoyaltyCardDAO;
 import exceptions.DBAccesException;
 import DAOinterfaces.CustomerDAO;
 import model.Customer;
-import model.LoyaltyCard;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerDBAccess implements CustomerDAO {
-    private LoyaltyCardDAO loyaltyCardDAO = new LoyaltyCardDBAccess();
-
     public void addCustomer(Customer customer) throws DBAccesException {
         String sqlInstruction = "insert into customer (id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -66,19 +62,25 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public int deleteCustomer(int customerId) throws  DBAccesException {
+    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws  DBAccesException {
         String sqlInstruction = "delete from customer where id = ?";
         try {
+            int nbUpdatedLines = 0;
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            LoyaltyCardDBAccess loyaltyCardDAO = new LoyaltyCardDBAccess();
+            SaleDBAccess saleDBAccess = new SaleDBAccess();
 
-            loyaltyCardDAO.delete(customerId);
+            nbUpdatedLines += loyaltyCardDAO.delete(customerId);
+            switch(deleteMode) {
+                case DELETE_SALES : nbUpdatedLines += saleDBAccess.deleteSale(customerId); break;
+                case REMOVE_FROM_SALES : nbUpdatedLines += saleDBAccess.removeCustomerFromSales(customerId); break;
+            }
 
             preparedStatement.setInt(1, customerId);
 
-
-
-            return preparedStatement.executeUpdate();
+            nbUpdatedLines +=preparedStatement.executeUpdate();
+            return nbUpdatedLines;
         }
         catch (SQLException e) {
             throw new DBAccesException(e.getMessage());

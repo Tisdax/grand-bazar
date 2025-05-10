@@ -162,9 +162,62 @@ CREATE TABLE stock (
 
 
 -- pour tests création d objets client et produit
-insert into category(name, description) values ("fruits", "c 1 froui");
-insert into category(name, description) values ("légumes", "c 1 légum");
-insert into locality(zip_code, name) values ("1340", "Ottignies");
-insert into locality(zip_code, name) values ("5030", "Gembloux");
-insert into type(name, description) values ("particulier", "client particulier sans numéro de tva");
-insert into type(name, description) values ("professionnel", "client professionnel avec numéro de tva");
+insert into category(name, description)
+values
+    ("fruits", "c 1 froui"),
+    ("légumes", "c 1 légum");
+
+insert into locality(zip_code, name)
+values
+    ("1340", "Ottignies"),
+    ("5030", "Gembloux");
+
+insert into type(name, description)
+values
+    ("particulier", "client particulier sans numéro de tva"),
+    ("professionnel", "client professionnel avec numéro de tva");
+
+insert into address(locality_zip_code, locality_name, street, house_number)
+values
+    ("1340", "Ottignies", "Rue du ruisseau", 24),
+    ("5030", "Gembloux", "Rue du chêne", 7);
+
+insert into customer(id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type)
+values
+    (1, "Locht", "Julien", "2005-10-04", FALSE, "1340", "Ottignies", "Rue du ruisseau", 24, "particulier");
+
+insert into loyalty_card(number, total_points, is_valid, customer)
+values
+    (5342632, 500, true, 1),
+    (4562278, 875, true, 1);
+
+insert into employee(id, last_name, first_name, address_locality_zip_code, address_locality_name, address_street, address_house_number)
+values
+    (1, "Van der Cuylen", "Mathias", "5030", "Gembloux", "Rue du chêne", 7);
+
+insert into sale(id, customer, date, employee)
+values
+    (101, 1, "2025-05-09", 1),
+    (102, 1, "2025-05-09", 1),
+    (103, 1, "2025-05-09", 1);
+
+INSERT INTO product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, min_quantity, promotion_min_quantity, sale_date, time_before_removing, category)
+VALUES
+    ("P001", "Apple", 1.20, 5, 10, TRUE, 1, 3, "2025-05-01", 10, "fruits"),
+    ("P002", "Banana", 0.90, 5, 8, TRUE, 1, 2, "2025-05-02", 7, "fruits"),
+    ("P003", "Carrot", 0.60, 5, 5, TRUE, 1, 2, "2025-05-03", 12, "légumes"),
+    ("P004", "Tomato", 1.10, 5, 6, TRUE, 1, 2, "2025-05-04", 8, "légumes"),
+    ("P005", "Pear", 1.30, 5, 9, TRUE, 1, 3, "2025-05-05", 9, "fruits");
+
+-- Sale 101
+INSERT INTO command_line (sale, product, quantity)
+    VALUES
+   (101, "P001", 2),
+   (101, "P003", 1),
+   (101, "P005", 4),
+   (102, "P002", 3),
+   (102, "P004", 2),
+   (102, "P001", 1),
+   (103, "P003", 2),
+   (103, "P004", 1),
+   (103, "P002", 2);

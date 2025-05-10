@@ -20,13 +20,4 @@ public class SingletonConnection {
         }
         return connection;
     }
-
-    public static void closeConnection() throws DBAccesException{
-        try {
-            connection.close();
-        }
-        catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
-        }
-    }
 }
