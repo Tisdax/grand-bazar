@@ -1,25 +1,26 @@
 package DAO;
 
-import DAOinterfaces.LoyaltyCardDAO;
+import DAOinterfaces.SaleDAO;
+import DAOinterfaces.StockDAO;
 import exceptions.DBAccesException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
-    public int delete(int customerId) throws DBAccesException {
-        String sqlInstruction = "delete from loyalty_card where customer = ?";
+public class StockDBAccess implements StockDAO {
+    public int deleteStock(String productId) throws DBAccesException {
+        String sqlInstruction = "delete from stock where product = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
 
-            preparedStatement.setInt(1, customerId);
+            preparedStatement.setString(1, productId);
 
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression de la carte de fidélité");
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression d'un stock");
         }
     }
 }

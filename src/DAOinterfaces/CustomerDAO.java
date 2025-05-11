@@ -2,7 +2,7 @@ package DAOinterfaces;
 
 import exceptions.DBAccesException;
 import model.Customer;
-import DAO.CustomerDeletionMode;
+import model.CustomerDeletionMode;
 
 import java.util.ArrayList;
 

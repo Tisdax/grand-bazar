@@ -56,22 +56,32 @@ public class ProductDBAccess implements ProductDAO {
             }
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de l'ajout du produit");
         }
     }
 
     public int deleteProduct(String productId) throws DBAccesException {
         String sqlInstruction = "delete from product where id = ?";
         try {
+            int nbUpdatedLines = 0;
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            CommandLineDBAccess commandLineDBAccess = new CommandLineDBAccess();
+            PromotionDBAccess promotionDBAccess = new PromotionDBAccess();
+            StockDBAccess stockDBAccess = new StockDBAccess();
+
+            nbUpdatedLines += commandLineDBAccess.deleteCommandLine(productId);
+            nbUpdatedLines += promotionDBAccess.deletePromotion(productId);
+            nbUpdatedLines += stockDBAccess.deleteStock(productId);
 
             preparedStatement.setString(1, productId);
 
-            return preparedStatement.executeUpdate();
+            nbUpdatedLines += preparedStatement.executeUpdate();
+
+            return nbUpdatedLines;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la supprression du produit");
         }
 
     };
@@ -111,7 +121,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression du produit");
         }
     }
 
@@ -146,7 +156,7 @@ public class ProductDBAccess implements ProductDAO {
             return products;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la lecture des produits dans la base de données");
         }
     }
 }

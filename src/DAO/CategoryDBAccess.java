@@ -26,7 +26,7 @@ public class CategoryDBAccess implements CategoryDAO {
             return categories;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la lecture des catégories dans la base de données");
         }
     }
 }

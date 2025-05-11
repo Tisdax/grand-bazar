@@ -32,7 +32,7 @@ public class SaleDBAccess implements SaleDAO {
             return nbUpdatedLines;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression d'une vente");
         }
     }
 
@@ -53,7 +53,7 @@ public class SaleDBAccess implements SaleDAO {
             return sales;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la recherche d'une vente");
         }
     }
 
@@ -68,7 +68,7 @@ public class SaleDBAccess implements SaleDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression d'un client de la table vente");
         }
     }
 }

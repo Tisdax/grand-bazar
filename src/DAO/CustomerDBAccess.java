@@ -3,6 +3,7 @@ package DAO;
 import exceptions.DBAccesException;
 import DAOinterfaces.CustomerDAO;
 import model.Customer;
+import model.CustomerDeletionMode;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class CustomerDBAccess implements CustomerDAO {
             }
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de l'ajout du client");
         }
     }
 
@@ -83,7 +84,7 @@ public class CustomerDBAccess implements CustomerDAO {
             return nbUpdatedLines;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression du client");
         }
     }
 
@@ -124,7 +125,7 @@ public class CustomerDBAccess implements CustomerDAO {
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la modification du client");
         }
     }
 
@@ -158,7 +159,7 @@ public class CustomerDBAccess implements CustomerDAO {
             return customers;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la lecture des clients dans la base de données");
         }
     }
 }

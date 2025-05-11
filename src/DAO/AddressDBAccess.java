@@ -39,7 +39,7 @@ public class AddressDBAccess implements AddressDAO {
 
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de l'ajout d'une adresse");
         }
     }
 
@@ -63,7 +63,7 @@ public class AddressDBAccess implements AddressDAO {
             return !data.wasNull();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la recherche d'une adresse dans la base de données");
         }
     }
 }

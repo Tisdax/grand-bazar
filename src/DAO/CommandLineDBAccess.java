@@ -19,11 +19,22 @@ public class CommandLineDBAccess implements CommandLineDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage());
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression d'une ligne de commande");
         }
     }
 
     public int deleteCommandLine(String productId) throws DBAccesException {
-        return 1;
+        String sqlInstruction = "delete from command_line where product = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setString(1, productId);
+
+            return preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression d'une ligne de commande");
+        }
     }
 }
