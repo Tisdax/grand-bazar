@@ -1,7 +1,14 @@
 package userInterface;
 
+import controller.ApplicationController;
+import exceptions.DBAccesException;
+import model.Product;
+import model.ProductCategory;
+
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,7 +19,10 @@ public class ProductForm extends JPanel {
     private JComboBox vatComboBox, categoryComboBox;
     private JCheckBox isEdibleCheckBox;
     private JSpinner saleDateSpinner, priceSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner;
-    public ProductForm(){
+    private JButton addButton;
+    private ApplicationController controller;
+    public ProductForm() throws DBAccesException {
+        controller = new ApplicationController();
         this.setLayout(new BorderLayout());
         titlePanel = new JPanel();
         this.add(titlePanel, BorderLayout.NORTH);
@@ -25,6 +35,9 @@ public class ProductForm extends JPanel {
         formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(11, 2, 5, 10));
         this.add(formPanel, BorderLayout.CENTER);
+
+        buttonPanel = new JPanel();
+        this.add(buttonPanel, BorderLayout.SOUTH);
 
         idLabel = new JLabel("Identifiant : ", SwingConstants.RIGHT);
         idField = new JTextField(15);
@@ -44,7 +57,7 @@ public class ProductForm extends JPanel {
         formPanel.add(priceSpinner);
 
         vatLabel = new JLabel("Taux de TVA : ", SwingConstants.RIGHT);
-        vatComboBox = new JComboBox<>(new String[]{"6%", "12%", "21%"});
+        vatComboBox = new JComboBox<>(new Integer[]{6, 12, 21});
         formPanel.add(vatLabel);
         formPanel.add(vatComboBox);
 
@@ -74,7 +87,7 @@ public class ProductForm extends JPanel {
         formPanel.add(timeBeforeRemovingSpinner);
 
         categoryLabel = new JLabel("Catégorie du produit : ", SwingConstants.RIGHT);
-        categoryComboBox = new JComboBox();
+        categoryComboBox = new JComboBox<>(controller.getAllCategory().toArray());
         formPanel.add(categoryLabel);
         formPanel.add(categoryComboBox);
 
@@ -85,5 +98,34 @@ public class ProductForm extends JPanel {
         saleDateSpinner.setEditor(editor);
         formPanel.add(saleDateLabel);
         formPanel.add(saleDateSpinner);
+
+        addButton = new JButton("Ajouter Produit");
+        buttonPanel.add(addButton);
+        addButton.addActionListener(e -> {
+            try {
+                Product test = addProduct(idField, nameField, priceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
+                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox);
+                System.out.println(test);
+            } catch (DBAccesException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+    }
+
+    private Product addProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner,
+                            JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
+        String id = idField.getText();
+        String name = nameField.getText();
+        Double netPrice = ((Number) netPriceSpinner.getValue()).doubleValue();
+        Integer vat = (Integer) vatComboBox.getSelectedItem();
+        Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
+        Integer minQuant = (Integer) minQuantSpinner.getValue();
+        Integer promotionMinQuant = (Integer) promotionQuantSpinner.getValue();
+        Integer timeBeforeRemoving = (Integer) timeBeforeRemovingSpinner.getValue();
+        Boolean isEdible = isEdibleCheckBox.isSelected();
+        LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String category = ((ProductCategory) categoryComboBox.getSelectedItem()).getName();
+        return new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category);
     }
 }

@@ -93,4 +93,8 @@ public class Product {
     public LocalDate getSaleDate() {
         return saleDate;
     }
+
+    public String toString(){
+        return "(" + id + ")" + " " + name + " " + "ajouté le " + saleDate;
+    }
 }
