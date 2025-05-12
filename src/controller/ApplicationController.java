@@ -25,10 +25,10 @@ public class ApplicationController {
         return categoryManager.getAllCategory();
     }
 
-    public void addProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
+    public void addProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
         String id = idField.getText();
         String name = nameField.getText();
-        Double netPrice = ((Number) netPriceSpinner.getValue()).doubleValue();
+        Double netPrice = Double.valueOf(netPriceField.getText());
         Integer vat = (Integer) vatComboBox.getSelectedItem();
         Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
         Integer minQuant = (Integer) minQuantSpinner.getValue();

@@ -14,12 +14,12 @@ import java.util.Date;
 
 public class ProductForm extends JPanel {
     private JPanel titlePanel, formPanel, buttonPanel;
-    private JLabel titleLabel, idLabel, nameLabel, priceLabel, vatLabel, isEdibleLabel, loyaltyPointsLabel, minQuantLabel, promotionQuantLabel, saleDateLabel, timeBeforeRemovingLabel, categoryLabel;
-    private JTextField idField, nameField;
+    private JLabel titleLabel, idLabel, nameLabel, netPriceLabel, vatLabel, isEdibleLabel, loyaltyPointsLabel, minQuantLabel, promotionQuantLabel, saleDateLabel, timeBeforeRemovingLabel, categoryLabel;
+    private JTextField idField, nameField, netPriceField;
     private JComboBox vatComboBox, categoryComboBox;
     private JCheckBox isEdibleCheckBox;
-    private JSpinner saleDateSpinner, priceSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner;
-    private JButton addButton;
+    private JSpinner saleDateSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner;
+    private JButton addButton, fillButton;
     private ApplicationController controller;
     public ProductForm() throws DBAccesException {
         controller = new ApplicationController();
@@ -36,6 +36,8 @@ public class ProductForm extends JPanel {
         formPanel.setLayout(new GridLayout(11, 2, 5, 10));
         this.add(formPanel, BorderLayout.CENTER);
 
+        UIManager.put("Spinner.editorAlignment", JTextField.LEFT);
+
         buttonPanel = new JPanel();
         this.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -49,12 +51,10 @@ public class ProductForm extends JPanel {
         formPanel.add(nameLabel);
         formPanel.add(nameField);
 
-        priceLabel = new JLabel("Prix : ", SwingConstants.RIGHT);
-        priceSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 0.50));
-        JSpinner.NumberEditor priceEditor = new JSpinner.NumberEditor(priceSpinner, "#0,00€");
-        priceSpinner.setEditor(priceEditor);
-        formPanel.add(priceLabel);
-        formPanel.add(priceSpinner);
+        netPriceLabel = new JLabel("Prix : ", SwingConstants.RIGHT);
+        netPriceField = new JTextField();
+        formPanel.add(netPriceLabel);
+        formPanel.add(netPriceField);
 
         vatLabel = new JLabel("Taux de TVA : ", SwingConstants.RIGHT);
         vatComboBox = new JComboBox<>(new Integer[]{6, 12, 21});
@@ -103,12 +103,40 @@ public class ProductForm extends JPanel {
         buttonPanel.add(addButton);
         addButton.addActionListener(e -> {
             try {
-                controller.addProduct(idField, nameField, priceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
+                controller.addProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
                         promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox);
             } catch (DBAccesException ex) {
                 JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes", JOptionPane.ERROR_MESSAGE);
             }
         });
+
+        fillButton = new JButton("Remplir produit");
+        buttonPanel.add(fillButton);
+        fillButton.addActionListener(fillButtonEvent -> {
+            fillProductForm(new Product("I5151", "Fanta 2l", 2.75, 21, 150, 30, 60, 15,
+                    true,LocalDate.of(2025, 1, 25), "légumes"));
+        });
+
+    }
+
+    private void fillProductForm(Product product){
+        idField.setText(product.getId());
+        nameField.setText(product.getName());
+        netPriceField.setText(String.valueOf(product.getNetPrice()));
+        loyaltyPointsSpinner.setValue(product.getLoyaltyPointsNb());
+        minQuantSpinner.setValue(product.getMinQuantity());
+        promotionQuantSpinner.setValue(product.getPromotionMinQuantity());
+        timeBeforeRemovingSpinner.setValue(product.getTimeBeforeRemoving());
+        isEdibleCheckBox.setSelected(product.getEdible());
+        saleDateSpinner.setValue(Date.from(product.getSaleDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        vatComboBox.setSelectedItem(product.getVatPercentage());
+        for (int i = 0; i < categoryComboBox.getItemCount(); i++) {
+            Object item = categoryComboBox.getItemAt(i);
+            if (item instanceof ProductCategory p && p.getName().equals(product.getCategoryName())) {
+                categoryComboBox.setSelectedItem(item);
+                return;
+            }
+        }
 
     }
 }
