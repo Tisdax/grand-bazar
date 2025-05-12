@@ -91,7 +91,7 @@ public class ProductForm extends JPanel {
         formPanel.add(categoryLabel);
         formPanel.add(categoryComboBox);
 
-        saleDateLabel = new JLabel("Date de Vente : ", SwingConstants.RIGHT);
+        saleDateLabel = new JLabel("Date de mise en vente : ", SwingConstants.RIGHT);
         Date today = new Date();
         saleDateSpinner = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.MONTH));
         JSpinner.DateEditor editor = new JSpinner.DateEditor(saleDateSpinner, "dd/MM/yyyy");
@@ -103,29 +103,12 @@ public class ProductForm extends JPanel {
         buttonPanel.add(addButton);
         addButton.addActionListener(e -> {
             try {
-                Product test = addProduct(idField, nameField, priceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
+                controller.addProduct(idField, nameField, priceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
                         promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox);
-                System.out.println(test);
             } catch (DBAccesException ex) {
-                throw new RuntimeException(ex);
+                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-    }
-
-    private Product addProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner,
-                            JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
-        String id = idField.getText();
-        String name = nameField.getText();
-        Double netPrice = ((Number) netPriceSpinner.getValue()).doubleValue();
-        Integer vat = (Integer) vatComboBox.getSelectedItem();
-        Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
-        Integer minQuant = (Integer) minQuantSpinner.getValue();
-        Integer promotionMinQuant = (Integer) promotionQuantSpinner.getValue();
-        Integer timeBeforeRemoving = (Integer) timeBeforeRemovingSpinner.getValue();
-        Boolean isEdible = isEdibleCheckBox.isSelected();
-        LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        String category = ((ProductCategory) categoryComboBox.getSelectedItem()).getName();
-        return new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category);
     }
 }
