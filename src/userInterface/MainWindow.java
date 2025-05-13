@@ -1,5 +1,7 @@
 package userInterface;
 
+import exceptions.DBAccesException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -10,7 +12,7 @@ public class MainWindow extends JFrame {
     private WelcomePanel welcomePanel;
     private ProductForm productForm;
 
-    public MainWindow(){
+    public MainWindow() throws DBAccesException {
         super("Accueil");
         setBounds(0,0,1280,720);
         setLocationRelativeTo(null);
@@ -31,7 +33,7 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DBAccesException {
         MainWindow mainWindow = new MainWindow();
     }
 }
