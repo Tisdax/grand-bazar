@@ -18,7 +18,7 @@ public class AddressDBAccess implements AddressDAO {
 
             connection.prepareStatement(sqlInstruction);
 
-            preparedStatement.setString(1, address.getLocalityZipCode());
+            preparedStatement.setInt(1, address.getLocalityZipCode());
             preparedStatement.setString(2, address.getLocalityName());
             preparedStatement.setString(3, address.getStreet());
             preparedStatement.setInt(4, address.getHouseNumber());
@@ -29,7 +29,7 @@ public class AddressDBAccess implements AddressDAO {
                 sqlInstruction = "update address set postal_box_number = ? where locality_zip_code = ? and locality_name = ? and street = ? and house_number = ?";
 
                 preparedStatement.setInt(1, address.getPostal_box_number());
-                preparedStatement.setString(2, address.getLocalityZipCode());
+                preparedStatement.setInt(2, address.getLocalityZipCode());
                 preparedStatement.setString(3, address.getLocalityName());
                 preparedStatement.setString(4, address.getStreet());
                 preparedStatement.setInt(5, address.getHouseNumber());
@@ -49,7 +49,7 @@ public class AddressDBAccess implements AddressDAO {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
 
-            preparedStatement.setString(1, address.getLocalityZipCode());
+            preparedStatement.setInt(1, address.getLocalityZipCode());
             preparedStatement.setString(2, address.getLocalityName());
             preparedStatement.setString(3, address.getStreet());
             preparedStatement.setInt(4, address.getHouseNumber());

@@ -7,14 +7,29 @@ public class Sale {
     private LocalDate date;
 
     public Sale(Integer id, Integer customer, LocalDate date, Integer employee) {
-        this.id = id;
-        this.customer = customer;
+        setId(id);
+        setCustomer(customer);
         this.date = date;
-        this.employee = employee;
+        setEmployee(employee);
     }
 
     public Sale(Integer id, LocalDate date, Integer employee) {
         this(id, null, date, employee);
+    }
+
+    public void setId(Integer id) {
+        if (id >= 0)
+            this.id = id;
+    }
+
+    public void setEmployee(Integer employee) {
+        if (employee >= 0)
+            this.employee = employee;
+    }
+
+    public void setCustomer(Integer customer) {
+        if (customer >= 0)
+            this.customer = customer;
     }
 
     public Integer getId() {

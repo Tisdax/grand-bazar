@@ -5,6 +5,7 @@ import DAOinterfaces.ProductDAO;
 import model.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductDBAccess implements ProductDAO {
@@ -84,7 +85,7 @@ public class ProductDBAccess implements ProductDAO {
             throw new DBAccesException(e.getMessage(), "Erreur lors de la supprression du produit");
         }
 
-    };
+    }
 
     public void updateProduct(Product product) throws DBAccesException {
         String sqlInstruction = "update product set name = ?, net_price = ?, vat_percentage = ?, loyalty_points_nb = ?, is_edible = ?, min_quantity = ?, promotion_min_quantity = ?, sale_date = ?, time_before_removing = ?, category = ? where id = ?";
@@ -153,10 +154,60 @@ public class ProductDBAccess implements ProductDAO {
 
                 products.add(product);
             }
+
             return products;
         }
         catch (SQLException e) {
             throw new DBAccesException(e.getMessage(), "Erreur lors de la lecture des produits dans la base de données");
+        }
+    }
+
+    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DBAccesException {
+        String sqlInstruction = "select p.name as 'product_name', st.quantity as 'stock_quantity', st.shelf_level as 'shelf_level', sh.id as 'shelf_id', sh.is_refrigirated as 'is_shelf_refregirated' from product p inner join stock st on p.id = st.product inner join shelf sh on st.shelf = sh.id where p.category = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setString(1, categoryId);
+
+            ResultSet data = preparedStatement.executeQuery();
+            ArrayList<ProductStockInfo> productsInfos = new ArrayList<>();
+            ProductStockInfo productInfos;
+
+            while (data.next()) {
+                productInfos = new ProductStockInfo(data.getString("product_name"), data.getInt("stock_quantity"), data.getInt("shelf_level"), data.getInt("shelf_id"), data.getBoolean("is_shelf_refregirated"));
+                productsInfos.add(productInfos);
+            }
+
+            return productsInfos;
+        }
+        catch (SQLException e) {
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la recherche des produits sur base de la catégorie" + categoryId);
+        }
+    }
+
+    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DBAccesException {
+        String sqlInstruction = "select p.id as 'product_id', p.name as 'product_name', p.net_price as 'product_net_price', c.quantity, s.id as 'sale_id', s.date as 'sale_date' from product p inner join command_line c on c.product = p.id inner join sale s on c.sale = s.id where s.date between ? and ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setDate(1, java.sql.Date.valueOf(startDate));
+            preparedStatement.setDate(2, java.sql.Date.valueOf(endDate));
+
+            ResultSet data = preparedStatement.executeQuery();
+            ArrayList<ProductOrderSummary> productsOrderSummaries = new ArrayList<>();
+            ProductOrderSummary productOrderSummary;
+
+            while (data.next()) {
+                productOrderSummary = new ProductOrderSummary(data.getString("product_id"), data.getString("product_name"), data.getDouble("product_net_price"), data.getInt("quantity"), data.getInt("sale_id"), data.getDate("sale_date").toLocalDate());
+                productsOrderSummaries.add(productOrderSummary);
+            }
+
+            return productsOrderSummaries;
+        }
+        catch (SQLException e) {
+            throw new DBAccesException(e.getMessage(), "Erreur lors de la recherche des produits sur base de dates");
         }
     }
 }

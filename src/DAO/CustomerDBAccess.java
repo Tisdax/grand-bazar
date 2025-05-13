@@ -20,7 +20,7 @@ public class CustomerDBAccess implements CustomerDAO {
             preparedStatement.setString(3, customer.getFirstName());
             preparedStatement.setDate(4, java.sql.Date.valueOf(customer.getBirthdate()));
             preparedStatement.setBoolean(5, customer.getSubscribedToNewsLetter());
-            preparedStatement.setString(6, customer.getLocalityZipCode());
+            preparedStatement.setInt(6, customer.getLocalityZipCode());
             preparedStatement.setString(7, customer.getLocalityName());
             preparedStatement.setString(8, customer.getAddressStreet());
             preparedStatement.setInt(9, customer.getHouseNumber());
@@ -116,7 +116,7 @@ public class CustomerDBAccess implements CustomerDAO {
             else
                 preparedStatement.setString(7, customer.getVatNumber());
 
-            preparedStatement.setString(8, customer.getLocalityZipCode());
+            preparedStatement.setInt(8, customer.getLocalityZipCode());
             preparedStatement.setString(9, customer.getLocalityName());
             preparedStatement.setString(10, customer.getAddressStreet());
             preparedStatement.setInt(11, customer.getHouseNumber());
@@ -140,7 +140,7 @@ public class CustomerDBAccess implements CustomerDAO {
             String phone, email, vatNumber;
 
             while (data.next()) {
-                customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"), data.getString("address_locality_zip_code"), data.getString("address_locality_name"), data.getString("address_street"), data.getInt("address_house_number"), data.getString("type"));
+                customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"), data.getString("address_locality_zip_code"), data.getInt("address_locality_name"), data.getString("address_street"), data.getInt("address_house_number"), data.getString("type"));
 
                 phone = data.getString("phone");
                 if (!data.wasNull())

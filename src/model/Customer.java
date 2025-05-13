@@ -3,19 +3,19 @@ package model;
 import java.time.LocalDate;
 
 public class Customer {
-    private String phone, email, vatNumber, typeName, lastName, firstName, addressStreet, localityZipCode, localityName;
+    private String phone, email, vatNumber, typeName, lastName, firstName, addressStreet, localityName;
     private LocalDate birthdate;
     private Boolean isSubscribedToNewsLetter;
-    private Integer id, houseNumber;
+    private Integer id, houseNumber, localityZipCode;
 
-    public Customer(Integer id, String lastName, String firstName, String addressStreet, String localityZipCode, String localityName, Integer houseNumber, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber, LocalDate birthdate, String typeName) {
-        this.id = id;
+    public Customer(Integer id, String lastName, String firstName, String addressStreet, Integer localityZipCode, String localityName, Integer houseNumber, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber, LocalDate birthdate, String typeName) {
+        setId(id);
         this.lastName = lastName;
         this.firstName = firstName;
         this.addressStreet = addressStreet;
-        this.localityZipCode = localityZipCode;
+        setLocalityZipCode(localityZipCode);
         this.localityName = localityName;
-        this.houseNumber = houseNumber;
+        setHouseNumber(houseNumber);
         this.phone = phone;
         this.email = email;
         this.isSubscribedToNewsLetter = isSubscribedToNewsLetter;
@@ -24,20 +24,35 @@ public class Customer {
         this.typeName = typeName;
     }
 
-    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, Boolean isSubscribedToNewsLetter, String addressStreet, String localityZipCode, String localityName, Integer houseNumber, String typeName) {
+    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, Boolean isSubscribedToNewsLetter, String addressStreet, Integer localityZipCode, String localityName, Integer houseNumber, String typeName) {
         this(id, lastName, firstName, addressStreet, localityZipCode, localityName, houseNumber, null, null, isSubscribedToNewsLetter, null, birthdate, typeName);
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(Integer id) {
+        if (id >= 0)
+            this.id = id;
+    }
+
+    public void setHouseNumber(Integer houseNumber) {
+        if (houseNumber > 0)
+            this.houseNumber = houseNumber;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setVatNumber(String vatNumber) {
         this.vatNumber = vatNumber;
+    }
+
+    public void setLocalityZipCode(Integer localityZipCode) {
+        if (localityZipCode > 0)
+            this.localityZipCode = localityZipCode;
     }
 
     public String getPhone() {
@@ -68,7 +83,7 @@ public class Customer {
         return addressStreet;
     }
 
-    public String getLocalityZipCode() {
+    public Integer getLocalityZipCode() {
         return localityZipCode;
     }
 

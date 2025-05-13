@@ -15,19 +15,23 @@ DROP TABLE IF EXISTS address;
 DROP TABLE IF EXISTS locality;
 
 CREATE TABLE locality (
-	zip_code VARCHAR(12),
+	zip_code MEDIUMINT,
     name VARCHAR(30),
-    CONSTRAINT locality_pk primary key (zip_code, name)
+    CONSTRAINT locality_pk primary key (zip_code, name),
+    CONSTRAINT locality_zip_code_chk CHECK (zip_code > 0)
 );
 
 CREATE TABLE address (
-	locality_zip_code VARCHAR(12),
+	locality_zip_code MEDIUMINT,
     locality_name VARCHAR(30),
     street VARCHAR(50),
     house_number SMALLINT,
     postal_box_number TINYINT,
     CONSTRAINT locality_fk foreign key (locality_zip_code, locality_name) references locality (zip_code, name),
-    CONSTRAINT address_pk primary key (locality_zip_code, locality_name, street, house_number)
+    CONSTRAINT address_pk primary key (locality_zip_code, locality_name, street, house_number),
+    CONSTRAINT address_locality_zip_code_chk CHECK (locality_zip_code > 0),
+    CONSTRAINT house_number_chk CHECK (house_number > 0),
+    CONSTRAINT postal_box_number_chk CHECK (postal_box_number > 0)
 );
 
 CREATE TABLE type (
@@ -45,14 +49,17 @@ CREATE TABLE customer (
     email VARCHAR(100),
     is_subscribed_to_newsletter BOOLEAN NOT NULL,
     vat_number VARCHAR(15),
-    address_locality_zip_code VARCHAR(12) NOT NULL,
+    address_locality_zip_code MEDIUMINT NOT NULL,
     address_locality_name VARCHAR(30) NOT NULL,
     address_street VARCHAR (50) NOT NULL,
     address_house_number SMALLINT NOT NULL,
     type VARCHAR(20) NOT NULL,
     CONSTRAINT customer_pk PRIMARY KEY (id),
     CONSTRAINT customer_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
-    CONSTRAINT customer_type_fk FOREIGN KEY (type) REFERENCES type(name)
+    CONSTRAINT customer_type_fk FOREIGN KEY (type) REFERENCES type(name),
+    CONSTRAINT customer_id_chk CHECK (id >= 0),
+    CONSTRAINT customer_house_number_chk CHECK (address_house_number > 0),
+    CONSTRAINT customer_locality_zip_code_chk CHECK (address_locality_zip_code > 0)
 );
 
 CREATE TABLE loyalty_card (
@@ -61,7 +68,8 @@ CREATE TABLE loyalty_card (
     is_valid BOOLEAN NOT NULL,
     customer MEDIUMINT NOT NULL,
     CONSTRAINT loyalty_card_pk PRIMARY KEY (number),
-    CONSTRAINT loyalty_card_customer_fk FOREIGN KEY (customer) REFERENCES customer(id)
+    CONSTRAINT loyalty_card_customer_fk FOREIGN KEY (customer) REFERENCES customer(id),
+    CONSTRAINT loyalty_cart_number_chk CHECK (number >= 0)
 );
 
 CREATE TABLE employee (
@@ -69,13 +77,17 @@ CREATE TABLE employee (
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     manager_id SMALLINT,
-    address_locality_zip_code VARCHAR(12) NOT NULL,
+    address_locality_zip_code MEDIUMINT NOT NULL,
     address_locality_name VARCHAR(30) NOT NULL,
     address_street VARCHAR (50) NOT NULL,
     address_house_number SMALLINT NOT NULL,
     CONSTRAINT employee_pk PRIMARY KEY (id),
     CONSTRAINT manager_id_fk FOREIGN KEY (manager_id) REFERENCES employee(id),
-	CONSTRAINT employee_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number)
+	CONSTRAINT employee_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
+    CONSTRAINT employee_id_chk CHECK (id >= 0),
+    CONSTRAINT employee_manager_id_chk CHECK (manager_id >= 0),
+    CONSTRAINT employee_house_number_chk CHECK (address_house_number > 0),
+    CONSTRAINT employee_locality_zip_code_chk CHECK (address_locality_zip_code > 0)
 );
 
 CREATE TABLE `function` (
@@ -99,7 +111,10 @@ CREATE TABLE sale (
     employee SMALLINT NOT NULL,
     CONSTRAINT sale_pk PRIMARY KEY (id),
     CONSTRAINT sale_customer_fk FOREIGN KEY (customer) REFERENCES customer(id),
-    CONSTRAINT sale_employee_fk FOREIGN KEY (employee) REFERENCES employee(id)
+    CONSTRAINT sale_employee_fk FOREIGN KEY (employee) REFERENCES employee(id),
+    CONSTRAINT sale_id_chk CHECK (id >= 0),
+    CONSTRAINT sale_customer_chk CHECK (customer >= 0),
+    CONSTRAINT sale_employee_chk CHECK (employee >= 0)
 );
 
 CREATE TABLE category (
@@ -122,7 +137,11 @@ CREATE TABLE product (
     category VARCHAR(30) NOT NULL,
     CONSTRAINT product_pk PRIMARY KEY (id),
     CONSTRAINT product_category_fk FOREIGN KEY (category) REFERENCES category(name),
-    CONSTRAINT vat_percentage_chk CHECK (vat_percentage IN(6, 12, 21))
+    CONSTRAINT product_vat_percentage_chk CHECK (vat_percentage IN(6, 12, 21)),
+    CONSTRAINT product_net_price_chk CHECK (net_price >= 0),
+    CONSTRAINT product_min_quantity_chk CHECK (min_quantity > 0),
+    CONSTRAINT product_promotion_min_quantity_chk CHECK (promotion_min_quantity > 0),
+    CONSTRAINT product_time_before_removing_chk CHECK (time_before_removing > 0)
 );
 
 CREATE TABLE command_line (
@@ -131,7 +150,9 @@ CREATE TABLE command_line (
     quantity SMALLINT NOT NULL,
     CONSTRAINT command_line_pk PRIMARY KEY (sale, product),
     CONSTRAINT command_line_sale_fk FOREIGN KEY (sale) REFERENCES sale(id),
-    CONSTRAINT command_line_product_fk FOREIGN KEY (product) REFERENCES product(id)
+    CONSTRAINT command_line_product_fk FOREIGN KEY (product) REFERENCES product(id),
+    CONSTRAINT command_line_sale_id_chk CHECK (sale >= 0),
+    CONSTRAINT command_line_quantity_chk CHECK (quantity > 0)
 );
 
 CREATE TABLE promotion (
@@ -142,13 +163,17 @@ CREATE TABLE promotion (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     CONSTRAINT promotion_pk PRIMARY KEY (id),
-    CONSTRAINT promotion_product_fk FOREIGN KEY (product) REFERENCES product(id)
+    CONSTRAINT promotion_product_fk FOREIGN KEY (product) REFERENCES product(id),
+    CONSTRAINT promotion_min_quantity_chk CHECK (min_quantity > 0),
+    CONSTRAINT promotion_reduction_percentage_chk CHECK (reduction_percentage > 0),
+    CONSTRAINT promotion_end_date_chk CHECK (end_date >= start_date)
 );
 
 CREATE TABLE shelf (
 	id TINYINT,
     is_refrigirated BOOLEAN NOT NULL,
-    CONSTRAINT shelf_pk PRIMARY KEY (id)
+    CONSTRAINT shelf_pk PRIMARY KEY (id),
+    CONSTRAINT shelf_id_chk CHECK (id >= 0)
 );
 
 CREATE TABLE stock (
@@ -158,15 +183,18 @@ CREATE TABLE stock (
     quantity SMALLINT NOT NULL,
     CONSTRAINT stock_pk PRIMARY KEY (shelf, shelf_level, product),
     CONSTRAINT stock_shelf_fk FOREIGN KEY (shelf) REFERENCES shelf(id),
-    CONSTRAINT stock_product_fk FOREIGN KEY (product) REFERENCES product(id)
+    CONSTRAINT stock_product_fk FOREIGN KEY (product) REFERENCES product(id),
+    CONSTRAINT stock_shelf_id_chk CHECK (shelf >= 0),
+    CONSTRAINT stock_shelf_level_chk CHECK (shelf > 0),
+    CONSTRAINT shelf_quantity_chk CHECK (quantity > 0)
 );
 
 
 -- pour tests création d objets client et produit
 insert into category(name, description)
 values
-    ('fruits', 'c 1 froui'),
-    ('légumes', 'c 1 légum'),
+    ('fruits', 'fruits frais'),
+    ('légumes', 'légumes frais'),
     ('boissons', 'boissons non alcoolisées'),
     ('produits ménagers', 'produits pour l’entretien de la maison');
 
@@ -200,18 +228,18 @@ values
 
 insert into sale(id, customer, date, employee)
 values
-    (101, 1, '2025-05-09', 1),
+    (101, 1, '2024-05-09', 1),
     (102, 1, '2025-05-09', 1),
-    (103, 1, '2025-05-09', 1);
+    (103, 1, '2024-12-01', 1);
 
 INSERT INTO product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, min_quantity, promotion_min_quantity, sale_date, time_before_removing, category)
 VALUES
-    ('P001', 'Pomme', 1.20, 6, 10, TRUE, 1, 3, '2025-05-01', 10, 'fruits'),
-    ('P002', 'Banane', 0.90, 6, 8, TRUE, 1, 2, '2025-05-02', 7, 'fruits'),
-    ('P003', 'Carotte', 0.60, 6, 5, TRUE, 1, 2, '2025-05-03', 12, 'légumes'),
-    ('P004', 'Tomate', 1.10, 6, 6, TRUE, 1, 2, '2025-05-04', 8, 'légumes'),
+    ('P001', 'Pomme', 1.20, 6, 10, TRUE, 1, 3, '2025-05-29', 10, 'fruits'),
+    ('P002', 'Banane', 0.90, 6, 8, TRUE, 1, 2, '2025-07-02', 7, 'fruits'),
+    ('P003', 'Carotte', 0.60, 6, 5, TRUE, 1, 2, '2025-08-03', 12, 'légumes'),
+    ('P004', 'Tomate', 1.10, 6, 6, TRUE, 1, 2, '2024-05-04', 8, 'légumes'),
     ('P005', 'Poire', 1.30, 6, 9, TRUE, 1, 3, '2025-05-05', 9, 'fruits'),
-    ('P006', 'Jus d\'orange', 2.50, 12, 12, TRUE, 1, 2, '2025-05-05', 10, 'boissons'),
+    ('P006', 'Jus d\'orange', 2.50, 12, 12, TRUE, 1, 2, '2025-02-20', 10, 'boissons'),
     ('P007', 'Nettoyant multi-surfaces', 3.75, 21, 15, FALSE, 1, 2, '2025-05-06', 30, 'produits ménagers');
 
 -- Sale 101
@@ -235,10 +263,14 @@ VALUES
 INSERT INTO stock (shelf, shelf_level, product, quantity)
 VALUES
     (1, 1, 'P001', 50),
+    (1, 3, 'P001', 50),
     (1, 2, 'P002', 40),
+    (1, 3, 'P002', 40),
     (1, 3, 'P005', 30),
     (2, 1, 'P003', 60),
-    (2, 2, 'P004', 55);
+    (2, 2, 'P004', 55),
+    (1, 2, 'P006', 45),
+    (1, 1, 'P007', 25);
 
 INSERT INTO promotion (id, min_quantity, reduction_percentage, product, start_date, end_date)
 VALUES

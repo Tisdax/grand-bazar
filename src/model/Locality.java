@@ -1,14 +1,20 @@
 package model;
 
 public class Locality {
-    private String zipCode, name;
+    private Integer zipCode;
+    private String name;
 
-    public Locality(String zip_code, String name) {
-        this.zipCode = zip_code;
+    public Locality(Integer zipCode, String name) {
+        setZipCode(zipCode);
         this.name = name;
     }
 
-    public String getZipCode() {
+    public void setZipCode(Integer zipCode) {
+        if (zipCode > 0)
+            this.zipCode = zipCode;
+    }
+
+    public Integer getZipCode() {
         return zipCode;
     }
 
