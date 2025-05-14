@@ -23,23 +23,23 @@ public class ProductForm extends JPanel {
     private ApplicationController controller;
     public ProductForm() throws DBAccesException {
         controller = new ApplicationController();
+
         this.setLayout(new BorderLayout());
         titlePanel = new JPanel();
+        formPanel = new JPanel(new GridLayout(11, 2, 5, 10));
+        buttonPanel = new JPanel();
         this.add(titlePanel, BorderLayout.NORTH);
+        this.add(formPanel, BorderLayout.CENTER);
+        this.add(buttonPanel, BorderLayout.SOUTH);
 
         titleLabel = new JLabel("Formulaire de Produit");
         Font font = new Font("Arial", Font.BOLD, 20);
         titleLabel.setFont(font);
         titlePanel.add(titleLabel);
 
-        formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(11, 2, 5, 10));
-        this.add(formPanel, BorderLayout.CENTER);
 
         UIManager.put("Spinner.editorAlignment", JTextField.LEFT);
 
-        buttonPanel = new JPanel();
-        this.add(buttonPanel, BorderLayout.SOUTH);
 
         idLabel = new JLabel("Identifiant : ", SwingConstants.RIGHT);
         idField = new JTextField(15);

@@ -6,8 +6,18 @@ import java.awt.*;
 public class WelcomePanel extends JPanel {
     private GroceryBag groceryBag;
     private Vegetable vegetable;
+    private JPanel titlePanel;
+    private JLabel titleLabel;
 
     public WelcomePanel() {
+        titlePanel = new JPanel();
+        this.add(titlePanel, BorderLayout.NORTH);
+
+        titleLabel = new JLabel("Bienvenue sur l'application du Grand Bazar");
+        Font font = new Font("Arial", Font.BOLD, 30);
+        titleLabel.setFont(font);
+        titlePanel.add(titleLabel);
+
         this.groceryBag = new GroceryBag();
         this.vegetable = new Vegetable(550, 100, 60, 60, Color.RED, groceryBag);
         AnimationThread animationThread = new AnimationThread(this);

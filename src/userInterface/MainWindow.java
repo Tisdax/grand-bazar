@@ -24,11 +24,10 @@ public class MainWindow extends JFrame {
             }
         } );
 
-        this.setJMenuBar(MenuBar.CreateJMenuBar());
+        setJMenuBar(MenuBar.CreateJMenuBar(this));
 
-        this.productForm = new ProductForm();
-        this.add(productForm);
-        this.welcomePanel = new WelcomePanel();
+        welcomePanel = new WelcomePanel();
+        add(welcomePanel);
 
         setVisible(true);
     }
