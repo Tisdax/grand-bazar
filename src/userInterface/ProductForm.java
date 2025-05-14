@@ -19,7 +19,7 @@ public class ProductForm extends JPanel {
     private JComboBox vatComboBox, categoryComboBox;
     private JCheckBox isEdibleCheckBox;
     private JSpinner saleDateSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner;
-    private JButton addButton, fillButton;
+    private JButton addButton, fillButton, updateButton;
     private ApplicationController controller;
     public ProductForm() throws DBAccesException {
         controller = new ApplicationController();
@@ -101,13 +101,23 @@ public class ProductForm extends JPanel {
 
         addButton = new JButton("Ajouter Produit");
         buttonPanel.add(addButton);
+        updateButton = new JButton("Modifier Produit");
         addButton.addActionListener(e -> {
             try {
-                addProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
-                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox);
+                controller.addProduct(tansformProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
+                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox));
                 JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
             } catch (DBAccesException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de l'ajout", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        updateButton.addActionListener(e -> {
+            try {
+                controller.updateProduct(tansformProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
+                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox));
+            } catch (DBAccesException ex){
+                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes lors de la mise à jour", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -120,7 +130,7 @@ public class ProductForm extends JPanel {
 
     }
 
-    public void addProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
+    public Product tansformProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
         String id = idField.getText();
         String name = nameField.getText();
         Double netPrice = Double.valueOf(netPriceField.getText());
@@ -132,10 +142,12 @@ public class ProductForm extends JPanel {
         Boolean isEdible = isEdibleCheckBox.isSelected();
         LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String category = ((ProductCategory) categoryComboBox.getSelectedItem()).getName();
-        controller.addProduct(new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category));
+        return new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category);
     }
     private void fillProductForm(Product product){
+        updateButton();
         idField.setText(product.getId());
+        idField.setEnabled(false);
         nameField.setText(product.getName());
         netPriceField.setText(String.valueOf(product.getNetPrice()));
         loyaltyPointsSpinner.setValue(product.getLoyaltyPointsNb());
@@ -152,6 +164,12 @@ public class ProductForm extends JPanel {
                 return;
             }
         }
+    }
 
+    public void updateButton(){
+        buttonPanel.removeAll();
+        buttonPanel.add(updateButton);
+        revalidate();
+        repaint();
     }
 }
