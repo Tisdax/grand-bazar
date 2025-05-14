@@ -3,10 +3,13 @@ package DAO;
 import DAOinterfaces.SaleDAO;
 import DAOinterfaces.StockDAO;
 import exceptions.DBAccesException;
+import model.Product;
+import model.Stock;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class StockDBAccess implements StockDAO {
     public int deleteStock(String productId) throws DBAccesException {

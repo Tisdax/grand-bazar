@@ -20,7 +20,7 @@ public class LocalityDBAccess implements LocalityDAO {
             ArrayList<Locality> localities = new ArrayList<>();
 
             while(data.next()) {
-                localities.add(new Locality(data.getString("zip_code"), data.getString("name")));
+                localities.add(new Locality(data.getInt("zip_code"), data.getString("name")));
             }
             return localities;
         }

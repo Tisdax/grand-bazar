@@ -1,26 +1,38 @@
 package model;
 
 public class Address {
-    private String street, localityZipCode, localityName;
-    private Integer houseNumber, postal_box_number;
+    private String street, localityName;
+    private Integer localityZipCode, houseNumber, postal_box_number;
 
-    public Address(String street, String localityZipCode, String localityName, Integer houseNumber, Integer postal_box_number) {
+    public Address(String street, Integer localityZipCode, String localityName, Integer houseNumber, Integer postal_box_number) {
         this.street = street;
-        this.localityZipCode = localityZipCode;
+        setLocalityZipCode(localityZipCode);
         this.localityName = localityName;
-        this.houseNumber = houseNumber;
+        setHouseNumber(houseNumber);
+        setPostal_box_number(postal_box_number);
+    }
+
+    public Address(String street, Integer localityZipCode, String localityName, Integer houseNumber) {
+        this(street, localityZipCode, localityName, houseNumber, null);
+    }
+
+    public void setLocalityZipCode(Integer localityZipCode) {
+        this.localityZipCode = localityZipCode;
+    }
+
+    public void setPostal_box_number(Integer postal_box_number) {
         this.postal_box_number = postal_box_number;
     }
 
-    public Address(String street, String localityZipCode, String localityName, Integer houseNumber) {
-        this(street, localityZipCode, localityName, houseNumber, null);
+    public void setHouseNumber(Integer houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
     public String getStreet() {
         return street;
     }
 
-    public String getLocalityZipCode() {
+    public Integer getLocalityZipCode() {
         return localityZipCode;
     }
 

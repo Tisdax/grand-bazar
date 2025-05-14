@@ -18,4 +18,20 @@ public class Employee {
     public Employee(Integer id, String lastName, String firstName, String addressStreet, String localityZipCode, String localityName, Integer houseNumber) {
         this(id, lastName, firstName, null, addressStreet, localityZipCode, localityName, houseNumber);
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
+    }
+
+    public void setHouseNumber(Integer houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public void setLocalityZipCode(String localityZipCode) {
+        this.localityZipCode = localityZipCode;
+    }
 }

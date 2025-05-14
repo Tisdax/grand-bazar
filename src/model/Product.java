@@ -15,6 +15,7 @@ public class Product {
         setNetPrice(netPrice);
         this.vatPercentage = vatPercentage;
         this.loyaltyPointsNb = loyaltyPointsNb;
+        setMinQuantity(minQuantity);
         this.minQuantity = minQuantity;
         this.promotionMinQuantity = promotionMinQuantity;
         this.timeBeforeRemoving = timeBeforeRemoving;
@@ -28,18 +29,18 @@ public class Product {
     }
 
     public void setNetPrice(Double netPrice) {
-        if (netPrice < 0)
-            this.netPrice = (double)0;
-        else
+        if (netPrice >= 0)
             this.netPrice = netPrice;
     }
 
     public void setMinQuantity(Integer minQuantity) {
-        this.minQuantity = minQuantity;
+        if (minQuantity > 0)
+            this.minQuantity = minQuantity;
     }
 
     public void setPromotionMinQuantity(Integer promotionMinQuantity) {
-        this.promotionMinQuantity = promotionMinQuantity;
+        if (promotionMinQuantity > 0)
+            this.promotionMinQuantity = promotionMinQuantity;
     }
 
     public void setTimeBeforeRemoving(Integer timeBeforeRemoving) {
