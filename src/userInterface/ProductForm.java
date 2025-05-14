@@ -103,10 +103,11 @@ public class ProductForm extends JPanel {
         buttonPanel.add(addButton);
         addButton.addActionListener(e -> {
             try {
-                controller.addProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
+                addProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
                         promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox);
+                JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
             } catch (DBAccesException ex) {
-                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -119,6 +120,20 @@ public class ProductForm extends JPanel {
 
     }
 
+    public void addProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
+        String id = idField.getText();
+        String name = nameField.getText();
+        Double netPrice = Double.valueOf(netPriceField.getText());
+        Integer vat = (Integer) vatComboBox.getSelectedItem();
+        Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
+        Integer minQuant = (Integer) minQuantSpinner.getValue();
+        Integer promotionMinQuant = (Integer) promotionQuantSpinner.getValue();
+        Integer timeBeforeRemoving = (Integer) timeBeforeRemovingSpinner.getValue();
+        Boolean isEdible = isEdibleCheckBox.isSelected();
+        LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String category = ((ProductCategory) categoryComboBox.getSelectedItem()).getName();
+        controller.addProduct(new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category));
+    }
     private void fillProductForm(Product product){
         idField.setText(product.getId());
         nameField.setText(product.getName());

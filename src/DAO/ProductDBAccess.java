@@ -26,7 +26,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.executeUpdate();
 
             if (product.getMinQuantity() != null) {
-                sqlInstruction = "update product set min_quantity = ? where isbn = ?";
+                sqlInstruction = "update product set min_quantity = ? where id = ?";
 
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setInt(1, product.getMinQuantity());
@@ -36,7 +36,7 @@ public class ProductDBAccess implements ProductDAO {
             }
 
             if (product.getPromotionMinQuantity() != null) {
-                sqlInstruction = "update product set promotion_min_quantity = ? where isbn = ?";
+                sqlInstruction = "update product set promotion_min_quantity = ? where id = ?";
 
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setInt(1, product.getPromotionMinQuantity());
@@ -46,7 +46,7 @@ public class ProductDBAccess implements ProductDAO {
             }
 
             if (product.getTimeBeforeRemoving() != null) {
-                sqlInstruction = "update product set time_before_removing = ? where isbn = ?";
+                sqlInstruction = "update product set time_before_removing = ? where id = ?";
 
                 preparedStatement = connection.prepareStatement(sqlInstruction);
                 preparedStatement.setInt(1, product.getTimeBeforeRemoving());
