@@ -19,7 +19,7 @@ public class ProductForm extends JPanel {
     private JComboBox vatComboBox, categoryComboBox;
     private JCheckBox isEdibleCheckBox;
     private JSpinner saleDateSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner;
-    private JButton addButton, fillButton, updateButton;
+    private JButton addButton, updateButton;
     private ApplicationController controller;
     public ProductForm() throws DBAccesException {
         controller = new ApplicationController();
@@ -120,14 +120,6 @@ public class ProductForm extends JPanel {
                 JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes lors de la mise à jour", JOptionPane.ERROR_MESSAGE);
             }
         });
-
-        fillButton = new JButton("Remplir produit");
-        buttonPanel.add(fillButton);
-        fillButton.addActionListener(fillButtonEvent -> {
-            fillProductForm(new Product("I5151", "Fanta 2l", 2.75, 21, 150, 30, 60, 15,
-                    true,LocalDate.of(2025, 1, 25), "légumes"));
-        });
-
     }
 
     public Product tansformProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
