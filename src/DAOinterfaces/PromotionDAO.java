@@ -1,7 +1,7 @@
 package DAOinterfaces;
 
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 
 public interface PromotionDAO {
-    public int deletePromotion(String productId) throws DBAccesException;
+    public int deletePromotion(String productId) throws DAOException;
 }

@@ -1,14 +1,14 @@
 package DAO;
 
 import DAOinterfaces.LoyaltyCardDAO;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
-    public int delete(int customerId) throws DBAccesException {
+    public int delete(int customerId) throws DAOException {
         String sqlInstruction = "delete from loyalty_card where customer = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -19,7 +19,7 @@ public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression de la carte de fidélité");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression de la carte de fidélité");
         }
     }
 }

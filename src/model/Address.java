@@ -1,18 +1,18 @@
 package model;
 
 public class Address {
-    private String street, localityName;
-    private Integer localityZipCode, houseNumber, postal_box_number;
+    private String street, localityName, houseNumber;
+    private Integer localityZipCode, postal_box_number;
 
-    public Address(String street, Integer localityZipCode, String localityName, Integer houseNumber, Integer postal_box_number) {
+    public Address(String street, Integer localityZipCode, String localityName, String houseNumber, Integer postal_box_number) {
         this.street = street;
         setLocalityZipCode(localityZipCode);
         this.localityName = localityName;
-        setHouseNumber(houseNumber);
+        this.houseNumber = houseNumber;
         setPostal_box_number(postal_box_number);
     }
 
-    public Address(String street, Integer localityZipCode, String localityName, Integer houseNumber) {
+    public Address(String street, Integer localityZipCode, String localityName, String houseNumber) {
         this(street, localityZipCode, localityName, houseNumber, null);
     }
 
@@ -22,10 +22,6 @@ public class Address {
 
     public void setPostal_box_number(Integer postal_box_number) {
         this.postal_box_number = postal_box_number;
-    }
-
-    public void setHouseNumber(Integer houseNumber) {
-        this.houseNumber = houseNumber;
     }
 
     public String getStreet() {
@@ -40,7 +36,7 @@ public class Address {
         return localityName;
     }
 
-    public Integer getHouseNumber() {
+    public String getHouseNumber() {
         return houseNumber;
     }
 

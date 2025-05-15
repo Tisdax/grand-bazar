@@ -10,8 +10,7 @@ public class Locality {
     }
 
     public void setZipCode(Integer zipCode) {
-        if (zipCode > 0)
-            this.zipCode = zipCode;
+        this.zipCode = zipCode;
     }
 
     public Integer getZipCode() {
