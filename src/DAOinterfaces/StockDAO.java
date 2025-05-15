@@ -1,10 +1,7 @@
 package DAOinterfaces;
 
-import exceptions.DBAccesException;
-import model.Stock;
-
-import java.util.ArrayList;
+import exceptions.DAOException;
 
 public interface StockDAO {
-    public int deleteStock(String productId) throws DBAccesException;
+    public int deleteStock(String productId) throws DAOException;
 }

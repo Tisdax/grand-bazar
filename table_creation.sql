@@ -25,12 +25,11 @@ CREATE TABLE address (
 	locality_zip_code MEDIUMINT,
     locality_name VARCHAR(30),
     street VARCHAR(50),
-    house_number SMALLINT,
+    house_number VARCHAR(4),
     postal_box_number TINYINT,
     CONSTRAINT locality_fk foreign key (locality_zip_code, locality_name) references locality (zip_code, name),
     CONSTRAINT address_pk primary key (locality_zip_code, locality_name, street, house_number),
     CONSTRAINT address_locality_zip_code_chk CHECK (locality_zip_code > 0),
-    CONSTRAINT house_number_chk CHECK (house_number > 0),
     CONSTRAINT postal_box_number_chk CHECK (postal_box_number > 0)
 );
 
@@ -52,13 +51,12 @@ CREATE TABLE customer (
     address_locality_zip_code MEDIUMINT NOT NULL,
     address_locality_name VARCHAR(30) NOT NULL,
     address_street VARCHAR (50) NOT NULL,
-    address_house_number SMALLINT NOT NULL,
+    address_house_number VARCHAR(4) NOT NULL,
     type VARCHAR(20) NOT NULL,
     CONSTRAINT customer_pk PRIMARY KEY (id),
     CONSTRAINT customer_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
     CONSTRAINT customer_type_fk FOREIGN KEY (type) REFERENCES type(name),
     CONSTRAINT customer_id_chk CHECK (id >= 0),
-    CONSTRAINT customer_house_number_chk CHECK (address_house_number > 0),
     CONSTRAINT customer_locality_zip_code_chk CHECK (address_locality_zip_code > 0)
 );
 
@@ -68,7 +66,7 @@ CREATE TABLE loyalty_card (
     is_valid BOOLEAN NOT NULL,
     customer MEDIUMINT NOT NULL,
     CONSTRAINT loyalty_card_pk PRIMARY KEY (number),
-    CONSTRAINT loyalty_card_customer_fk FOREIGN KEY (customer) REFERENCES customer(id),
+    CONSTRAINT loyalty_card_customer_fk FOREIGN KEY (customer) REFERENCES customer(id) ON DELETE CASCADE,
     CONSTRAINT loyalty_cart_number_chk CHECK (number >= 0)
 );
 
@@ -80,13 +78,12 @@ CREATE TABLE employee (
     address_locality_zip_code MEDIUMINT NOT NULL,
     address_locality_name VARCHAR(30) NOT NULL,
     address_street VARCHAR (50) NOT NULL,
-    address_house_number SMALLINT NOT NULL,
+    address_house_number VARCHAR(4) NOT NULL,
     CONSTRAINT employee_pk PRIMARY KEY (id),
     CONSTRAINT manager_id_fk FOREIGN KEY (manager_id) REFERENCES employee(id),
 	CONSTRAINT employee_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
     CONSTRAINT employee_id_chk CHECK (id >= 0),
     CONSTRAINT employee_manager_id_chk CHECK (manager_id >= 0),
-    CONSTRAINT employee_house_number_chk CHECK (address_house_number > 0),
     CONSTRAINT employee_locality_zip_code_chk CHECK (address_locality_zip_code > 0)
 );
 
@@ -210,21 +207,22 @@ values
 
 insert into address(locality_zip_code, locality_name, street, house_number)
 values
-    ('1340', 'Ottignies', 'Rue du ruisseau', 24),
-    ('5030', 'Gembloux', 'Rue du chêne', 7);
+    ('1340', 'Ottignies', 'Rue du ruisseau', '24'),
+    ('5030', 'Gembloux', 'Rue du chêne', '7');
 
 insert into customer(id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type)
 values
-    (1, 'Locht', 'Julien', '2005-10-04', FALSE, '1340', 'Ottignies', 'Rue du ruisseau', 24, 'particulier');
+    (1, 'Locht', 'Julien', '2005-10-04', FALSE, '1340', 'Ottignies', 'Rue du ruisseau', '24', 'particulier'),
+    (2, 'Carton de Tournai', 'Martin', '2005-10-04', TRUE, '1340', 'Ottignies', 'Rue du ruisseau', '24', 'professionnel');
 
 insert into loyalty_card(number, total_points, is_valid, customer)
 values
     (5342632, 500, true, 1),
-    (4562278, 875, true, 1);
+    (4562278, 875, true, 2);
 
 insert into employee(id, last_name, first_name, address_locality_zip_code, address_locality_name, address_street, address_house_number)
 values
-    (1, 'Van der Cuylen', 'Mathias', '5030', 'Gembloux', 'Rue du chêne', 7);
+    (1, 'Van der Cuylen', 'Mathias', '5030', 'Gembloux', 'Rue du chêne', '7');
 
 insert into sale(id, customer, date, employee)
 values

@@ -1,7 +1,7 @@
 package DAOinterfaces;
 
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 
 public interface DAO {
-    public void closeConnection() throws DBAccesException;
+    public void closeConnection() throws DAOException;
 }

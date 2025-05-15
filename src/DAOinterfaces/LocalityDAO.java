@@ -1,10 +1,10 @@
 package DAOinterfaces;
 
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.Locality;
 
 import java.util.ArrayList;
 
 public interface LocalityDAO {
-    public ArrayList<Locality> localitiesList() throws DBAccesException;
+    public ArrayList<Locality> localitiesList() throws DAOException;
 }
