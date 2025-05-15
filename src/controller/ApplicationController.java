@@ -25,19 +25,8 @@ public class ApplicationController {
         return categoryManager.getAllCategory();
     }
 
-    public void addProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
-        String id = idField.getText();
-        String name = nameField.getText();
-        Double netPrice = Double.valueOf(netPriceField.getText());
-        Integer vat = (Integer) vatComboBox.getSelectedItem();
-        Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
-        Integer minQuant = (Integer) minQuantSpinner.getValue();
-        Integer promotionMinQuant = (Integer) promotionQuantSpinner.getValue();
-        Integer timeBeforeRemoving = (Integer) timeBeforeRemovingSpinner.getValue();
-        Boolean isEdible = isEdibleCheckBox.isSelected();
-        LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        String category = ((ProductCategory) categoryComboBox.getSelectedItem()).getName();
-        productManager.addProduct(new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category));
+    public void addProduct(Product product) throws DBAccesException {
+        productManager.addProduct(product);
     }
 
     public int deletProduct(String productId) throws DBAccesException {
