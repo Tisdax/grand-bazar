@@ -3,7 +3,7 @@ package businessLogic;
 
 import DAO.AddressDBAccess;
 import DAOinterfaces.AddressDAO;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.Address;
 
 public class AddressManager {
@@ -13,11 +13,11 @@ public class AddressManager {
         dao = new AddressDBAccess();
     }
 
-    public void addAddress(Address address) throws DBAccesException {
+    public void addAddress(Address address) throws DAOException {
         dao.addAddress(address);
     }
 
-    public boolean exist(Address address) throws DBAccesException {
+    public boolean exist(Address address) throws DAOException {
         return dao.exists(address);
     }
 }

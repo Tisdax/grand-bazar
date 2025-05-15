@@ -1,12 +1,11 @@
 package userInterface;
 
-import exceptions.DBAccesException;
-import model.Product;
+import exceptions.DAOException;
 
 import javax.swing.*;
 
 public class MenuBar {
-    public static JMenuBar CreateJMenuBar(JFrame frame) throws DBAccesException{
+    public static JMenuBar CreateJMenuBar(JFrame frame) throws DAOException {
         JMenuBar menu = new JMenuBar();
         CustomerForm customerForm = new CustomerForm();
         ProductForm productForm = new ProductForm();

@@ -1,9 +1,8 @@
 package userInterface;
 
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -12,7 +11,7 @@ public class MainWindow extends JFrame {
     private WelcomePanel welcomePanel;
     private ProductForm productForm;
 
-    public MainWindow() throws DBAccesException {
+    public MainWindow() throws DAOException {
         super("Accueil");
         setBounds(0,0,1280,720);
         setLocationRelativeTo(null);
@@ -32,7 +31,7 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) throws DBAccesException {
+    public static void main(String[] args) throws DAOException {
         MainWindow mainWindow = new MainWindow();
     }
 }

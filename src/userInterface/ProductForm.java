@@ -1,7 +1,7 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.Product;
 import model.ProductCategory;
 
@@ -21,7 +21,7 @@ public class ProductForm extends JPanel {
     private JSpinner saleDateSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner;
     private JButton addButton, updateButton;
     private ApplicationController controller;
-    public ProductForm() throws DBAccesException {
+    public ProductForm() throws DAOException {
         controller = new ApplicationController();
 
         this.setLayout(new BorderLayout());
@@ -107,7 +107,7 @@ public class ProductForm extends JPanel {
                 controller.addProduct(tansformProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
                         promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox));
                 JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
-            } catch (DBAccesException ex) {
+            } catch (DAOException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de l'ajout", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -116,13 +116,13 @@ public class ProductForm extends JPanel {
             try {
                 controller.updateProduct(tansformProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
                         promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox));
-            } catch (DBAccesException ex){
+            } catch (DAOException ex){
                 JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes lors de la mise à jour", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
 
-    public Product tansformProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DBAccesException {
+    public Product tansformProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DAOException {
         String id = idField.getText();
         String name = nameField.getText();
         Double netPrice = Double.valueOf(netPriceField.getText());

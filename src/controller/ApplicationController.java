@@ -4,15 +4,10 @@ import businessLogic.AddressManager;
 import businessLogic.CategoryManager;
 import businessLogic.CustomerManager;
 import businessLogic.ProductManager;
-import com.mysql.cj.xdevapi.AddResult;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.*;
 
-import java.time.*;
 import java.util.ArrayList;
-
-import javax.swing.*;
-import java.util.Date;
 
 public class ApplicationController {
     private CategoryManager categoryManager;
@@ -27,47 +22,47 @@ public class ApplicationController {
         customerManager = new CustomerManager();
     }
 
-    public ArrayList<ProductCategory> getAllCategory() throws DBAccesException {
+    public ArrayList<ProductCategory> getAllCategory() throws DAOException {
         return categoryManager.getAllCategory();
     }
 
-    public void addProduct(Product product) throws DBAccesException {
+    public void addProduct(Product product) throws DAOException {
         productManager.addProduct(product);
     }
 
-    public int deletProduct(String productId) throws DBAccesException {
+    public int deletProduct(String productId) throws DAOException {
         return productManager.deleteProduct(productId);
     }
 
-    public void updateProduct(Product product) throws DBAccesException {
+    public void updateProduct(Product product) throws DAOException {
         productManager.updateProduct(product);
     }
 
-    public ArrayList<Product> productList() throws DBAccesException {
+    public ArrayList<Product> productList() throws DAOException {
         return productManager.productList();
     }
 
-    public void addAddress(Address address) throws DBAccesException {
+    public void addAddress(Address address) throws DAOException {
         addressManager.addAddress(address);
     }
 
-    public boolean exists(Address address) throws DBAccesException{
+    public boolean exists(Address address) throws DAOException {
         return addressManager.exist(address);
     }
 
-    public void addCustomer(Customer customer) throws DBAccesException {
+    public void addCustomer(Customer customer) throws DAOException {
         customerManager.addCustomer(customer);
     }
 
-    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DBAccesException{
+    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException {
         return customerManager.deleteCustomer(customerId, deleteMode);
     }
 
-    public void updateCustomer(Customer customer) throws DBAccesException{
+    public void updateCustomer(Customer customer) throws DAOException {
         customerManager.updateCustomer(customer);
     }
 
-    public ArrayList<Customer> customerList() throws  DBAccesException {
+    public ArrayList<Customer> customerList() throws DAOException {
         return customerManager.customerList();
     }
 }
