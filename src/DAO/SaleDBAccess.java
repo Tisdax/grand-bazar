@@ -1,18 +1,17 @@
 package DAO;
 
 import DAOinterfaces.SaleDAO;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.Sale;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SaleDBAccess implements SaleDAO {
-    public int deleteSale(int customerId) throws DBAccesException {
+    public int deleteSale(int customerId) throws DAOException {
         String sqlInstruction = "delete from sale where customer = ?";
         try {
             int nbUpdatedLines = 0;
@@ -32,11 +31,11 @@ public class SaleDBAccess implements SaleDAO {
             return nbUpdatedLines;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression d'une vente");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une vente");
         }
     }
 
-    public ArrayList<Sale> getSales(int customerId) throws DBAccesException {
+    public ArrayList<Sale> getSales(int customerId) throws DAOException {
         String sqlInstruction = "select * from sale where customer = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -53,11 +52,11 @@ public class SaleDBAccess implements SaleDAO {
             return sales;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la recherche d'une vente");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'une vente");
         }
     }
 
-    public int removeCustomerFromSales(int customerId) throws DBAccesException {
+    public int removeCustomerFromSales(int customerId) throws DAOException {
         String sqlInstruction = "update sale set customer = null where customer = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -68,7 +67,7 @@ public class SaleDBAccess implements SaleDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression d'un client de la table vente");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'un client de la table vente");
         }
     }
 }

@@ -1,7 +1,7 @@
 package DAOinterfaces;
 
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 
 public interface LoyaltyCardDAO {
-    public int delete(int loyaltyCardId) throws DBAccesException;
+    public int delete(int loyaltyCardId) throws DAOException;
 }

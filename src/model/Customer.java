@@ -3,19 +3,19 @@ package model;
 import java.time.LocalDate;
 
 public class Customer {
-    private String phone, email, vatNumber, typeName, lastName, firstName, addressStreet, localityName;
+    private String phone, email, vatNumber, typeName, lastName, firstName, addressStreet, localityName, houseNumber;
     private LocalDate birthdate;
     private Boolean isSubscribedToNewsLetter;
-    private Integer id, houseNumber, localityZipCode;
+    private Integer id, localityZipCode;
 
-    public Customer(Integer id, String lastName, String firstName, String addressStreet, Integer localityZipCode, String localityName, Integer houseNumber, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber, LocalDate birthdate, String typeName) {
+    public Customer(Integer id, String lastName, String firstName, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber, LocalDate birthdate, String typeName) {
         setId(id);
         this.lastName = lastName;
         this.firstName = firstName;
         this.addressStreet = addressStreet;
         setLocalityZipCode(localityZipCode);
         this.localityName = localityName;
-        setHouseNumber(houseNumber);
+        this.houseNumber = houseNumber;
         this.phone = phone;
         this.email = email;
         this.isSubscribedToNewsLetter = isSubscribedToNewsLetter;
@@ -24,18 +24,13 @@ public class Customer {
         this.typeName = typeName;
     }
 
-    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, Boolean isSubscribedToNewsLetter, String addressStreet, Integer localityZipCode, String localityName, Integer houseNumber, String typeName) {
+    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, Boolean isSubscribedToNewsLetter, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String typeName) {
         this(id, lastName, firstName, addressStreet, localityZipCode, localityName, houseNumber, null, null, isSubscribedToNewsLetter, null, birthdate, typeName);
     }
 
     public void setId(Integer id) {
         if (id >= 0)
             this.id = id;
-    }
-
-    public void setHouseNumber(Integer houseNumber) {
-        if (houseNumber > 0)
-            this.houseNumber = houseNumber;
     }
 
     public void setPhone(String phone) {
@@ -103,7 +98,7 @@ public class Customer {
         return id;
     }
 
-    public Integer getHouseNumber() {
+    public String getHouseNumber() {
         return houseNumber;
     }
 }

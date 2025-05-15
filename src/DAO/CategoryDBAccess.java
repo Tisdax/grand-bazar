@@ -1,7 +1,7 @@
 package DAO;
 
 import DAOinterfaces.CategoryDAO;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.ProductCategory;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CategoryDBAccess implements CategoryDAO {
-    public ArrayList<ProductCategory> categoriesList() throws DBAccesException {
+    public ArrayList<ProductCategory> categoriesList() throws DAOException {
         String sqlInstruction = "select * from category";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -26,7 +26,7 @@ public class CategoryDBAccess implements CategoryDAO {
             return categories;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la lecture des catégories dans la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la lecture des catégories dans la base de données");
         }
     }
 }

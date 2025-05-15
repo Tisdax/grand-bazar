@@ -1,15 +1,16 @@
 package DAO;
 
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import DAOinterfaces.CustomerDAO;
 import model.Customer;
+import model.CustomerAddressInfo;
 import model.CustomerDeletionMode;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerDBAccess implements CustomerDAO {
-    public void addCustomer(Customer customer) throws DBAccesException {
+    public void addCustomer(Customer customer) throws DAOException {
         String sqlInstruction = "insert into customer (id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -23,7 +24,7 @@ public class CustomerDBAccess implements CustomerDAO {
             preparedStatement.setInt(6, customer.getLocalityZipCode());
             preparedStatement.setString(7, customer.getLocalityName());
             preparedStatement.setString(8, customer.getAddressStreet());
-            preparedStatement.setInt(9, customer.getHouseNumber());
+            preparedStatement.setString(9, customer.getHouseNumber());
             preparedStatement.setString(10, customer.getTypeName());
 
             preparedStatement.executeUpdate();
@@ -59,11 +60,11 @@ public class CustomerDBAccess implements CustomerDAO {
             }
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de l'ajout du client");
+            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout du client");
         }
     }
 
-    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws  DBAccesException {
+    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException {
         String sqlInstruction = "delete from customer where id = ?";
         try {
             int nbUpdatedLines = 0;
@@ -84,11 +85,11 @@ public class CustomerDBAccess implements CustomerDAO {
             return nbUpdatedLines;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la suppression du client");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression du client");
         }
     }
 
-    public void updateCustomer(Customer customer) throws DBAccesException {
+    public void updateCustomer(Customer customer) throws DAOException {
         String sqlInstruction = "update customer set last_name = ?, first_name = ?, birthdate = ?, phone = ?, email = ?, is_subscribed_to_newsletter = ?, vat_number = ?, address_locality_zip_code = ?, address_locality_name = ?, address_street = ?, address_house_number = ?, type = ? where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -119,17 +120,17 @@ public class CustomerDBAccess implements CustomerDAO {
             preparedStatement.setInt(8, customer.getLocalityZipCode());
             preparedStatement.setString(9, customer.getLocalityName());
             preparedStatement.setString(10, customer.getAddressStreet());
-            preparedStatement.setInt(11, customer.getHouseNumber());
+            preparedStatement.setString(11, customer.getHouseNumber());
             preparedStatement.setString(12, customer.getTypeName());
 
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la modification du client");
+            throw new DAOException(e.getMessage(), "Erreur lors de la modification du client");
         }
     }
 
-    public ArrayList<Customer> customerList() throws  DBAccesException {
+    public ArrayList<Customer> customerList() throws DAOException {
         String sqlInstruction = "select * from customer";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -140,7 +141,7 @@ public class CustomerDBAccess implements CustomerDAO {
             String phone, email, vatNumber;
 
             while (data.next()) {
-                customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"), data.getString("address_locality_zip_code"), data.getInt("address_locality_name"), data.getString("address_street"), data.getInt("address_house_number"), data.getString("type"));
+                customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"), data.getString("address_locality_zip_code"), data.getInt("address_locality_name"), data.getString("address_street"), data.getString("address_house_number"), data.getString("type"));
 
                 phone = data.getString("phone");
                 if (!data.wasNull())
@@ -159,7 +160,37 @@ public class CustomerDBAccess implements CustomerDAO {
             return customers;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la lecture des clients dans la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la lecture des clients dans la base de données");
+        }
+    }
+
+    public ArrayList<CustomerAddressInfo> CustomerAddressSearch(int nbPointsMin, int nbPointsMax) throws DAOException {
+        String sqlInstruction = "select c.last_name as 'customer_last_name', c.first_name as 'customer_first_name', a.street, a.house_number, a.postal_box_number, l.zip_code, l.name as 'locality_name' from customer c inner join address a on c.address_locality_zip_code = a.locality_zip_code and c.address_locality_name = a.locality_name and c.address_street = a.street and c.address_house_number = a.house_number inner join locality l on a.locality_zip_code = l.zip_code and a.locality_name = l.name inner join loyalty_card lc on lc.customer = c.id where lc.total_points between ? and ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setInt(1, nbPointsMin);
+            preparedStatement.setInt(2, nbPointsMax);
+
+            ResultSet data = preparedStatement.executeQuery();
+            ArrayList<CustomerAddressInfo> customersAddressInfos = new ArrayList<>();
+            CustomerAddressInfo customerAddressInfo;
+            int postalBoxNumber;
+
+            while (data.next()) {
+                customerAddressInfo = new CustomerAddressInfo(data.getString("customer_last_name"), data.getString("customer_first_name"), data.getString("street"), data.getString("locality_name"), data.getInt("house_number"), data.getInt("zip_code"));
+
+                postalBoxNumber = data.getInt("postal_box_number");
+                if (!data.wasNull())
+                    customerAddressInfo.setPostalBoxNumber(postalBoxNumber);
+
+                customersAddressInfos.add(customerAddressInfo);
+            }
+            return customersAddressInfos;
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche de clients sur base d'un nombre de points de fidélité");
         }
     }
 }

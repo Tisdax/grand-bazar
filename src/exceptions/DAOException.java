@@ -1,9 +1,9 @@
 package exceptions;
 
-public class DBAccesException extends Exception {
+public class DAOException extends Exception {
     private String description;
 
-    public DBAccesException (String message, String description) {
+    public DAOException(String message, String description) {
         super(message);
         this.description = description;
     }

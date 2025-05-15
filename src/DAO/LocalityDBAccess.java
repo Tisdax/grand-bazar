@@ -1,7 +1,7 @@
 package DAO;
 
 import DAOinterfaces.LocalityDAO;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.Locality;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LocalityDBAccess implements LocalityDAO {
-    public ArrayList<Locality> localitiesList() throws DBAccesException {
+    public ArrayList<Locality> localitiesList() throws DAOException {
         String sqlInstruction = "select * from locality";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -25,7 +25,7 @@ public class LocalityDBAccess implements LocalityDAO {
             return localities;
         }
         catch (SQLException e) {
-            throw new DBAccesException(e.getMessage(), "Erreur lors de la lecture des localités dans la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la lecture des localités dans la base de données");
         }
     }
 }

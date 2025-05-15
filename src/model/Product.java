@@ -34,7 +34,6 @@ public class Product {
     }
 
     public void setMinQuantity(Integer minQuantity) {
-        if (minQuantity > 0)
             this.minQuantity = minQuantity;
     }
 
