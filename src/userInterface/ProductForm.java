@@ -157,13 +157,14 @@ public class ProductForm extends JPanel {
         isEdibleCheckBox.setSelected(product.getEdible());
         saleDateSpinner.setValue(Date.from(product.getSaleDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         vatComboBox.setSelectedItem(product.getVatPercentage());
-        for (int i = 0; i < categoryComboBox.getItemCount(); i++) {
-            Object item = categoryComboBox.getItemAt(i);
-            if (item instanceof ProductCategory p && p.getName().equals(product.getCategoryName())) {
-                categoryComboBox.setSelectedItem(item);
-                return;
-            }
+
+        int i = 1;
+        Object item = categoryComboBox.getItemAt(0);
+        while (i < categoryComboBox.getItemCount() && item instanceof ProductCategory p && !p.getName().equals(product.getCategoryName())) {
+            item = categoryComboBox.getItemAt(i);
+            i++;
         }
+        categoryComboBox.setSelectedItem(item);
     }
 
     public void updateButton(){

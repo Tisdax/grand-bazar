@@ -10,12 +10,12 @@ import java.awt.*;
 
 public class CustomerForm extends JPanel {
     private JPanel titlePanel, formPanel, buttonPanel;
-    private JLabel titleLabel, idLabel, LastNameLabel, firstName, adresseStreetLabel, localityZipCodeLabel, localityNameLabel,
+    private JLabel titleLabel, idLabel, lastNameLabel, firstNameLabel, adresseStreetLabel, loclalityLabel,
             houseNumberLabel, phoneLabel, emailLabel, isSubscrideLabel, vatNumberLabel, birthdayLabel, typeLabel;
-    private JTextField idLabelField, lastNameField, firstNameField, adresseStreetField, localidtyZipCodeField, localityNameField, houseNumberField, emailField, vatNumberField;
+    private JTextField idField, lastNameField, firstNameField, adresseStreetField, houseNumberField, emailField, vatNumberField;
     private JSpinner phoneNumberSpinner, birthdaySpinner;
     private JCheckBox isSubscrideCheckbox;
-    private JComboBox typeComboBox;
+    private JComboBox localityComboBox, typeComboBox;
     private JButton addButton, updateButton;
     private ApplicationController controller;
 
@@ -35,33 +35,57 @@ public class CustomerForm extends JPanel {
         titleLabel.setFont(font);
         titlePanel.add(titleLabel);
 
+        idLabel = new JLabel("Identifiant client");
+        idField = new JTextField();
+        formPanel.add(idLabel);
+        formPanel.add(idField);
 
-        addButton.addActionListener(e -> {
-            try {
-                controller.addProduct(transformCustomer(idLabelField, lastNameField, firstNameField, adresseStreetField, localidtyZipCodeField, localityNameField, houseNumberField,
-                        emailField, vatNumberField, phoneNumberSpinner, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
-            } catch (DBAccesException ex) {
-                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problème lors de l'ajout du client", JOptionPane.ERROR_MESSAGE);
-            }
-)
-        });
+        lastNameLabel = new JLabel("Nom");
+        lastNameField = new JTextField();
+        formPanel.add(lastNameLabel);
+        formPanel.add(lastNameField);
 
-        updateButton.addActionListener(e -> {
-            try {
-                controller.updateProduct(transformCustomer(idLabelField, lastNameField, firstNameField, adresseStreetField, localidtyZipCodeField, localityNameField, houseNumberField,
-                        emailField, vatNumberField, phoneNumberSpinner, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
-            } catch (DBAccesException ex) {
-                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problème lors de la mise à jour du client", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        firstNameLabel = new JLabel("Prénom");
+        firstNameField = new JTextField();
+        formPanel.add(firstNameLabel);
+        formPanel.add(firstNameField);
+
+
+
+        addButton = new JButton("Ajouter client");
+        updateButton = new JButton("Modifier client");
+        buttonPanel.add(addButton);
+
+//        addButton.addActionListener(e -> {
+//            try {
+//              controller.addCustomer(transformCustomer(idLabelField, lastNameField, firstNameField, adresseStreetField, localidtyZipCodeField, localityNameField, houseNumberField,
+//                        emailField, vatNumberField, phoneNumberSpinner, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
+//            } catch (DBAccesException ex) {
+//                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problème lors de l'ajout du client", JOptionPane.ERROR_MESSAGE);
+//            }
+//)
+//        });
+//
+//        updateButton.addActionListener(e -> {
+//            try {
+
+//               controller.updateCustomer(transformCustomer(idLabelField, lastNameField, firstNameField, adresseStreetField, localidtyZipCodeField, localityNameField, houseNumberField,
+//                        emailField, vatNumberField, phoneNumberSpinner, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
+//            } catch (DBAccesException ex) {
+//                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problème lors de la mise à jour du client", JOptionPane.ERROR_MESSAGE);
+//            }
+//        });
 
     }
 
-    private Product transformCustomer(JTextField idLabelField, JTextField lastNameField, JTextField firstNameField, JTextField adresseStreetField,
+    private void transformAddress(JComboBox localityComboBox, JTextField adresseStreetField, JTextField houseNumberField){
+
+    }
+
+    private void transformCustomer(JTextField idField, JTextField lastNameField, JTextField firstNameField, JTextField adresseStreetField,
                                        JTextField localidtyZipCodeField, JTextField localityNameField, JTextField houseNumberField, JTextField emailField,
                                        JTextField vatNumberField, JSpinner phoneNumberSpinner, JSpinner birthdaySpinner, JCheckBox isSubscrideCheckbox, JComboBox typeComboBox){
 
-        return new Product();
     }
 
     private void fillCustomerForm(Customer customer){

@@ -8,6 +8,8 @@ import javax.swing.*;
 public class MenuBar {
     public static JMenuBar CreateJMenuBar(JFrame frame) throws DBAccesException{
         JMenuBar menu = new JMenuBar();
+        CustomerForm customerForm = new CustomerForm();
+        ProductForm productForm = new ProductForm();
         JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;
         JMenuItem welcomePage, leave, createProduct, readProduct, updateProduct, deleteProduct, createCustomer, readCustomer, updateCustomer, deleteCustomer;
 
@@ -39,15 +41,10 @@ public class MenuBar {
         deleteProduct = new JMenuItem("Supprimer produit");
 
         createProduct.addActionListener(e -> {
-            try {
-                ProductForm productForm = new ProductForm();
-                frame.getContentPane().removeAll();
-                frame.add(productForm);
-                frame.revalidate();
-                frame.repaint();
-            } catch (DBAccesException ex) {
-                JOptionPane.showMessageDialog(null, ex.getDescription(), "Erreur lors de l'accès au forumaire de création de produit", JOptionPane.ERROR_MESSAGE);
-            }
+            frame.getContentPane().removeAll();
+            frame.add(productForm);
+            frame.revalidate();
+            frame.repaint();
         });
 
         menu.add(productMenu);
@@ -67,15 +64,10 @@ public class MenuBar {
         deleteCustomer = new JMenuItem("Supprimer client");
 
         createCustomer.addActionListener(e -> {
-            try {
-                CustomerForm customerForm = new CustomerForm();
-                frame.getContentPane().removeAll();
-                frame.add(customerForm);
-                frame.revalidate();
-                frame.repaint();
-            } catch (DBAccesException ex) {
-                JOptionPane.showMessageDialog(null, ex.getDescription(), "Erreur lors de l'accès au forumaire de création de produit", JOptionPane.ERROR_MESSAGE);
-            }
+            frame.getContentPane().removeAll();
+            frame.add(customerForm);
+            frame.revalidate();
+            frame.repaint();
         });
 
         menu.add(customerMenu);
