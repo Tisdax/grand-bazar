@@ -2,7 +2,7 @@ package businessLogic;
 
 import DAO.CategoryDBAccess;
 import DAOinterfaces.CategoryDAO;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.ProductCategory;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class CategoryManager {
         dao = new CategoryDBAccess();
     }
 
-    public ArrayList<ProductCategory> getAllCategory() throws DBAccesException {
+    public ArrayList<ProductCategory> getAllCategory() throws DAOException {
         return dao.categoriesList();
     }
 

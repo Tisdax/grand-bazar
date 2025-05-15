@@ -1,9 +1,8 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.Customer;
-import model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +18,7 @@ public class CustomerForm extends JPanel {
     private JButton addButton, updateButton;
     private ApplicationController controller;
 
-    public CustomerForm() throws DBAccesException {
+    public CustomerForm() throws DAOException {
         controller = new ApplicationController();
 
         this.setLayout(new BorderLayout());

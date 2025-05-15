@@ -2,11 +2,9 @@ package businessLogic;
 
 import DAO.ProductDBAccess;
 import DAOinterfaces.ProductDAO;
-import exceptions.DBAccesException;
+import exceptions.DAOException;
 import model.Product;
-import model.ProductCategory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ProductManager {
@@ -16,19 +14,19 @@ public class ProductManager {
         dao = new ProductDBAccess();
     }
 
-    public void addProduct(Product product) throws DBAccesException {
+    public void addProduct(Product product) throws DAOException {
         dao.addProduct(product);
     }
 
-    public int deleteProduct(String productId) throws DBAccesException {
+    public int deleteProduct(String productId) throws DAOException {
         return dao.deleteProduct(productId);
     }
 
-    public void updateProduct(Product product) throws DBAccesException {
+    public void updateProduct(Product product) throws DAOException {
         dao.updateProduct(product);
     }
 
-    public ArrayList<Product> productList() throws DBAccesException {
+    public ArrayList<Product> productList() throws DAOException {
         return dao.productList();
     }
 }
