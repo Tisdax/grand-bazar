@@ -2,6 +2,7 @@ package DAO;
 
 import DAOinterfaces.SaleDAO;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.Sale;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SaleDBAccess implements SaleDAO {
-    public int deleteSale(int customerId) throws DAOException {
+    public int deleteSale(int customerId) throws DAOException, InvalidValueException {
         String sqlInstruction = "delete from sale where customer = ?";
         try {
             int nbUpdatedLines = 0;
@@ -35,7 +36,7 @@ public class SaleDBAccess implements SaleDAO {
         }
     }
 
-    public ArrayList<Sale> getSales(int customerId) throws DAOException {
+    public ArrayList<Sale> getSales(int customerId) throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from sale where customer = ?";
         try {
             Connection connection = SingletonConnection.getInstance();

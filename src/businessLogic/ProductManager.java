@@ -3,6 +3,7 @@ package businessLogic;
 import DAO.ProductDBAccess;
 import DAOinterfaces.ProductDAO;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.Product;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ProductManager {
         dao.updateProduct(product);
     }
 
-    public ArrayList<Product> productList() throws DAOException {
+    public ArrayList<Product> productList() throws DAOException, InvalidValueException {
         return dao.productList();
     }
 }
