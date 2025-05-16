@@ -12,7 +12,6 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private WelcomePanel welcomePanel;
     private ProductForm productForm;
-    private ApplicationController controller;
     private JPanel mainPanel;
     private CardLayout cardLayout;
 
@@ -24,7 +23,8 @@ public class MainWindow extends JFrame {
         addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
                 try {
-                    controller = new ApplicationController();
+                    ProductForm productForm;
+                    ApplicationController controller = new ApplicationController();
                     controller.closeConnection();
                     System.exit(0);
                 } catch (DAOException ex) {
