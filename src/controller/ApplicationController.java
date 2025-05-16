@@ -1,25 +1,28 @@
 package controller;
 
-import businessLogic.AddressManager;
-import businessLogic.CategoryManager;
-import businessLogic.CustomerManager;
-import businessLogic.ProductManager;
+import businessLogic.*;
 import exceptions.DAOException;
 import model.*;
 
 import java.util.ArrayList;
 
 public class ApplicationController {
+    private ConnectionManager connectionManager;
     private CategoryManager categoryManager;
     private ProductManager productManager;
     private AddressManager addressManager;
     private CustomerManager customerManager;
 
     public ApplicationController(){
+        connectionManager = new ConnectionManager();
         categoryManager = new CategoryManager();
         productManager = new ProductManager();
         addressManager = new AddressManager();
         customerManager = new CustomerManager();
+    }
+
+    public void closeConnection() throws DAOException {
+        connectionManager.closeConnection();
     }
 
     public ArrayList<ProductCategory> getAllCategory() throws DAOException {
