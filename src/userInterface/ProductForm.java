@@ -120,14 +120,6 @@ public class ProductForm extends JPanel {
                 JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes lors de la mise à jour", JOptionPane.ERROR_MESSAGE);
             }
         });
-
-        fillButton = new JButton("Remplir produit");
-        buttonPanel.add(fillButton);
-        fillButton.addActionListener(fillButtonEvent -> {
-            fillProductForm(new Product("P001", "Pomme", 1.20, 6, 10, 1, 3, 10,
-                    true,LocalDate.of(2025, 5, 29), "fruits"));
-        });
-
     }
 
     public Product tansformProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DAOException {
