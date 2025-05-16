@@ -5,6 +5,7 @@ import businessLogic.CategoryManager;
 import businessLogic.CustomerManager;
 import businessLogic.ProductManager;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.*;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class ApplicationController {
         productManager.updateProduct(product);
     }
 
-    public ArrayList<Product> productList() throws DAOException {
+    public ArrayList<Product> productList() throws DAOException, InvalidValueException {
         return productManager.productList();
     }
 
@@ -54,7 +55,7 @@ public class ApplicationController {
         customerManager.addCustomer(customer);
     }
 
-    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException {
+    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
         return customerManager.deleteCustomer(customerId, deleteMode);
     }
 
@@ -62,7 +63,7 @@ public class ApplicationController {
         customerManager.updateCustomer(customer);
     }
 
-    public ArrayList<Customer> customerList() throws DAOException {
+    public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
         return customerManager.customerList();
     }
 }
