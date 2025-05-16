@@ -66,7 +66,7 @@ CREATE TABLE loyalty_card (
     is_valid BOOLEAN NOT NULL,
     customer MEDIUMINT NOT NULL,
     CONSTRAINT loyalty_card_pk PRIMARY KEY (number),
-    CONSTRAINT loyalty_card_customer_fk FOREIGN KEY (customer) REFERENCES customer(id) ON DELETE CASCADE,
+    CONSTRAINT loyalty_card_customer_fk FOREIGN KEY (customer) REFERENCES customer(id),
     CONSTRAINT loyalty_cart_number_chk CHECK (number >= 0)
 );
 

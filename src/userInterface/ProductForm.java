@@ -124,8 +124,8 @@ public class ProductForm extends JPanel {
         fillButton = new JButton("Remplir produit");
         buttonPanel.add(fillButton);
         fillButton.addActionListener(fillButtonEvent -> {
-            fillProductForm(new Product("I5151", "Fanta 2l", 2.75, 21, 150, 30, 60, 15,
-                    true,LocalDate.of(2025, 1, 25), "légumes"));
+            fillProductForm(new Product("P001", "Pomme", 1.20, 6, 10, 1, 3, 10,
+                    true,LocalDate.of(2025, 5, 29), "fruits"));
         });
 
     }
