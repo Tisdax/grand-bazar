@@ -30,11 +30,11 @@ public class Vegetable {
         if (rectangle.y >= groceryBag.getRectangle().y + rectangle.height) {
             rectangle.y = start_y;
             rectangle.x += STEP_X;
+            if (rectangle.x >= 700)
+                rectangle.x = start_x;
         }
         else {
             rectangle.y += STEP_Y;
-            if (rectangle.x >= 700)
-                rectangle.x = start_x;
         }
     }
 }

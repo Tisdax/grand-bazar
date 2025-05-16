@@ -3,6 +3,7 @@ package businessLogic;
 import DAO.CustomerDBAccess;
 import DAOinterfaces.CustomerDAO;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.Customer;
 import model.CustomerDeletionMode;
 
@@ -19,7 +20,7 @@ public class CustomerManager {
         dao.addCustomer(customer);
     }
 
-    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException {
+    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
         return dao.deleteCustomer(customerId, deleteMode);
     }
 
@@ -27,7 +28,7 @@ public class CustomerManager {
         dao.updateCustomer(customer);
     }
 
-    public ArrayList<Customer> customerList() throws DAOException {
+    public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
         return dao.customerList();
     }
 }

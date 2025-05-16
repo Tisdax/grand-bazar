@@ -1,9 +1,9 @@
 package exceptions;
 
-public class InvalidAddressException extends Exception {
+public class InvalidValueException extends Exception {
     private Object invalidValue;
 
-    public InvalidAddressException(String message, Object invalidValue) {
+    public InvalidValueException(String message, Object invalidValue) {
         super("La valeur " + invalidValue + " n'est pas valide. " + message);
         this.invalidValue = invalidValue;
     }

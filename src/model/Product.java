@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.InvalidValueException;
+
 import java.time.LocalDate;
 
 public class Product {
@@ -9,45 +11,46 @@ public class Product {
     private Boolean isEdible;
     private LocalDate saleDate;
 
-    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Integer minQuantity, Integer promotionMinQuantity, Integer timeBeforeRemoving, Boolean isEdible, LocalDate saleDate, String categoryName) {
+    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Integer minQuantity, Integer promotionMinQuantity, Integer timeBeforeRemoving, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException {
         this.id = id;
         this.name = name;
         setNetPrice(netPrice);
         this.vatPercentage = vatPercentage;
         this.loyaltyPointsNb = loyaltyPointsNb;
         setMinQuantity(minQuantity);
-        this.minQuantity = minQuantity;
-        this.promotionMinQuantity = promotionMinQuantity;
-        this.timeBeforeRemoving = timeBeforeRemoving;
+        setPromotionMinQuantity(promotionMinQuantity);
+        setTimeBeforeRemoving(timeBeforeRemoving);
         this.isEdible = isEdible;
         this.saleDate = saleDate;
         this.categoryName = categoryName;
     }
 
-    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, LocalDate saleDate, String categoryName) {
+    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException {
         this(id, name, netPrice, vatPercentage, loyaltyPointsNb, null, null, null, isEdible, saleDate, categoryName);
     }
 
-    public void setNetPrice(Double netPrice) {
-        if (netPrice >= 0)
-            this.netPrice = netPrice;
+    public void setNetPrice(Double netPrice) throws InvalidValueException {
+        if (netPrice == null || netPrice <= 0)
+            throw new InvalidValueException("Le prix est obligatoire et doit être un nombre positif.", netPrice);
+        this.netPrice = netPrice;
     }
 
-    public void setMinQuantity(Integer minQuantity) {
-            this.minQuantity = minQuantity;
+    public void setMinQuantity(Integer minQuantity) throws InvalidValueException {
+        if (minQuantity != null && minQuantity <= 0)
+            throw new InvalidValueException("La quantité minimale doit être laissée vide ou être un nombre positif.", minQuantity);
+        this.minQuantity = minQuantity;
     }
 
-    public void setPromotionMinQuantity(Integer promotionMinQuantity) {
-        if (promotionMinQuantity > 0)
-            this.promotionMinQuantity = promotionMinQuantity;
+    public void setPromotionMinQuantity(Integer promotionMinQuantity) throws InvalidValueException {
+        if (promotionMinQuantity != null && promotionMinQuantity <= 0)
+            throw new InvalidValueException("La quantité minimale en promotion doit être laissée vide ou être un nombre positif.", promotionMinQuantity);
+        this.promotionMinQuantity = promotionMinQuantity;
     }
 
-    public void setTimeBeforeRemoving(Integer timeBeforeRemoving) {
+    public void setTimeBeforeRemoving(Integer timeBeforeRemoving) throws InvalidValueException {
+        if (timeBeforeRemoving != null && timeBeforeRemoving <= 0)
+            throw new InvalidValueException("Le temps avant de retirer des rayons doit être laissé vide ou être un nombre positif.", timeBeforeRemoving);
         this.timeBeforeRemoving = timeBeforeRemoving;
-    }
-
-    public void setSaleDate(LocalDate saleDate) {
-        this.saleDate = saleDate;
     }
 
     public String getId() {

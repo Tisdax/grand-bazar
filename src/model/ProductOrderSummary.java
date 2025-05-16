@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.InvalidValueException;
+
 import java.time.LocalDate;
 
 public class ProductOrderSummary {
@@ -8,13 +10,31 @@ public class ProductOrderSummary {
     private Integer quantity, saleId;
     private LocalDate saleDate;
 
-    public ProductOrderSummary(String productId, String productName, Double productNetPrice, Integer quantity, Integer saleId, LocalDate saleDate) {
+    public ProductOrderSummary(String productId, String productName, Double productNetPrice, Integer quantity, Integer saleId, LocalDate saleDate) throws InvalidValueException {
         this.productId = productId;
         this.productName = productName;
-        this.productNetPrice = productNetPrice;
-        this.quantity = quantity;
-        this.saleId = saleId;
+        setProductNetPrice(productNetPrice);
+        setQuantity(quantity);
+        setSaleId(saleId);
         this.saleDate = saleDate;
+    }
+
+    public void setProductNetPrice(Double netPrice) throws InvalidValueException {
+        if (netPrice == null || netPrice <= 0)
+            throw new InvalidValueException("Le prix est obligatoire et doit être un nombre positif.", netPrice);
+        this.productNetPrice = netPrice;
+    }
+
+    public void setQuantity(Integer quantity) throws InvalidValueException {
+        if (quantity == null || quantity <= 0)
+            throw new InvalidValueException("La quantité est obligatoire et doit être un nombre positif.", quantity);
+        this.quantity = quantity;
+    }
+
+    public void setSaleId(Integer saleId) throws InvalidValueException {
+        if (saleId == null || saleId <= 0)
+            throw new InvalidValueException("L'id de la vente est obligatoire et doit être un nombre positif.", saleId);
+        this.saleId = saleId;
     }
 
     public String getProductId() {
