@@ -29,16 +29,18 @@ public class MainWindow extends JFrame {
         this.add(mainPanel);
 
         //
-        mainPanel.add(new ProductManagement(), "product");
-        mainPanel.add(new WelcomePanel(), "welcome");
-        mainPanel.add(new SaleManagement(), "sale");
+        addPanel(new ProductManagement(), "product");
+        addPanel(new WelcomePanel(), "welcome");
+        addPanel(new SaleManagement(), "sale");
         cardLayout.show(mainPanel, "welcome");
-
         setVisible(true);
     }
-public void changePanel(String panelName){
+    public void addPanel(JPanel panel, String panelName) {
+        mainPanel.add(panel, panelName);
+    }
+    public void changePanel(String panelName){
         cardLayout.show(mainPanel, panelName);
-}
+    }
     public static void main(String[] args) {
         MainWindow mainWindow = new MainWindow();
     }
