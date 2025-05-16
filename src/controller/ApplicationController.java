@@ -30,6 +30,10 @@ public class ApplicationController {
         return categoryManager.getAllCategory();
     }
 
+    public boolean existes(String productid) throws DAOException {
+        return productManager.exists(productid);
+    }
+
     public void addProduct(Product product) throws DAOException {
         productManager.addProduct(product);
     }

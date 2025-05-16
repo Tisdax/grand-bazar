@@ -29,6 +29,7 @@ public class Product {
         this(id, name, netPrice, vatPercentage, loyaltyPointsNb, null, null, null, isEdible, saleDate, categoryName);
     }
 
+
     public void setNetPrice(Double netPrice) throws InvalidValueException {
         if (netPrice == null || netPrice <= 0)
             throw new InvalidValueException("Le prix est obligatoire et doit être un nombre positif.", netPrice);
