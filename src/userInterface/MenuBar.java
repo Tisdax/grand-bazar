@@ -88,7 +88,7 @@ public class MenuBar {
         leave.addActionListener(e -> {
             System.exit(0);
         });
-        // menu
+        //
         return menu;
     }
     public static void addPanelToFrame(JFrame frame, JMenuItem menuItem, JPanel panel) {
