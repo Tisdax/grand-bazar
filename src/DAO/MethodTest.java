@@ -16,9 +16,7 @@ public class MethodTest {
         DBAccess dbAccess = new DBAccess();
 
         try {
-            ArrayList<CustomerAddressInfo> customersAddressInfos = customerDBAccess.CustomerAddressSearch(500, 875);
-            for(CustomerAddressInfo customerAddressInfo: customersAddressInfos)
-                System.out.println(customerAddressInfo.getFirstName() + " " +customerAddressInfo.getLastName() + " " +customerAddressInfo.getLocalityName() + " " +customerAddressInfo.getStreet() + " " +customerAddressInfo.getHouseNumber() + " " +(customerAddressInfo.getPostalBoxNumber() == null ? "null" : customerAddressInfo.getPostalBoxNumber())+ " " +customerAddressInfo.getZipCode());
+            System.out.println(customerDBAccess.exists(3));
         }
         catch (DAOException e) {
             System.out.println(e.getMessage());

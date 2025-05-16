@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface ProductDAO {
+    public boolean exists(String productId) throws DAOException;
     public void addProduct(Product product) throws DAOException;
     public int deleteProduct(String productId) throws DAOException;
     public void updateProduct(Product product) throws DAOException;

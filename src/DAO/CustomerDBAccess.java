@@ -1,5 +1,6 @@
 package DAO;
 
+import DAOinterfaces.DAO;
 import exceptions.DAOException;
 import DAOinterfaces.CustomerDAO;
 import model.Customer;
@@ -10,6 +11,23 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerDBAccess implements CustomerDAO {
+    public boolean exists(int customerId) throws DAOException {
+        String sqlInstruction = "select * from customer where id = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setInt(1, customerId);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            return data.next();
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Cet id existe déjà");
+        }
+    }
+
     public void addCustomer(Customer customer) throws DAOException {
         String sqlInstruction = "insert into customer (id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {

@@ -56,11 +56,7 @@ public class AddressDBAccess implements AddressDAO {
 
             ResultSet data = preparedStatement.executeQuery();
 
-            if (!data.next())
-                return false;
-
-            data.getString("locality_zip_code");
-            return !data.wasNull();
+            return data.next();
         }
         catch (SQLException e) {
             throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'une adresse dans la base de données");

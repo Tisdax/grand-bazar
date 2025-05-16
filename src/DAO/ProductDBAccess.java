@@ -9,6 +9,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductDBAccess implements ProductDAO {
+    public boolean exists(String productId) throws DAOException {
+        String sqlInstruction = "select * from product where id = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setString(1, productId);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            return data.next();
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Cet id existe déjà");
+        }
+    }
+
     public void addProduct(Product product) throws DAOException {
         String sqlInstruction = "insert into product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, sale_date, category) values (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
