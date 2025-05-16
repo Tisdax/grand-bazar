@@ -29,6 +29,25 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
+    public Integer lastId() throws DAOException {
+        String sqlInstruction = "SELECT MAX(id) FROM customer";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            if (data.next()) {
+                return data.getInt(1);
+            } else {
+                return 0;
+            }
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Problème lors de la recheche du dernier identifiant");
+        }
+    }
+
     public void addCustomer(Customer customer) throws DAOException {
         String sqlInstruction = "insert into customer (id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {

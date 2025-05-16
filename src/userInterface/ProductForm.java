@@ -165,10 +165,19 @@ public class ProductForm extends JPanel {
         String name = nameField.getText();
         Integer vat = (Integer) vatComboBox.getSelectedItem();
         Boolean isEdible = isEdibleCheckBox.isSelected();
-        String category = (String) categoryComboBox.getSelectedItem();
+
 
         String id = idField.getText();
+        if (!id.equals("")) {
+            if (controller.exists(id)) {
 
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Veuillez entrez un identifiant", "Identifiant manquant", JOptionPane.ERROR_MESSAGE);
+        }
+
+        String category = (String) categoryComboBox.getSelectedItem();
         Double netPrice = ((Number) netPriceSpinner.getValue()).doubleValue();
 
         Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
@@ -214,7 +223,7 @@ public class ProductForm extends JPanel {
         categoryComboBox.setSelectedItem(product.getCategoryName());
     }
 
-    public void emptyForm(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException {
+    private void emptyForm(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException {
         idField.setText("");
         nameField.setText("");
         netPriceSpinner.setValue(0);
@@ -230,7 +239,7 @@ public class ProductForm extends JPanel {
         promoMinQuantCheckBox.setSelected(false);
         timeBeforeRemovingCheckBox.setSelected(false);
     }
-    public void updateButton(){
+    private void updateButton(){
         buttonPanel.removeAll();
         buttonPanel.add(updateButton);
         revalidate();

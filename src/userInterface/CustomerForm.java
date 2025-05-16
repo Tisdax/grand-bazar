@@ -92,7 +92,7 @@ public class CustomerForm extends JPanel {
 
     }
 
-    public void updateButton(){
+    private void updateButton(){
         buttonPanel.removeAll();
         buttonPanel.add(updateButton);
         revalidate();
