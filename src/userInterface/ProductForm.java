@@ -9,16 +9,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class ProductForm extends JPanel {
     private JPanel titlePanel, formPanel, buttonPanel;
-    private JLabel titleLabel, idLabel, nameLabel, netPriceLabel, vatLabel, isEdibleLabel, loyaltyPointsLabel, minQuantLabel, promotionQuantLabel, saleDateLabel, timeBeforeRemovingLabel, categoryLabel;
-    private JTextField idField, nameField, netPriceField;
-    private JComboBox vatComboBox, categoryComboBox;
-    private JCheckBox isEdibleCheckBox;
-    private JSpinner saleDateSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner;
+    private JLabel titleLabel, idLabel, nameLabel, netPriceLabel, vatLabel, isEdibleLabel, loyaltyPointsLabel, minQuantLabel, promotionQuantLabel, saleDateLabel, timeBeforeRemovingLabel, categoryLabel, minQuantCBLabel, promoMinQuantCBLabel, timeBeforeRemovingCBLabel;
+    private JTextField idField, nameField;
+    private JComboBox<Integer> vatComboBox;
+    private JComboBox<String> categoryComboBox;
+    private JCheckBox isEdibleCheckBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox;
+    private JSpinner saleDateSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, netPriceSpinner;
     private JButton addButton, updateButton;
     private ApplicationController controller;
     public ProductForm() throws DAOException {
@@ -26,7 +28,7 @@ public class ProductForm extends JPanel {
 
         this.setLayout(new BorderLayout());
         titlePanel = new JPanel();
-        formPanel = new JPanel(new GridLayout(11, 2, 5, 10));
+        formPanel = new JPanel(new GridLayout(14, 2, 10, 10));
         buttonPanel = new JPanel();
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
@@ -37,9 +39,7 @@ public class ProductForm extends JPanel {
         titleLabel.setFont(font);
         titlePanel.add(titleLabel);
 
-
         UIManager.put("Spinner.editorAlignment", JTextField.LEFT);
-
 
         idLabel = new JLabel("Identifiant : ", SwingConstants.RIGHT);
         idField = new JTextField(15);
@@ -51,10 +51,14 @@ public class ProductForm extends JPanel {
         formPanel.add(nameLabel);
         formPanel.add(nameField);
 
-        netPriceLabel = new JLabel("Prix : ", SwingConstants.RIGHT);
-        netPriceField = new JTextField();
+        netPriceLabel = new JLabel("Prix (€) : ", SwingConstants.RIGHT);
+        netPriceSpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 9999.99, 0.01));
+        JSpinner.NumberEditor netPriceEditor = new JSpinner.NumberEditor(netPriceSpinner, "0.00");
+        JFormattedTextField textField = netPriceEditor.getTextField();
+        textField.setHorizontalAlignment(SwingConstants.LEFT);
+        netPriceSpinner.setEditor(netPriceEditor);
         formPanel.add(netPriceLabel);
-        formPanel.add(netPriceField);
+        formPanel.add(netPriceSpinner);
 
         vatLabel = new JLabel("Taux de TVA : ", SwingConstants.RIGHT);
         vatComboBox = new JComboBox<>(new Integer[]{6, 12, 21});
@@ -71,41 +75,72 @@ public class ProductForm extends JPanel {
         formPanel.add(loyaltyPointsLabel);
         formPanel.add(loyaltyPointsSpinner);
 
+        minQuantCBLabel = new JLabel("Définir une quantité minimale", SwingConstants.RIGHT);
+        minquantCheckBox = new JCheckBox();
+        formPanel.add(minQuantCBLabel);
+        formPanel.add(minquantCheckBox);
         minQuantLabel = new JLabel("Quantité minimale : ", SwingConstants.RIGHT);
         minQuantSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 10));
+        minQuantSpinner.setEnabled(false);
         formPanel.add(minQuantLabel);
         formPanel.add(minQuantSpinner);
 
+        promoMinQuantCBLabel = new JLabel("Définir une quantité minimale lors de promotion", SwingConstants.RIGHT);
+        promoMinQuantCheckBox = new JCheckBox();
+        formPanel.add(promoMinQuantCBLabel);
+        formPanel.add(promoMinQuantCheckBox);
         promotionQuantLabel = new JLabel("Quantité minimale en cas de promotion", SwingConstants.RIGHT);
         promotionQuantSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 10));
+        promotionQuantSpinner.setEnabled(false);
         formPanel.add(promotionQuantLabel);
         formPanel.add(promotionQuantSpinner);
 
+        timeBeforeRemovingCBLabel = new JLabel("Définir une durée avant la suppression des rayons", SwingConstants.RIGHT);
+        timeBeforeRemovingCheckBox = new JCheckBox();
+        formPanel.add(timeBeforeRemovingCBLabel);
+        formPanel.add(timeBeforeRemovingCheckBox);
         timeBeforeRemovingLabel = new JLabel("Temps avant suppression des rayons : ", SwingConstants.RIGHT);
         timeBeforeRemovingSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 10));
+        timeBeforeRemovingSpinner.setEnabled(false);
         formPanel.add(timeBeforeRemovingLabel);
         formPanel.add(timeBeforeRemovingSpinner);
 
         categoryLabel = new JLabel("Catégorie du produit : ", SwingConstants.RIGHT);
-        categoryComboBox = new JComboBox<>(controller.getAllCategory().toArray());
+        categoryComboBox = new JComboBox<>();
+        ArrayList<ProductCategory> categories = controller.getAllCategory();
+        for (ProductCategory category : categories) {
+            categoryComboBox.addItem(category.getName());
+        }
         formPanel.add(categoryLabel);
         formPanel.add(categoryComboBox);
 
         saleDateLabel = new JLabel("Date de mise en vente : ", SwingConstants.RIGHT);
         Date today = new Date();
         saleDateSpinner = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.MONTH));
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(saleDateSpinner, "dd/MM/yyyy");
-        saleDateSpinner.setEditor(editor);
+        saleDateSpinner.setEditor(new JSpinner.DateEditor(saleDateSpinner, "dd/MM/yyyy"));
         formPanel.add(saleDateLabel);
         formPanel.add(saleDateSpinner);
+
+        minquantCheckBox.addItemListener(e -> {
+            minQuantSpinner.setEnabled(minquantCheckBox.isSelected());
+        });
+
+        promoMinQuantCheckBox.addItemListener(e -> {
+            promotionQuantSpinner.setEnabled(promoMinQuantCheckBox.isSelected());
+        });
+
+        timeBeforeRemovingCheckBox.addItemListener(e -> {
+            timeBeforeRemovingSpinner.setEnabled(timeBeforeRemovingCheckBox.isSelected());
+        });
 
         addButton = new JButton("Ajouter Produit");
         buttonPanel.add(addButton);
         updateButton = new JButton("Modifier Produit");
         addButton.addActionListener(e -> {
             try {
-                controller.addProduct(tansformProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
-                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox));
+                controller.addProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
+                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
+                emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
                 JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
             } catch (DAOException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de l'ajout", JOptionPane.ERROR_MESSAGE);
@@ -114,26 +149,49 @@ public class ProductForm extends JPanel {
 
         updateButton.addActionListener(e -> {
             try {
-                controller.updateProduct(tansformProduct(idField, nameField, netPriceField, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
-                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox));
+                controller.updateProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
+                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
+                emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
             } catch (DAOException ex){
                 JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes lors de la mise à jour", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
 
-    public Product tansformProduct(JTextField idField, JTextField nameField, JTextField netPriceField, JComboBox vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox categoryComboBox) throws DAOException {
-        String id = idField.getText();
+    public Product tansformProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException {
         String name = nameField.getText();
-        Double netPrice = Double.valueOf(netPriceField.getText());
         Integer vat = (Integer) vatComboBox.getSelectedItem();
-        Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
-        Integer minQuant = (Integer) minQuantSpinner.getValue();
-        Integer promotionMinQuant = (Integer) promotionQuantSpinner.getValue();
-        Integer timeBeforeRemoving = (Integer) timeBeforeRemovingSpinner.getValue();
         Boolean isEdible = isEdibleCheckBox.isSelected();
+        String category = (String) categoryComboBox.getSelectedItem();
+
+        String id = idField.getText();
+
+        Double netPrice = ((Number) netPriceSpinner.getValue()).doubleValue();
+
+        Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
+
         LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        String category = ((ProductCategory) categoryComboBox.getSelectedItem()).getName();
+
+
+        Integer minQuant;
+        if (minquantCheckBox.isSelected())
+            minQuant = (Integer) minQuantSpinner.getValue();
+        else
+            minQuant = null;
+
+        Integer promotionMinQuant;
+        if (promoMinQuantCheckBox.isSelected())
+            promotionMinQuant = (Integer) promotionQuantSpinner.getValue();
+        else
+            promotionMinQuant = null;
+
+        Integer timeBeforeRemoving;
+        if (timeBeforeRemovingCheckBox.isSelected())
+            timeBeforeRemoving = (Integer) timeBeforeRemovingSpinner.getValue();
+        else
+            timeBeforeRemoving = null;
+
+
         return new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category);
     }
     private void fillProductForm(Product product){
@@ -141,7 +199,7 @@ public class ProductForm extends JPanel {
         idField.setText(product.getId());
         idField.setEnabled(false);
         nameField.setText(product.getName());
-        netPriceField.setText(String.valueOf(product.getNetPrice()));
+        netPriceSpinner.setValue(product.getNetPrice());
         loyaltyPointsSpinner.setValue(product.getLoyaltyPointsNb());
         minQuantSpinner.setValue(product.getMinQuantity());
         promotionQuantSpinner.setValue(product.getPromotionMinQuantity());
@@ -149,16 +207,25 @@ public class ProductForm extends JPanel {
         isEdibleCheckBox.setSelected(product.getEdible());
         saleDateSpinner.setValue(Date.from(product.getSaleDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         vatComboBox.setSelectedItem(product.getVatPercentage());
-
-        int i = 1;
-        Object item = categoryComboBox.getItemAt(0);
-        while (i < categoryComboBox.getItemCount() && item instanceof ProductCategory p && !p.getName().equals(product.getCategoryName())) {
-            item = categoryComboBox.getItemAt(i);
-            i++;
-        }
-        categoryComboBox.setSelectedItem(item);
+        categoryComboBox.setSelectedItem(product.getCategoryName());
     }
 
+    public void emptyForm(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException {
+        idField.setText("");
+        nameField.setText("");
+        netPriceSpinner.setValue(0);
+        vatComboBox.setSelectedIndex(0);
+        loyaltyPointsSpinner.setValue(0);
+        minQuantSpinner.setValue(0);
+        promotionQuantSpinner.setValue(0);
+        timeBeforeRemovingSpinner.setValue(0);
+        isEdibleCheckBox.setSelected(false);
+        saleDateSpinner.setValue(new Date());
+        categoryComboBox.setSelectedIndex(0);
+        minquantCheckBox.setSelected(false);
+        promoMinQuantCheckBox.setSelected(false);
+        timeBeforeRemovingCheckBox.setSelected(false);
+    }
     public void updateButton(){
         buttonPanel.removeAll();
         buttonPanel.add(updateButton);
