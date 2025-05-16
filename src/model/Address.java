@@ -1,33 +1,33 @@
 package model;
 
-import exceptions.InvalidAddressException;
+import exceptions.InvalidValueException;
 
 public class Address {
     private String street, localityName, houseNumber;
-    private Integer localityZipCode, postal_box_number;
+    private Integer localityZipCode, postalBoxNumber;
 
-    public Address(String street, Integer localityZipCode, String localityName, String houseNumber, Integer postal_box_number) /*throws InvalidAddressException*/ {
+    public Address(String street, Integer localityZipCode, String localityName, String houseNumber, Integer postalBoxNumber) throws InvalidValueException {
         this.street = street;
         setLocalityZipCode(localityZipCode);
         this.localityName = localityName;
         this.houseNumber = houseNumber;
-        setPostal_box_number(postal_box_number);
+        setPostalBoxNumber(postalBoxNumber);
     }
 
-    public Address(String street, Integer localityZipCode, String localityName, String houseNumber) /*throws InvalidAddressException*/ {
+    public Address(String street, Integer localityZipCode, String localityName, String houseNumber) throws InvalidValueException {
         this(street, localityZipCode, localityName, houseNumber, null);
     }
 
-    public void setLocalityZipCode(Integer localityZipCode) /*throws InvalidAddressException*/ {
-        //if (localityZipCode == null || localityZipCode <= 0)
-            //throw new InvalidAddressException("Le code postal est obligatoire et doit être un nombre positif", localityZipCode);
+    public void setLocalityZipCode(Integer localityZipCode) throws InvalidValueException {
+        if (localityZipCode == null || localityZipCode <= 0)
+            throw new InvalidValueException("Le code postal est obligatoire et doit être un nombre positif.", localityZipCode);
         this.localityZipCode = localityZipCode;
     }
 
-    public void setPostal_box_number(Integer postal_box_number) {
-        //if (postal_box_number != null && postal_box_number <= 0)
-            //throw new InvalidAddressException("La boite postale doit être laissée vide ou être un nombre positif", postal_box_number);
-        this.postal_box_number = postal_box_number;
+    public void setPostalBoxNumber(Integer postalBoxNumber) throws InvalidValueException {
+        if (postalBoxNumber != null && postalBoxNumber <= 0)
+            throw new InvalidValueException("La boite postale doit être laissée vide ou être un nombre positif.", postalBoxNumber);
+        this.postalBoxNumber = postalBoxNumber;
     }
 
     public String getStreet() {
@@ -46,7 +46,7 @@ public class Address {
         return houseNumber;
     }
 
-    public Integer getPostal_box_number() {
-        return postal_box_number;
+    public Integer getPostalBoxNumber() {
+        return postalBoxNumber;
     }
 }

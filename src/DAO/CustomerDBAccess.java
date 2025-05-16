@@ -3,6 +3,7 @@ package DAO;
 import DAOinterfaces.DAO;
 import exceptions.DAOException;
 import DAOinterfaces.CustomerDAO;
+import exceptions.InvalidValueException;
 import model.Customer;
 import model.CustomerAddressInfo;
 import model.CustomerDeletionMode;
@@ -82,7 +83,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException {
+    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
         String sqlInstruction = "delete from customer where id = ?";
         try {
             int nbUpdatedLines = 0;
@@ -148,7 +149,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public ArrayList<Customer> customerList() throws DAOException {
+    public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from customer";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -182,7 +183,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public ArrayList<CustomerAddressInfo> CustomerAddressSearch(int nbPointsMin, int nbPointsMax) throws DAOException {
+    public ArrayList<CustomerAddressInfo> CustomerAddressSearch(int nbPointsMin, int nbPointsMax) throws DAOException, InvalidValueException {
         String sqlInstruction = "select c.last_name as 'customer_last_name', c.first_name as 'customer_first_name', a.street, a.house_number, a.postal_box_number, l.zip_code, l.name as 'locality_name' from customer c inner join address a on c.address_locality_zip_code = a.locality_zip_code and c.address_locality_name = a.locality_name and c.address_street = a.street and c.address_house_number = a.house_number inner join locality l on a.locality_zip_code = l.zip_code and a.locality_name = l.name inner join loyalty_card lc on lc.customer = c.id where lc.total_points between ? and ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -197,7 +198,7 @@ public class CustomerDBAccess implements CustomerDAO {
             int postalBoxNumber;
 
             while (data.next()) {
-                customerAddressInfo = new CustomerAddressInfo(data.getString("customer_last_name"), data.getString("customer_first_name"), data.getString("street"), data.getString("locality_name"), data.getInt("house_number"), data.getInt("zip_code"));
+                customerAddressInfo = new CustomerAddressInfo(data.getString("customer_last_name"), data.getString("customer_first_name"), data.getString("street"), data.getString("locality_name"), data.getString("house_number"), data.getInt("zip_code"));
 
                 postalBoxNumber = data.getInt("postal_box_number");
                 if (!data.wasNull())

@@ -56,7 +56,7 @@ CREATE TABLE customer (
     CONSTRAINT customer_pk PRIMARY KEY (id),
     CONSTRAINT customer_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
     CONSTRAINT customer_type_fk FOREIGN KEY (type) REFERENCES type(name),
-    CONSTRAINT customer_id_chk CHECK (id >= 0),
+    CONSTRAINT customer_id_chk CHECK (id > 0),
     CONSTRAINT customer_locality_zip_code_chk CHECK (address_locality_zip_code > 0)
 );
 
@@ -67,7 +67,7 @@ CREATE TABLE loyalty_card (
     customer MEDIUMINT NOT NULL,
     CONSTRAINT loyalty_card_pk PRIMARY KEY (number),
     CONSTRAINT loyalty_card_customer_fk FOREIGN KEY (customer) REFERENCES customer(id),
-    CONSTRAINT loyalty_cart_number_chk CHECK (number >= 0)
+    CONSTRAINT loyalty_cart_number_chk CHECK (number > 0)
 );
 
 CREATE TABLE employee (
@@ -82,8 +82,7 @@ CREATE TABLE employee (
     CONSTRAINT employee_pk PRIMARY KEY (id),
     CONSTRAINT manager_id_fk FOREIGN KEY (manager_id) REFERENCES employee(id),
 	CONSTRAINT employee_address_fk FOREIGN KEY (address_locality_zip_code, address_locality_name, address_street, address_house_number) REFERENCES address (locality_zip_code, locality_name, street, house_number),
-    CONSTRAINT employee_id_chk CHECK (id >= 0),
-    CONSTRAINT employee_manager_id_chk CHECK (manager_id >= 0),
+    CONSTRAINT employee_id_chk CHECK (id > 0),
     CONSTRAINT employee_locality_zip_code_chk CHECK (address_locality_zip_code > 0)
 );
 
@@ -109,9 +108,9 @@ CREATE TABLE sale (
     CONSTRAINT sale_pk PRIMARY KEY (id),
     CONSTRAINT sale_customer_fk FOREIGN KEY (customer) REFERENCES customer(id),
     CONSTRAINT sale_employee_fk FOREIGN KEY (employee) REFERENCES employee(id),
-    CONSTRAINT sale_id_chk CHECK (id >= 0),
-    CONSTRAINT sale_customer_chk CHECK (customer >= 0),
-    CONSTRAINT sale_employee_chk CHECK (employee >= 0)
+    CONSTRAINT sale_id_chk CHECK (id > 0),
+    CONSTRAINT sale_customer_chk CHECK (customer > 0),
+    CONSTRAINT sale_employee_chk CHECK (employee > 0)
 );
 
 CREATE TABLE category (
@@ -135,7 +134,7 @@ CREATE TABLE product (
     CONSTRAINT product_pk PRIMARY KEY (id),
     CONSTRAINT product_category_fk FOREIGN KEY (category) REFERENCES category(name),
     CONSTRAINT product_vat_percentage_chk CHECK (vat_percentage IN(6, 12, 21)),
-    CONSTRAINT product_net_price_chk CHECK (net_price >= 0),
+    CONSTRAINT product_net_price_chk CHECK (net_price > 0),
     CONSTRAINT product_min_quantity_chk CHECK (min_quantity > 0),
     CONSTRAINT product_promotion_min_quantity_chk CHECK (promotion_min_quantity > 0),
     CONSTRAINT product_time_before_removing_chk CHECK (time_before_removing > 0)
@@ -148,7 +147,7 @@ CREATE TABLE command_line (
     CONSTRAINT command_line_pk PRIMARY KEY (sale, product),
     CONSTRAINT command_line_sale_fk FOREIGN KEY (sale) REFERENCES sale(id),
     CONSTRAINT command_line_product_fk FOREIGN KEY (product) REFERENCES product(id),
-    CONSTRAINT command_line_sale_id_chk CHECK (sale >= 0),
+    CONSTRAINT command_line_sale_id_chk CHECK (sale > 0),
     CONSTRAINT command_line_quantity_chk CHECK (quantity > 0)
 );
 
@@ -170,7 +169,7 @@ CREATE TABLE shelf (
 	id TINYINT,
     is_refrigirated BOOLEAN NOT NULL,
     CONSTRAINT shelf_pk PRIMARY KEY (id),
-    CONSTRAINT shelf_id_chk CHECK (id >= 0)
+    CONSTRAINT shelf_id_chk CHECK (id > 0)
 );
 
 CREATE TABLE stock (
@@ -181,8 +180,8 @@ CREATE TABLE stock (
     CONSTRAINT stock_pk PRIMARY KEY (shelf, shelf_level, product),
     CONSTRAINT stock_shelf_fk FOREIGN KEY (shelf) REFERENCES shelf(id),
     CONSTRAINT stock_product_fk FOREIGN KEY (product) REFERENCES product(id),
-    CONSTRAINT stock_shelf_id_chk CHECK (shelf >= 0),
-    CONSTRAINT stock_shelf_level_chk CHECK (shelf > 0),
+    CONSTRAINT stock_shelf_id_chk CHECK (shelf > 0),
+    CONSTRAINT stock_shelf_level_chk CHECK (shelf_level > 0),
     CONSTRAINT shelf_quantity_chk CHECK (quantity > 0)
 );
 

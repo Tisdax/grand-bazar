@@ -2,6 +2,7 @@ package DAO;
 
 import DAOinterfaces.LocalityDAO;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.Locality;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LocalityDBAccess implements LocalityDAO {
-    public ArrayList<Locality> localitiesList() throws DAOException {
+    public ArrayList<Locality> localitiesList() throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from locality";
         try {
             Connection connection = SingletonConnection.getInstance();

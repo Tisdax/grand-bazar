@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.InvalidValueException;
+
 import java.time.LocalDate;
 
 public class Customer {
@@ -8,7 +10,7 @@ public class Customer {
     private Boolean isSubscribedToNewsLetter;
     private Integer id, localityZipCode;
 
-    public Customer(Integer id, String lastName, String firstName, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber, LocalDate birthdate, String typeName) {
+    public Customer(Integer id, String lastName, String firstName, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber, LocalDate birthdate, String typeName) throws InvalidValueException {
         setId(id);
         this.lastName = lastName;
         this.firstName = firstName;
@@ -16,21 +18,22 @@ public class Customer {
         setLocalityZipCode(localityZipCode);
         this.localityName = localityName;
         this.houseNumber = houseNumber;
-        this.phone = phone;
-        this.email = email;
+        setPhone(phone);
+        setEmail(email);
         this.isSubscribedToNewsLetter = isSubscribedToNewsLetter;
-        this.vatNumber = vatNumber;
+        setVatNumber(vatNumber);
         this.birthdate = birthdate;
         this.typeName = typeName;
     }
 
-    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, Boolean isSubscribedToNewsLetter, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String typeName) {
+    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, Boolean isSubscribedToNewsLetter, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String typeName) throws InvalidValueException {
         this(id, lastName, firstName, addressStreet, localityZipCode, localityName, houseNumber, null, null, isSubscribedToNewsLetter, null, birthdate, typeName);
     }
 
-    public void setId(Integer id) {
-        if (id >= 0)
-            this.id = id;
+    public void setId(Integer id) throws InvalidValueException {
+        if (id == null || id <= 0)
+            throw new InvalidValueException("L'id est obligatoire et doit être un nombre positif.", id);
+        this.id = id;
     }
 
     public void setPhone(String phone) {
@@ -45,9 +48,10 @@ public class Customer {
         this.vatNumber = vatNumber;
     }
 
-    public void setLocalityZipCode(Integer localityZipCode) {
-        if (localityZipCode > 0)
-            this.localityZipCode = localityZipCode;
+    public void setLocalityZipCode(Integer localityZipCode) throws InvalidValueException {
+        if (localityZipCode == null || localityZipCode > 0)
+            throw new InvalidValueException("Le code postal est obligatoire et doit être un nombre positif.", localityZipCode);
+        this.localityZipCode = localityZipCode;
     }
 
     public String getPhone() {

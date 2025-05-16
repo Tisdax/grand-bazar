@@ -2,6 +2,7 @@ package DAO;
 
 import exceptions.DAOException;
 import DAOinterfaces.ProductDAO;
+import exceptions.InvalidValueException;
 import model.*;
 
 import java.sql.*;
@@ -22,7 +23,7 @@ public class ProductDBAccess implements ProductDAO {
             return data.next();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Cet id existe déjà");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'un produit");
         }
     }
 
@@ -143,7 +144,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Product> productList() throws DAOException {
+    public ArrayList<Product> productList() throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from product";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -179,7 +180,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException {
+    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException, InvalidValueException {
         String sqlInstruction = "select p.name as 'product_name', st.quantity as 'stock_quantity', st.shelf_level as 'shelf_level', sh.id as 'shelf_id', sh.is_refrigirated as 'is_shelf_refregirated' from product p inner join stock st on p.id = st.product inner join shelf sh on st.shelf = sh.id where p.category = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -203,7 +204,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException {
+    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
         String sqlInstruction = "select p.id as 'product_id', p.name as 'product_name', p.net_price as 'product_net_price', c.quantity, s.id as 'sale_id', s.date as 'sale_date' from product p inner join command_line c on c.product = p.id inner join sale s on c.sale = s.id where s.date between ? and ?";
         try {
             Connection connection = SingletonConnection.getInstance();
