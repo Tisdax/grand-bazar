@@ -2,6 +2,7 @@ package userInterface;
 
 import controller.ApplicationController;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.Product;
 import model.ProductCategory;
 
@@ -142,7 +143,7 @@ public class ProductForm extends JPanel {
                         promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
                 emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
                 JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
-            } catch (DAOException ex) {
+            } catch (DAOException | InvalidValueException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de l'ajout", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -152,13 +153,13 @@ public class ProductForm extends JPanel {
                 controller.updateProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
                         promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
                 emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
-            } catch (DAOException ex){
-                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problèmes lors de la mise à jour", JOptionPane.ERROR_MESSAGE);
+            } catch (DAOException | InvalidValueException ex){
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de la mise à jour", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
 
-    public Product tansformProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException {
+    private Product tansformProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException, InvalidValueException {
         String name = nameField.getText();
         Integer vat = (Integer) vatComboBox.getSelectedItem();
         Boolean isEdible = isEdibleCheckBox.isSelected();
