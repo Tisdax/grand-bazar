@@ -23,28 +23,30 @@ public class CustomerForm extends JPanel {
 
         this.setLayout(new BorderLayout());
         titlePanel = new JPanel();
-        formPanel = new JPanel(new GridLayout());
+        formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
         buttonPanel = new JPanel();
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
 
-        titleLabel = new JLabel("Formulaire de client");
+        titleLabel = new JLabel("Formulaire de client", SwingConstants.RIGHT);
         Font font = new Font("Arial", Font.BOLD, 20);
         titleLabel.setFont(font);
         titlePanel.add(titleLabel);
 
-        idLabel = new JLabel("Identifiant client");
+        idLabel = new JLabel("Identifiant client", SwingConstants.RIGHT);
         idField = new JTextField();
+        idField.setText(String.valueOf(controller.lastId() + 1));
+        idField.setEnabled(false);
         formPanel.add(idLabel);
         formPanel.add(idField);
 
-        lastNameLabel = new JLabel("Nom");
+        lastNameLabel = new JLabel("Nom", SwingConstants.RIGHT);
         lastNameField = new JTextField();
         formPanel.add(lastNameLabel);
         formPanel.add(lastNameField);
 
-        firstNameLabel = new JLabel("Prénom");
+        firstNameLabel = new JLabel("Prénom", SwingConstants.RIGHT);
         firstNameField = new JTextField();
         formPanel.add(firstNameLabel);
         formPanel.add(firstNameField);
@@ -92,7 +94,7 @@ public class CustomerForm extends JPanel {
 
     }
 
-    public void updateButton(){
+    private void updateButton(){
         buttonPanel.removeAll();
         buttonPanel.add(updateButton);
         revalidate();

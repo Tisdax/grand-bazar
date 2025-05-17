@@ -15,6 +15,10 @@ public class ProductManager {
         dao = new ProductDBAccess();
     }
 
+    public boolean exists(String productid) throws DAOException {
+        return dao.exists(productid);
+    }
+
     public void addProduct(Product product) throws DAOException {
         dao.addProduct(product);
     }

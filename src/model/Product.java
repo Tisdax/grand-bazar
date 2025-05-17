@@ -1,5 +1,7 @@
 package model;
 
+import controller.ApplicationController;
+import exceptions.DAOException;
 import exceptions.InvalidValueException;
 
 import java.time.LocalDate;
@@ -10,29 +12,58 @@ public class Product {
     private Integer vatPercentage, loyaltyPointsNb, minQuantity, promotionMinQuantity, timeBeforeRemoving;
     private Boolean isEdible;
     private LocalDate saleDate;
+    private ApplicationController controller = new ApplicationController();
 
-    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Integer minQuantity, Integer promotionMinQuantity, Integer timeBeforeRemoving, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException {
-        this.id = id;
-        this.name = name;
+    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Integer minQuantity, Integer promotionMinQuantity, Integer timeBeforeRemoving, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException, DAOException {
+        setId(id);
+        setName(name);
         setNetPrice(netPrice);
         this.vatPercentage = vatPercentage;
-        this.loyaltyPointsNb = loyaltyPointsNb;
+        setLoyaltyPointsNb(loyaltyPointsNb);
         setMinQuantity(minQuantity);
         setPromotionMinQuantity(promotionMinQuantity);
         setTimeBeforeRemoving(timeBeforeRemoving);
         this.isEdible = isEdible;
-        this.saleDate = saleDate;
+        setSaleDate(saleDate);
         this.categoryName = categoryName;
     }
 
-    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException {
+    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException, DAOException {
         this(id, name, netPrice, vatPercentage, loyaltyPointsNb, null, null, null, isEdible, saleDate, categoryName);
     }
 
+    public void setId(String id) throws InvalidValueException, DAOException {
+        if (id == null || id.isEmpty()){
+            throw new InvalidValueException("Veuillez entrez un identifiant", id);
+        } else {
+            if (controller.exists(id)) {
+                throw new InvalidValueException("L'identifiant est déjà utilisé. Veuillez en choisir un autre", id);
+            } else {
+                if (id.length() > 13){
+                    throw new InvalidValueException("L'identifiant doit avoir maximum 13 caractères", id);
+                } else {
+                    this.id = id;
+                }
+            }
+        }
+    }
+
+    public void setName(String name) throws InvalidValueException {
+        if (name == null || name.isEmpty()){
+            throw new InvalidValueException("Veuillez entrez un nom au produit", name);
+        }
+        this.name = name;
+    }
     public void setNetPrice(Double netPrice) throws InvalidValueException {
         if (netPrice == null || netPrice <= 0)
             throw new InvalidValueException("Le prix est obligatoire et doit être un nombre positif.", netPrice);
         this.netPrice = netPrice;
+    }
+
+    public void setLoyaltyPointsNb(Integer loyaltyPointsNb) throws InvalidValueException {
+        if (loyaltyPointsNb == null || loyaltyPointsNb < 0)
+            throw new InvalidValueException("Le nombre de points de fidélité doit être un nombre positif.", loyaltyPointsNb);
+        this.loyaltyPointsNb = loyaltyPointsNb;
     }
 
     public void setMinQuantity(Integer minQuantity) throws InvalidValueException {
@@ -51,6 +82,13 @@ public class Product {
         if (timeBeforeRemoving != null && timeBeforeRemoving <= 0)
             throw new InvalidValueException("Le temps avant de retirer des rayons doit être laissé vide ou être un nombre positif.", timeBeforeRemoving);
         this.timeBeforeRemoving = timeBeforeRemoving;
+    }
+
+    public void setSaleDate(LocalDate saleDate) throws InvalidValueException {
+        if (saleDate == null || saleDate.isBefore(LocalDate.now())){
+            throw new InvalidValueException("Veuillez entrez une adresse supérieur à aujourd'hui", saleDate);
+        }
+        this.saleDate = saleDate;
     }
 
     public String getId() {

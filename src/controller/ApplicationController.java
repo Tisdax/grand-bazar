@@ -30,6 +30,10 @@ public class ApplicationController {
         return categoryManager.getAllCategory();
     }
 
+    public boolean exists(String productid) throws DAOException {
+        return productManager.exists(productid);
+    }
+
     public void addProduct(Product product) throws DAOException {
         productManager.addProduct(product);
     }
@@ -68,5 +72,9 @@ public class ApplicationController {
 
     public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
         return customerManager.customerList();
+    }
+
+    public int lastId() throws DAOException {
+        return customerManager.lastId();
     }
 }

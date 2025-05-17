@@ -31,4 +31,8 @@ public class CustomerManager {
     public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
         return dao.customerList();
     }
+
+    public int lastId() throws DAOException {
+        return dao.lastId();
+    }
 }
