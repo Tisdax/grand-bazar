@@ -18,11 +18,9 @@ public class MethodTest {
         DAO dao = new DBAccess();
 
         try {
-            System.out.println(customerDAO.exists(3));
-            if (!productDAO.exists("25"))
-                productDAO.addProduct(new Product("25", "jus dfraise", (double)1, 12, 200, true, LocalDate.of(2025, 4, 2), "fruits"));
-            else
-                System.out.println("product exists");
+            ArrayList<Product> products = productDAO.productList();
+            for (Product product : products)
+                System.out.println(product.getId());
         }
         catch (DAOException | InvalidValueException e) {
             System.out.println(e.getMessage());

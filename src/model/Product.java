@@ -79,7 +79,7 @@ public class Product {
         this.timeBeforeRemoving = timeBeforeRemoving;
     }
 
-    public void setSaleDate(LocalDate saleDate) {
+    public void setSaleDate(LocalDate saleDate) throws InvalidValueException {
         this.saleDate = saleDate;
     }
 
