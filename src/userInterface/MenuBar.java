@@ -2,12 +2,14 @@ package userInterface;
 
 import controller.ApplicationController;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.text.ParseException;
 
 public class MenuBar {
-    public static JMenuBar CreateJMenuBar(JFrame frame) throws DAOException {
+    public static JMenuBar CreateJMenuBar(JFrame frame) throws DAOException, ParseException, InvalidValueException {
         // Menu & Menu Items
         JMenuBar menu = new JMenuBar();
         JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;

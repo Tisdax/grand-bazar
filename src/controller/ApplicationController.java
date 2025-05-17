@@ -13,6 +13,7 @@ public class ApplicationController {
     private ProductManager productManager;
     private AddressManager addressManager;
     private CustomerManager customerManager;
+    private LocalityManager localityManager;
 
     public ApplicationController(){
         connectionManager = new ConnectionManager();
@@ -20,6 +21,7 @@ public class ApplicationController {
         productManager = new ProductManager();
         addressManager = new AddressManager();
         customerManager = new CustomerManager();
+        localityManager = new LocalityManager();
     }
 
     public void closeConnection() throws DAOException {
@@ -76,5 +78,9 @@ public class ApplicationController {
 
     public int lastId() throws DAOException {
         return customerManager.lastId();
+    }
+
+    public ArrayList<Locality> localitiesList() throws DAOException, InvalidValueException {
+        return localityManager.localitiesList();
     }
 }

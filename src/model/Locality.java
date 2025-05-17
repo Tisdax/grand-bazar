@@ -24,4 +24,9 @@ public class Locality {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return zipCode + " " + name;
+    }
 }

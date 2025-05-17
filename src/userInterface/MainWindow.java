@@ -2,11 +2,13 @@ package userInterface;
 
 import controller.ApplicationController;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 
 public class MainWindow extends JFrame {
     private JMenuBar menuBar;
@@ -15,7 +17,7 @@ public class MainWindow extends JFrame {
     private JPanel mainPanel;
     private CardLayout cardLayout;
 
-    public MainWindow() throws DAOException {
+    public MainWindow() throws DAOException, ParseException, InvalidValueException {
         super("Accueil");
         setBounds(0,0,1400,800);
         setLocationRelativeTo(null);
@@ -40,7 +42,7 @@ public class MainWindow extends JFrame {
 
         setVisible(true);
     }
-    public static void main(String[] args) throws DAOException {
+    public static void main(String[] args) throws DAOException, ParseException, InvalidValueException {
         MainWindow mainWindow = new MainWindow();
     }
 }

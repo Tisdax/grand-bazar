@@ -12,7 +12,6 @@ public class Product {
     private Integer vatPercentage, loyaltyPointsNb, minQuantity, promotionMinQuantity, timeBeforeRemoving;
     private Boolean isEdible;
     private LocalDate saleDate;
-    private ApplicationController controller = new ApplicationController();
 
     public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Integer minQuantity, Integer promotionMinQuantity, Integer timeBeforeRemoving, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException, DAOException {
         setId(id);
@@ -80,10 +79,7 @@ public class Product {
         this.timeBeforeRemoving = timeBeforeRemoving;
     }
 
-    public void setSaleDate(LocalDate saleDate) throws InvalidValueException {
-        if (saleDate == null || saleDate.isBefore(LocalDate.now())){
-            throw new InvalidValueException("Veuillez entrez une adresse supérieur à aujourd'hui", saleDate);
-        }
+    public void setSaleDate(LocalDate saleDate) {
         this.saleDate = saleDate;
     }
 
