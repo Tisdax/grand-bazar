@@ -36,14 +36,10 @@ public class Product {
         if (id == null || id.isEmpty()){
             throw new InvalidValueException("Veuillez entrez un identifiant", id);
         } else {
-            if (controller.exists(id)) {
-                throw new InvalidValueException("L'identifiant est déjà utilisé. Veuillez en choisir un autre", id);
+            if (id.length() > 13){
+                throw new InvalidValueException("L'identifiant doit avoir maximum 13 caractères", id);
             } else {
-                if (id.length() > 13){
-                    throw new InvalidValueException("L'identifiant doit avoir maximum 13 caractères", id);
-                } else {
-                    this.id = id;
-                }
+                this.id = id;
             }
         }
     }
