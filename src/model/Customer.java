@@ -12,8 +12,8 @@ public class Customer {
 
     public Customer(Integer id, String lastName, String firstName, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber, LocalDate birthdate, String typeName) throws InvalidValueException {
         setId(id);
-        this.lastName = lastName;
-        this.firstName = firstName;
+        setLastName(lastName);
+        setFirstName(firstName);
         this.addressStreet = addressStreet;
         setLocalityZipCode(localityZipCode);
         this.localityName = localityName;
@@ -22,7 +22,7 @@ public class Customer {
         setEmail(email);
         this.isSubscribedToNewsLetter = isSubscribedToNewsLetter;
         setVatNumber(vatNumber);
-        this.birthdate = birthdate;
+        setBirthdate(birthdate);
         this.typeName = typeName;
     }
 
@@ -34,6 +34,20 @@ public class Customer {
         if (id == null || id <= 0)
             throw new InvalidValueException("L'id est obligatoire et doit être un nombre positif.", id);
         this.id = id;
+    }
+
+    public void setLastName(String lastName) throws InvalidValueException {
+        if (lastName == null || lastName.isEmpty()){
+            throw new InvalidValueException("Veuillez entre un nom", lastName);
+        }
+        this.lastName = firstName;
+    }
+
+    public void setFirstName(String firstName) throws InvalidValueException {
+        if (firstName == null || !firstName.isEmpty()){
+            throw new InvalidValueException("Veuillez entre un prénom", firstName);
+        }
+        this.firstName = firstName;
     }
 
     public void setPhone(String phone) {
@@ -52,6 +66,12 @@ public class Customer {
         if (localityZipCode == null || localityZipCode > 0)
             throw new InvalidValueException("Le code postal est obligatoire et doit être un nombre positif.", localityZipCode);
         this.localityZipCode = localityZipCode;
+    }
+
+    public void setBirthdate(LocalDate birthdate) throws InvalidValueException {
+        if (birthdate == null || birthdate.isAfter(LocalDate.now()))
+            throw new InvalidValueException("Veuillez entre une date de naissance valide", birthdate);
+        this.birthdate = birthdate;
     }
 
     public String getPhone() {

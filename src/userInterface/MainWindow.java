@@ -4,6 +4,7 @@ import controller.ApplicationController;
 import exceptions.DAOException;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -11,7 +12,8 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private WelcomePanel welcomePanel;
     private ProductForm productForm;
-    private ApplicationController controller;
+    private JPanel mainPanel;
+    private CardLayout cardLayout;
 
     public MainWindow() throws DAOException {
         super("Accueil");
@@ -21,7 +23,8 @@ public class MainWindow extends JFrame {
         addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
                 try {
-                    controller = new ApplicationController();
+                    ProductForm productForm;
+                    ApplicationController controller = new ApplicationController();
                     controller.closeConnection();
                     System.exit(0);
                 } catch (DAOException ex) {
@@ -37,8 +40,9 @@ public class MainWindow extends JFrame {
 
         setVisible(true);
     }
-
     public static void main(String[] args) throws DAOException {
         MainWindow mainWindow = new MainWindow();
     }
 }
+
+

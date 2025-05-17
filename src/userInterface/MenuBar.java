@@ -1,8 +1,10 @@
 package userInterface;
 
+import controller.ApplicationController;
 import exceptions.DAOException;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 public class MenuBar {
     public static JMenuBar CreateJMenuBar(JFrame frame) throws DAOException {
