@@ -143,10 +143,8 @@ public class ProductForm extends JPanel {
                         promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
                 emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
                 JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
-            } catch (DAOException ex) {
+            } catch (DAOException | InvalidValueException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de l'ajout", JOptionPane.ERROR_MESSAGE);
-            } catch (InvalidValueException ex) {
-                throw new RuntimeException(ex);
             }
         });
 
@@ -161,7 +159,7 @@ public class ProductForm extends JPanel {
         });
     }
 
-    public Product tansformProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException, InvalidValueException {
+    private Product tansformProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException, InvalidValueException {
         String name = nameField.getText();
         Integer vat = (Integer) vatComboBox.getSelectedItem();
         Boolean isEdible = isEdibleCheckBox.isSelected();
@@ -170,7 +168,7 @@ public class ProductForm extends JPanel {
         String id = idField.getText();
         if (!id.equals("")) {
             if (controller.exists(id)) {
-
+                JOptionPane.showMessageDialog(null, "L'identifiant " + id + " est déjà utilisé. Veuillez en choisir un autre", "Identifiant incorrect", JOptionPane.ERROR_MESSAGE);
             }
 
         } else {
@@ -207,6 +205,7 @@ public class ProductForm extends JPanel {
 
         return new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category);
     }
+
     private void fillProductForm(Product product){
         updateButton();
         idField.setText(product.getId());

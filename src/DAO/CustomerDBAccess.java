@@ -29,7 +29,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public Integer lastId() throws DAOException {
+    public int lastId() throws DAOException {
         String sqlInstruction = "SELECT MAX(id) FROM customer";
         try {
             Connection connection = SingletonConnection.getInstance();

@@ -9,4 +9,7 @@ public class CustomerManager extends JPanel {
         titleLabel = new JLabel("Gestion des clients");
         this.add(titleLabel, BorderLayout.NORTH);
     }
+
+
+
 }

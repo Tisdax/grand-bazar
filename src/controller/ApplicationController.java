@@ -73,4 +73,8 @@ public class ApplicationController {
     public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
         return customerManager.customerList();
     }
+
+    public int lastId() throws DAOException {
+        return customerManager.lastId();
+    }
 }

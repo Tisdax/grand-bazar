@@ -23,7 +23,7 @@ public class ProductDBAccess implements ProductDAO {
             return data.next();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Cet identifiant est déjà utilisé par un autre produi");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'un produit");
         }
     }
 
