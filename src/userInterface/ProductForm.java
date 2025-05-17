@@ -35,13 +35,17 @@ public class ProductForm extends JPanel {
         this.add(formPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
 
+        UIManager.put("Spinner.editorAlignment", JTextField.LEFT);
+
+
+        // TITLE PANEL
         titleLabel = new JLabel("Formulaire de Produit");
         Font font = new Font("Arial", Font.BOLD, 20);
         titleLabel.setFont(font);
         titlePanel.add(titleLabel);
 
-        UIManager.put("Spinner.editorAlignment", JTextField.LEFT);
 
+        // FORM PANEL
         idLabel = new JLabel("Identifiant : ", SwingConstants.RIGHT);
         idField = new JTextField(15);
         formPanel.add(idLabel);
@@ -134,15 +138,16 @@ public class ProductForm extends JPanel {
             timeBeforeRemovingSpinner.setEnabled(timeBeforeRemovingCheckBox.isSelected());
         });
 
+
+        // BUTTON PANEL
         addButton = new JButton("Ajouter Produit");
         buttonPanel.add(addButton);
         updateButton = new JButton("Modifier Produit");
         addButton.addActionListener(e -> {
             try {
-                controller.addProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
-                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
-                emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
+                controller.addProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
                 JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
+                emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
             } catch (DAOException | InvalidValueException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de l'ajout", JOptionPane.ERROR_MESSAGE);
             }
@@ -150,8 +155,8 @@ public class ProductForm extends JPanel {
 
         updateButton.addActionListener(e -> {
             try {
-                controller.updateProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner,
-                        promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
+                controller.updateProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
+                JOptionPane.showMessageDialog(null, "Produit modifié", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
             } catch (DAOException | InvalidValueException ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de la mise à jour", JOptionPane.ERROR_MESSAGE);
