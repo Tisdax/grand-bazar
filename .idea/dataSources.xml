@@ -15,7 +15,6 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="@localhost" uuid="45fcf74f-0181-440d-84a0-ce673eff30db">
-      <driver-ref>mysql_aurora.aws_wrapper</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>software.amazon.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:aws-wrapper:mysql://localhost:3306</jdbc-url>
