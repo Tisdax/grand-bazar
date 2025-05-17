@@ -81,7 +81,7 @@ public class Product {
     }
 
     public void setSaleDate(LocalDate saleDate) throws InvalidValueException {
-        if (saleDate == null || saleDate.isBefore(LocalDate.now())){
+        if (saleDate == null){
             throw new InvalidValueException("Veuillez entrez une adresse supérieur à aujourd'hui", saleDate);
         }
         this.saleDate = saleDate;
