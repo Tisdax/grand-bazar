@@ -10,24 +10,26 @@ public class Customer {
     private Boolean isSubscribedToNewsLetter;
     private Integer id, localityZipCode;
 
-    public Customer(Integer id, String lastName, String firstName, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber, LocalDate birthdate, String typeName) throws InvalidValueException {
+    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, String phone, String email, Boolean isSubscribedToNewsLetter, String vatNumber,
+                    Integer localityZipCode, String localityName, String addressStreet, String houseNumber, String typeName) throws InvalidValueException {
         setId(id);
         setLastName(lastName);
         setFirstName(firstName);
-        this.addressStreet = addressStreet;
-        setLocalityZipCode(localityZipCode);
-        this.localityName = localityName;
-        this.houseNumber = houseNumber;
+        setBirthdate(birthdate);
         setPhone(phone);
         setEmail(email);
         this.isSubscribedToNewsLetter = isSubscribedToNewsLetter;
         setVatNumber(vatNumber);
-        setBirthdate(birthdate);
+        setLocalityZipCode(localityZipCode);
+        this.localityName = localityName;
+        this.addressStreet = addressStreet;
+        this.houseNumber = houseNumber;
         this.typeName = typeName;
     }
 
-    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, Boolean isSubscribedToNewsLetter, String addressStreet, Integer localityZipCode, String localityName, String houseNumber, String typeName) throws InvalidValueException {
-        this(id, lastName, firstName, addressStreet, localityZipCode, localityName, houseNumber, null, null, isSubscribedToNewsLetter, null, birthdate, typeName);
+    public Customer(Integer id, String lastName, String firstName, LocalDate birthdate, Boolean isSubscribedToNewsLetter, Integer localityZipCode,
+                    String localityName, String addressStreet, String houseNumber, String typeName) throws InvalidValueException {
+        this(id, lastName, firstName, birthdate, null, null, isSubscribedToNewsLetter, null, localityZipCode, localityName, addressStreet, houseNumber, typeName);
     }
 
     public void setId(Integer id) throws InvalidValueException {
@@ -38,14 +40,14 @@ public class Customer {
 
     public void setLastName(String lastName) throws InvalidValueException {
         if (lastName == null || lastName.isEmpty()){
-            throw new InvalidValueException("Veuillez entre un nom", lastName);
+            throw new InvalidValueException("Veuillez entrer un nom", lastName);
         }
-        this.lastName = firstName;
+        this.lastName = lastName;
     }
 
     public void setFirstName(String firstName) throws InvalidValueException {
-        if (firstName == null || !firstName.isEmpty()){
-            throw new InvalidValueException("Veuillez entre un prénom", firstName);
+        if (firstName == null || firstName.isEmpty()){
+            throw new InvalidValueException("Veuillez entrer un prénom", firstName);
         }
         this.firstName = firstName;
     }
@@ -63,14 +65,14 @@ public class Customer {
     }
 
     public void setLocalityZipCode(Integer localityZipCode) throws InvalidValueException {
-        if (localityZipCode == null || localityZipCode > 0)
+        if (localityZipCode == null || localityZipCode <= 0)
             throw new InvalidValueException("Le code postal est obligatoire et doit être un nombre positif.", localityZipCode);
         this.localityZipCode = localityZipCode;
     }
 
     public void setBirthdate(LocalDate birthdate) throws InvalidValueException {
         if (birthdate == null || birthdate.isAfter(LocalDate.now()))
-            throw new InvalidValueException("Veuillez entre une date de naissance valide", birthdate);
+            throw new InvalidValueException("Veuillez entrer une date de naissance valide", birthdate);
         this.birthdate = birthdate;
     }
 

@@ -50,7 +50,6 @@ public class ProductManager extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 
-
         titleLabel = new JLabel("Gestion des produits");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
