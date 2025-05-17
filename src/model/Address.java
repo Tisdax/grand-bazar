@@ -19,7 +19,7 @@ public class Address {
     }
 
     public void setLocalityZipCode(Integer localityZipCode) throws InvalidValueException {
-        if (localityZipCode == null || localityZipCode <= 0)
+        if (localityZipCode == null || localityZipCode  <= 0)
             throw new InvalidValueException("Le code postal est obligatoire et doit être un nombre positif.", localityZipCode);
         this.localityZipCode = localityZipCode;
     }

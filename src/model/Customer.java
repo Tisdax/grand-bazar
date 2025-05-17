@@ -40,11 +40,11 @@ public class Customer {
         if (lastName == null || lastName.isEmpty()){
             throw new InvalidValueException("Veuillez entre un nom", lastName);
         }
-        this.lastName = firstName;
+        this.lastName = lastName;
     }
 
     public void setFirstName(String firstName) throws InvalidValueException {
-        if (firstName == null || !firstName.isEmpty()){
+        if (firstName == null || firstName.isEmpty()){
             throw new InvalidValueException("Veuillez entre un prénom", firstName);
         }
         this.firstName = firstName;
@@ -63,7 +63,7 @@ public class Customer {
     }
 
     public void setLocalityZipCode(Integer localityZipCode) throws InvalidValueException {
-        if (localityZipCode == null || localityZipCode > 0)
+        if (localityZipCode == null || localityZipCode <= 0)
             throw new InvalidValueException("Le code postal est obligatoire et doit être un nombre positif.", localityZipCode);
         this.localityZipCode = localityZipCode;
     }
