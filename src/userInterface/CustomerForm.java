@@ -262,7 +262,7 @@ public class CustomerForm extends JPanel {
         typeComboBox.setSelectedItem(customer.getTypeName());
 
         addressStreetField.setText(address.getStreet());
-        localityComboBox.setSelectedItem(STR."\{address.getLocalityZipCode()} \{address.getLocalityName()}");
+        localityComboBox.setSelectedItem(address.getLocalityZipCode() + " " +address.getLocalityName());
         houseNumberField.setText(address.getHouseNumber());
         postalBoxNumberSpinner.setValue(address.getPostalBoxNumber());
     }
