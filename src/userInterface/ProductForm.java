@@ -160,48 +160,38 @@ public class ProductForm extends JPanel {
     }
 
     private Product tansformProduct(JTextField idField, JTextField nameField, JSpinner netPriceSpinner, JComboBox<Integer> vatComboBox, JSpinner loyaltyPointsSpinner, JSpinner minQuantSpinner, JSpinner promotionQuantSpinner, JSpinner timeBeforeRemovingSpinner, JCheckBox isEdibleCheckBox, JSpinner saleDateSpinner, JComboBox<String> categoryComboBox, JCheckBox minquantCheckBox, JCheckBox promoMinQuantCheckBox, JCheckBox timeBeforeRemovingCheckBox) throws DAOException, InvalidValueException {
+        String id = idField.getText();
         String name = nameField.getText();
         Integer vat = (Integer) vatComboBox.getSelectedItem();
-        Boolean isEdible = isEdibleCheckBox.isSelected();
-
-
-        String id = idField.getText();
-        if (!id.equals("")) {
-            if (controller.exists(id)) {
-                JOptionPane.showMessageDialog(null, "L'identifiant " + id + " est déjà utilisé. Veuillez en choisir un autre", "Identifiant incorrect", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Veuillez entrez un identifiant", "Identifiant manquant", JOptionPane.ERROR_MESSAGE);
-        }
-
-        String category = (String) categoryComboBox.getSelectedItem();
         Double netPrice = ((Number) netPriceSpinner.getValue()).doubleValue();
-
         Integer loyaltyPoints = (Integer) loyaltyPointsSpinner.getValue();
-
+        Boolean isEdible = isEdibleCheckBox.isSelected();
         LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-
+        String category = (String) categoryComboBox.getSelectedItem();
 
         Integer minQuant;
-        if (minquantCheckBox.isSelected())
+        if (minquantCheckBox.isSelected()) {
             minQuant = (Integer) minQuantSpinner.getValue();
-        else
+        }
+        else {
             minQuant = null;
+        }
 
         Integer promotionMinQuant;
-        if (promoMinQuantCheckBox.isSelected())
+        if (promoMinQuantCheckBox.isSelected()) {
             promotionMinQuant = (Integer) promotionQuantSpinner.getValue();
-        else
+        }
+        else {
             promotionMinQuant = null;
+        }
 
         Integer timeBeforeRemoving;
-        if (timeBeforeRemovingCheckBox.isSelected())
+        if (timeBeforeRemovingCheckBox.isSelected()) {
             timeBeforeRemoving = (Integer) timeBeforeRemovingSpinner.getValue();
-        else
+        }
+        else {
             timeBeforeRemoving = null;
-
+        }
 
         return new Product(id , name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category);
     }
