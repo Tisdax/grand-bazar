@@ -246,7 +246,8 @@ public class CustomerForm extends JPanel {
         else
             vatNumber = null;
 
-        return new Customer(id, lastname, firstName, addressStreet, localityZipCode, localityName, houseNumber, phone, email, isSubscribedToNewsLetter, vatNumber, birthday, typeName);
+        return new Customer(id, lastname, firstName, birthday, phone, email, isSubscribedToNewsLetter, vatNumber,
+                localityZipCode, localityName, addressStreet, houseNumber, typeName);
     }
 
     private void fillCustomerForm(Customer customer, Address address){

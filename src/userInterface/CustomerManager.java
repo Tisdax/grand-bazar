@@ -21,19 +21,15 @@ public class CustomerManager extends JPanel {
     public CustomerManager() {
         DefaultTableModel tableModel = new DefaultTableModel();
         JTable customerTable = new JTable(tableModel);
-        tableModel.addColumn("ID");
-        tableModel.addColumn("Nom");
-        tableModel.addColumn("Prénom");
-        tableModel.addColumn("Date de naissance");
-        tableModel.addColumn("Num Téléphone");
-        tableModel.addColumn("Email");
-        tableModel.addColumn("Est abonné newsletter");
-        tableModel.addColumn("Numéro TVA");
-        tableModel.addColumn("Localité zip code");
-        tableModel.addColumn("Nom localité");
-        tableModel.addColumn("Rue");
-        tableModel.addColumn("Numéro maison");
-        tableModel.addColumn("Type");
+
+        String[] columnNames = {
+                "ID", "Nom", "Prénom", "Date de naissance", "Num Téléphone", "Email",
+                "Est abonné newsletter", "Numéro TVA", "Localité zip code",
+                "Nom localité", "Rue", "Numéro maison", "Type"
+        };
+        for (String columnName : columnNames) {
+            tableModel.addColumn(columnName);
+        }
 
         customerDBAccess = new CustomerDBAccess();
         try {
