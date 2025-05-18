@@ -13,7 +13,6 @@ public class MainWindow extends JFrame {
     private WelcomePanel welcomePanel;
     private ProductForm productForm;
     private JPanel mainPanel;
-    private CardLayout cardLayout;
 
     public MainWindow() throws DAOException {
         super("Accueil");
