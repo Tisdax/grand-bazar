@@ -9,6 +9,7 @@ import model.CustomerAddressInfo;
 import model.CustomerDeletionMode;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CustomerDBAccess implements CustomerDAO {
@@ -179,7 +180,12 @@ public class CustomerDBAccess implements CustomerDAO {
             String phone, email, vatNumber;
 
             while (data.next()) {
-                customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"), data.getString("address_locality_name"), data.getInt("address_locality_zip_code"),  data.getString("address_street"), data.getString("address_house_number"), data.getString("type"));
+                customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"),
+                        data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"),
+                        data.getInt("address_locality_zip_code"), data.getString("address_locality_name"),
+                        data.getString("address_street"), data.getString("address_house_number"),
+                        data.getString("type"));
+
 
                 phone = data.getString("phone");
                 if (!data.wasNull())
