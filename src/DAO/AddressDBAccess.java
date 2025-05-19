@@ -28,6 +28,8 @@ public class AddressDBAccess implements AddressDAO {
             if (address.getPostalBoxNumber() != null) {
                 sqlInstruction = "update address set postal_box_number = ? where locality_zip_code = ? and locality_name = ? and street = ? and house_number = ?";
 
+                preparedStatement = connection.prepareStatement(sqlInstruction);
+
                 preparedStatement.setInt(1, address.getPostalBoxNumber());
                 preparedStatement.setInt(2, address.getLocalityZipCode());
                 preparedStatement.setString(3, address.getLocalityName());

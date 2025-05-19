@@ -139,8 +139,8 @@ public class CustomerForm extends JPanel {
         formPanel.add(typeLabel);
         formPanel.add(typeComboBox);
 
-        vatNumberLabel = new JLabel("Numéro de TVA :", SwingConstants.RIGHT);
-        MaskFormatter vatFormatter = new MaskFormatter("BE##########");
+        vatNumberLabel = new JLabel("Numéro de TVA (BE) :", SwingConstants.RIGHT);
+        MaskFormatter vatFormatter = new MaskFormatter("##########");
         vatFormatter.setPlaceholderCharacter('_');
         vatNumberField = new JFormattedTextField(vatFormatter);
         vatNumberField.setEnabled(false);
@@ -176,7 +176,9 @@ public class CustomerForm extends JPanel {
 
         addButton.addActionListener(e -> {
             try {
-                controller.addAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
+                if (!controller.exists(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
+                    controller.addAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
+                }
                 controller.addCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
                 JOptionPane.showMessageDialog(null, "Client ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox, postalBoxNumberCheckBox, postalBoxNumberSpinner);
@@ -187,10 +189,10 @@ public class CustomerForm extends JPanel {
 
         updateButton.addActionListener(e -> {
             try {
-                controller.updateCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
                 if (!controller.exists(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
                     controller.addAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
                 }
+                controller.updateCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
                 JOptionPane.showMessageDialog(null, "Client modifié", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox, postalBoxNumberCheckBox, postalBoxNumberSpinner);
             } catch (DAOException | InvalidValueException ex) {
@@ -203,8 +205,9 @@ public class CustomerForm extends JPanel {
         String street = addressStreetField.getText();
         String houseNumber = houseNumberField.getText();
         Locality locality = (Locality) localityComboBox.getSelectedItem();
-        String localityName = locality.getName();
         Integer localityZipCode = locality.getZipCode();
+        String localityName = locality.getName();
+
 
         Integer postalBoxNumber;
         if (postalBoxNumberCheckBox.isSelected()){
@@ -212,7 +215,6 @@ public class CustomerForm extends JPanel {
         } else {
             postalBoxNumber = null;
         }
-        System.out.println(street + localityZipCode + localityName + houseNumber + postalBoxNumber);
 
         return new Address(street, localityZipCode, localityName, houseNumber, postalBoxNumber);
     }
@@ -236,14 +238,14 @@ public class CustomerForm extends JPanel {
         else
             phone = null;
 
-        String email;
+        String email = null;
         if (emailCheckBox.isSelected())
-            email = emailField.getText();
+                email = emailField.getText();
         else
             email = null;
 
         String vatNumber;
-        if (typeName.equals("professionnel"))
+        if (typeComboBox.getSelectedItem().equals("professionnel"))
             vatNumber = vatNumberField.getText();
         else
             vatNumber = null;
@@ -276,7 +278,7 @@ public class CustomerForm extends JPanel {
         firstNameField.setText("");
         emailField.setText("");
         vatNumberField.setText("");
-        phoneNumberField.setValue(0);
+        phoneNumberField.setValue(null);
         birthdaySpinner.setValue(new Date());
         isSubscrideCheckbox.setSelected(false);
         typeComboBox.setSelectedIndex(0);
