@@ -5,6 +5,7 @@ import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ApplicationController {
@@ -50,6 +51,14 @@ public class ApplicationController {
 
     public ArrayList<Product> productList() throws DAOException, InvalidValueException {
         return productManager.productList();
+    }
+
+    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException, InvalidValueException {
+        return productManager.productStockSearch(categoryId);
+    }
+
+    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
+        return productManager.productSalesSearch(startDate, endDate);
     }
 
     public void addAddress(Address address) throws DAOException {

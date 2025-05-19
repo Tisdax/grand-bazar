@@ -38,10 +38,11 @@ public class StockInformation extends JPanel {
         } catch (DAOException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur lors de la recherche de catégorie", JOptionPane.ERROR_MESSAGE);
         }
+
         categoryComboBox.addActionListener(e -> {
             stockTable.refreshTable();
             String selectedCategory = (String) categoryComboBox.getSelectedItem();
-            stockTable.fillStockTable();
+            stockTable.fillStockTable(selectedCategory);
         });
 
 
