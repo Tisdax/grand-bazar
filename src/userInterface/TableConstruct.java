@@ -8,6 +8,7 @@ import exceptions.InvalidValueException;
 import model.Customer;
 import model.Product;
 import model.ProductCategory;
+import model.ProductStockInfo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,7 @@ public class TableConstruct {
         tableModel = new DefaultTableModel();
         table = new JTable(tableModel);
         controller = new ApplicationController();
+        table.setEnabled(false);
 
         for (String columnName : columnNames) {
             tableModel.addColumn(columnName);
@@ -57,15 +59,16 @@ public class TableConstruct {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void fillStockTable() {
+    public void fillStockTable(String category) {
         try {
-            ArrayList<ProductCategory> categories = controller.getAllCategory();
-            for (ProductCategory category : categories) {
+            ArrayList<ProductStockInfo> productStockInfos = controller.productStockSearch(category);
+            for (ProductStockInfo productStockInfo : productStockInfos) {
                 tableModel.addRow(new Object[] {
-                     category.getName(), category.getDescription()
+                     productStockInfo.getProductName(), productStockInfo.getStockQuantity(), productStockInfo.getShelfLevel(),
+                        productStockInfo.getShelfId(), productStockInfo.getShelfRefregirated()
                 });
             }
-        } catch (DAOException e) {
+        } catch (DAOException | InvalidValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

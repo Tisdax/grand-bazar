@@ -6,6 +6,7 @@ import DAOinterfaces.AddressDAO;
 import exceptions.DAOException;
 import model.Address;
 
+
 public class AddressManager {
     private AddressDAO dao;
 

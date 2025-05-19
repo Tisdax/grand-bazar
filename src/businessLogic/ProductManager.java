@@ -5,7 +5,10 @@ import DAOinterfaces.ProductDAO;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Product;
+import model.ProductOrderSummary;
+import model.ProductStockInfo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductManager {
@@ -34,4 +37,11 @@ public class ProductManager {
     public ArrayList<Product> productList() throws DAOException, InvalidValueException {
         return dao.productList();
     }
+    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException, InvalidValueException {
+        return dao.productStockSearch(categoryId);
+    }
+    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
+        return dao.productSalesSearch(startDate, endDate);
+    }
+
 }

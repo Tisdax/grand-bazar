@@ -52,15 +52,24 @@ public class Customer {
         this.firstName = firstName;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(String phone) throws InvalidValueException {
+        if (phone != null && phone.charAt(phone.length() - 1) == '_'){
+            throw new InvalidValueException("Veuillez entrez un numéro de téléphone valide", phone);
+        }
         this.phone = phone;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws InvalidValueException {
+        if (email != null && email.isEmpty()){
+            throw new InvalidValueException("Veuillez entrez une adresse email valide", email);
+        }
         this.email = email;
     }
 
-    public void setVatNumber(String vatNumber) {
+    public void setVatNumber(String vatNumber) throws InvalidValueException {
+        if (vatNumber != null && vatNumber.charAt(vatNumber.length() - 1) == '_'){
+            throw new InvalidValueException("Veuillez entrez un numéro de TVA valide", vatNumber);
+        }
         this.vatNumber = vatNumber;
     }
 
@@ -75,6 +84,7 @@ public class Customer {
             throw new InvalidValueException("Veuillez entrer une date de naissance valide", birthdate);
         this.birthdate = birthdate;
     }
+
 
     public String getPhone() {
         return phone;
