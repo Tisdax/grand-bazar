@@ -1,5 +1,6 @@
 package userInterface;
 
+import businessLogic.ConnectionManager;
 import controller.ApplicationController;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
@@ -90,7 +91,13 @@ public class MenuBar {
 
         // exit
         leave.addActionListener(e -> {
-            System.exit(0);
+            try {
+                ApplicationController controller = new ApplicationController();
+                controller.closeConnection();
+                System.exit(0);
+            } catch (DAOException ex) {
+                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problème lors de la fermeture de la BD",JOptionPane.ERROR_MESSAGE);
+            }
         });
         //
         return menu;
