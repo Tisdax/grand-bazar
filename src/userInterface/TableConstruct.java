@@ -7,10 +7,12 @@ import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Customer;
 import model.Product;
+import model.ProductCategory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class TableConstruct {
     DefaultTableModel tableModel;
@@ -55,8 +57,24 @@ public class TableConstruct {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
+    public void fillStockTable() {
+        try {
+            ArrayList<ProductCategory> categories = controller.getAllCategory();
+            for (ProductCategory category : categories) {
+                tableModel.addRow(new Object[] {
+                     category.getName(), category.getDescription()
+                });
+            }
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     public JTable getTable() {
         return table;
+    }
+    public void refreshTable() {
+        tableModel.setRowCount(0);
+        tableModel.fireTableDataChanged();
     }
 }

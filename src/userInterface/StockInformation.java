@@ -21,8 +21,15 @@ public class StockInformation extends JPanel {
     public StockInformation() {
         titleLabel = new JLabel("Informations sur le stock");
         controller = new ApplicationController();
-        categoryComboBox = new JComboBox<>();
 
+        // Table
+        String[] columnsNames = {
+                "Nom ¨produit", "Qt en stock", "Shelf Level", "Shelf ID", "Est réfrigérer"
+        };
+        stockTable = new TableConstruct(columnsNames);
+
+        // ComboBox
+        categoryComboBox = new JComboBox<>();
         try {
             ArrayList<ProductCategory> categories = controller.getAllCategory();
             for (ProductCategory category : categories) {
@@ -31,12 +38,15 @@ public class StockInformation extends JPanel {
         } catch (DAOException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur lors de la recherche de catégorie", JOptionPane.ERROR_MESSAGE);
         }
+        categoryComboBox.addActionListener(e -> {
+            stockTable.refreshTable();
+            String selectedCategory = (String) categoryComboBox.getSelectedItem();
+            stockTable.fillStockTable();
+        });
 
-        String[] columnsNames = {
-                "Nom ¨produit", "Qt en stock", "Shelf Level", "Shelf ID", "Est réfrigérer"
-        };
+
         this.add(titleLabel, BorderLayout.NORTH);
         this.add(categoryComboBox, BorderLayout.SOUTH);
-
+        this.add(new JScrollPane(stockTable.getTable()));
     }
 }
