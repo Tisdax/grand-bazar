@@ -188,7 +188,9 @@ public class CustomerForm extends JPanel {
         updateButton.addActionListener(e -> {
             try {
                 controller.updateCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
-                controller.addAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
+                if (!controller.exists(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
+                    controller.addAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
+                }
                 JOptionPane.showMessageDialog(null, "Client modifié", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox, postalBoxNumberCheckBox, postalBoxNumberSpinner);
             } catch (DAOException | InvalidValueException ex) {
