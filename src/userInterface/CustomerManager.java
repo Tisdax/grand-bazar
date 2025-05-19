@@ -17,35 +17,18 @@ public class CustomerManager extends JPanel {
     private JLabel titleLabel;
     private JButton addCustomerButton;
     private JButton removeCustomerButton;
+    private TableConstruct customerTable;
 
     public CustomerManager() {
-        DefaultTableModel tableModel = new DefaultTableModel();
-        JTable customerTable = new JTable(tableModel);
-
         String[] columnNames = {
                 "ID", "Nom", "Prénom", "Date de naissance", "Num Téléphone", "Email",
                 "Est abonné newsletter", "Numéro TVA", "Localité zip code",
                 "Nom localité", "Rue", "Numéro maison", "Type"
         };
-        for (String columnName : columnNames) {
-            tableModel.addColumn(columnName);
-        }
 
         customerDBAccess = new CustomerDBAccess();
-        try {
-            ArrayList<Customer> customers = customerDBAccess.customerList();
-
-            for(Customer customer : customers) {
-                tableModel.addRow(new Object[] {
-                        customer.getId(), customer.getLastName(), customer.getFirstName(), customer.getBirthdate(), customer.getPhone(),
-                        customer.getEmail(), customer.getSubscribedToNewsLetter(), customer.getVatNumber(), customer.getLocalityZipCode(),
-                        customer.getLocalityName(), customer.getAddressStreet(), customer.getHouseNumber(), customer.getTypeName()
-                });
-            }
-
-        } catch (DAOException | InvalidValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
+        customerTable = new TableConstruct(columnNames);
+        customerTable.fillCustomerTable(customerDBAccess);
 
         titleLabel = new JLabel("Gestion des clients");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -59,7 +42,7 @@ public class CustomerManager extends JPanel {
         this.add(titleLabel);
         this.add(addCustomerButton);
         this.add(removeCustomerButton);
-        this.add(new JScrollPane(customerTable));
+        this.add(new JScrollPane(customerTable.getTable()));
     }
 
 
