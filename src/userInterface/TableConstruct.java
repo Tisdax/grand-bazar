@@ -2,6 +2,7 @@ package userInterface;
 
 import DAO.CustomerDBAccess;
 import DAO.ProductDBAccess;
+import controller.ApplicationController;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Customer;
@@ -12,21 +13,22 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class TableConstruct {
-    String[] columnNames;
     DefaultTableModel tableModel;
     JTable table;
+    ApplicationController controller;
 
     public TableConstruct(String[] columnNames) {
         tableModel = new DefaultTableModel();
         table = new JTable(tableModel);
+        controller = new ApplicationController();
 
         for (String columnName : columnNames) {
             tableModel.addColumn(columnName);
         }
     }
-    public void fillProductTable(ProductDBAccess productDBAccess) {
+    public void fillProductTable() {
         try {
-            ArrayList<Product> products = productDBAccess.productList();
+            ArrayList<Product> products = controller.productList();
             for(Product product : products) {
                 tableModel.addRow(new Object[] {
                         product.getId(), product.getName(), product.getNetPrice(), product.getVatPercentage(),
@@ -39,9 +41,9 @@ public class TableConstruct {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void fillCustomerTable(CustomerDBAccess customerDBAccess) {
+    public void fillCustomerTable() {
         try {
-            ArrayList<Customer> customers = customerDBAccess.customerList();
+            ArrayList<Customer> customers = controller.customerList();
             for(Customer customer : customers) {
                 tableModel.addRow(new Object[] {
                         customer.getId(), customer.getLastName(), customer.getFirstName(), customer.getBirthdate(), customer.getPhone(),

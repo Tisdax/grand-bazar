@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ProductManager extends JPanel {
-    private ProductDBAccess productDBAccess;
     private JLabel titleLabel;
     private JButton addProductButton;
     private JButton removeProductButton;
@@ -24,10 +23,8 @@ public class ProductManager extends JPanel {
                 "ID", "Name", "Prix Net", "% TVA", "Pts Fidélité", "Eligible", "Quantité minimum",
                 "Quantité minimum promo", "Date mise en vente", "Temps avant retrait", "Catégorie"
         };
-
-        productDBAccess = new ProductDBAccess();
         tableConstruct = new TableConstruct(columnNames);
-        tableConstruct.fillProductTable(productDBAccess);
+        tableConstruct.fillProductTable();
 
         titleLabel = new JLabel("Gestion des produits");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));

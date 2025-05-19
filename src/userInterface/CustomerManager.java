@@ -13,7 +13,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CustomerManager extends JPanel {
-    private CustomerDBAccess customerDBAccess;
     private JLabel titleLabel;
     private JButton addCustomerButton;
     private JButton removeCustomerButton;
@@ -25,10 +24,8 @@ public class CustomerManager extends JPanel {
                 "Est abonné newsletter", "Numéro TVA", "Localité zip code",
                 "Nom localité", "Rue", "Numéro maison", "Type"
         };
-
-        customerDBAccess = new CustomerDBAccess();
         customerTable = new TableConstruct(columnNames);
-        customerTable.fillCustomerTable(customerDBAccess);
+        customerTable.fillCustomerTable();
 
         titleLabel = new JLabel("Gestion des clients");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
