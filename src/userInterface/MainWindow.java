@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import java.text.ParseException;
 
 public class MainWindow extends JFrame {
+    private static MainWindow instance;
     private JMenuBar menuBar;
     private WelcomePanel welcomePanel;
     private ProductForm productForm;
@@ -18,6 +19,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() throws DAOException, ParseException, InvalidValueException {
         super("Accueil");
+        instance = this;
         setBounds(0,0,1400,800);
         setLocationRelativeTo(null);
 
@@ -34,13 +36,17 @@ public class MainWindow extends JFrame {
             }
         } );
 
-        setJMenuBar(MenuBar.CreateJMenuBar(this));
+        setJMenuBar(MenuBar.CreateJMenuBar());
 
         welcomePanel = new WelcomePanel();
         add(welcomePanel);
 
         setVisible(true);
     }
+    public static MainWindow getInstance() {
+        return instance;
+    } // Erreur à gérer si mal initialisée ?
+
     public static void main(String[] args) throws DAOException, ParseException, InvalidValueException {
         MainWindow mainWindow = new MainWindow();
     }

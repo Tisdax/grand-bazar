@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.text.ParseException;
 
 public class MenuBar {
-    public static JMenuBar CreateJMenuBar(JFrame frame) throws DAOException, ParseException, InvalidValueException {
-        PanelSwitchActionner switchActionner = new PanelSwitchActionner(frame);
+    public static JMenuBar CreateJMenuBar() throws DAOException, ParseException, InvalidValueException {
+        PanelSwitchActionner switchActionner = new PanelSwitchActionner();
         // Menu & Menu Items
         JMenuBar menu = new JMenuBar();
         JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;
@@ -21,7 +21,7 @@ public class MenuBar {
         CustomerForm customerForm = new CustomerForm();
         ProductForm productForm = new ProductForm();
         WelcomePanel welcomePanel = new WelcomePanel();
-        ProductManager productManager = new ProductManager(frame);
+        ProductManager productManager = new ProductManager();
         CustomerManager customerManager = new CustomerManager();
         CartManager cartManager = new CartManager();
         StockInformation stockInformation = new StockInformation();
