@@ -1,6 +1,7 @@
 package userInterface;
 
 import DAO.ProductDBAccess;
+import controller.ApplicationController;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Product;
@@ -16,6 +17,7 @@ public class ProductManager extends JPanel {
     private JLabel titleLabel;
     private JButton addProductButton;
     private JButton removeProductButton;
+    private JButton editProductButton;
     private TableConstruct tableConstruct;
 
     public ProductManager() {
@@ -35,9 +37,14 @@ public class ProductManager extends JPanel {
         removeProductButton = new JButton("Supprimer un produit");
         removeProductButton.setPreferredSize(new Dimension(250, 60));
 
+        editProductButton = new JButton("Modifier un produit");
+        editProductButton.setPreferredSize(new Dimension(250, 60));
+        // Faire une méthode pour les boutons
+
         this.add(titleLabel);
         this.add(addProductButton);
         this.add(removeProductButton);
+        this.add(editProductButton);
         this.add(new JScrollPane(tableConstruct.getTable()));
     }
 }
