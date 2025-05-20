@@ -10,7 +10,7 @@ import java.text.ParseException;
 
 public class MenuBar {
     public static JMenuBar CreateJMenuBar(JFrame frame) throws DAOException, ParseException, InvalidValueException {
-        PanelSwitchActionner panelSwitchActionner = new PanelSwitchActionner(frame);
+        PanelSwitchActionner switchActionner = new PanelSwitchActionner(frame);
         // Menu & Menu Items
         JMenuBar menu = new JMenuBar();
         JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;
@@ -21,7 +21,7 @@ public class MenuBar {
         CustomerForm customerForm = new CustomerForm();
         ProductForm productForm = new ProductForm();
         WelcomePanel welcomePanel = new WelcomePanel();
-        ProductManager productManager = new ProductManager();
+        ProductManager productManager = new ProductManager(frame);
         CustomerManager customerManager = new CustomerManager();
         CartManager cartManager = new CartManager();
         StockInformation stockInformation = new StockInformation();
@@ -29,18 +29,18 @@ public class MenuBar {
 
         // Application Menu
         applicationMenu = new JMenu("Application");
-        welcomePage = panelSwitchActionner.createMenuItem(welcomePanel, "Accueil");
-        leave = panelSwitchActionner.createMenuItem(welcomePanel, "Quitter");
+        welcomePage = switchActionner.createMenuItem(welcomePanel, "Accueil");
+        leave = switchActionner.createMenuItem(welcomePanel, "Quitter");
         menu.add(applicationMenu);
         applicationMenu.add(welcomePage);
         applicationMenu.add(leave);
 
         // Product Menu
         productMenu = new JMenu("Gestion produit");
-        createProduct = panelSwitchActionner.createMenuItem(productManager, "Nouveau produit");
-        readProduct = panelSwitchActionner.createMenuItem(productManager, "Afficher produit");
-        updateProduct = panelSwitchActionner.createMenuItem(productManager, "Modifier produit");
-        deleteProduct = panelSwitchActionner.createMenuItem(productManager, "Supprimer produit");
+        createProduct = switchActionner.createMenuItem(productForm, "Nouveau produit");
+        readProduct = switchActionner.createMenuItem(productManager, "Afficher produit");
+        updateProduct = switchActionner.createMenuItem(productManager, "Modifier produit");
+        deleteProduct = switchActionner.createMenuItem(productManager, "Supprimer produit");
         menu.add(productMenu);
         productMenu.add(createProduct);
         productMenu.addSeparator();
@@ -52,10 +52,10 @@ public class MenuBar {
 
         // Customer Menu
         customerMenu = new JMenu("Gestion client");
-        createCustomer = panelSwitchActionner.createMenuItem(customerManager, "Nouveau client");
-        readCustomer = panelSwitchActionner.createMenuItem(customerManager, "Afficher client");
-        updateCustomer = panelSwitchActionner.createMenuItem(customerManager, "Modifier client");
-        deleteCustomer = panelSwitchActionner.createMenuItem(customerManager, "Supprimer client");
+        createCustomer = switchActionner.createMenuItem(customerForm, "Nouveau client");
+        readCustomer = switchActionner.createMenuItem(customerManager, "Afficher client");
+        updateCustomer = switchActionner.createMenuItem(customerManager, "Modifier client");
+        deleteCustomer = switchActionner.createMenuItem(customerManager, "Supprimer client");
         menu.add(customerMenu);
         customerMenu.add(createCustomer);
         customerMenu.addSeparator();
@@ -67,14 +67,14 @@ public class MenuBar {
 
         // Cart Menu
         shoppingCartMenu = new JMenu("Panier");
-        newPurchase = panelSwitchActionner.createMenuItem(cartManager, "Nouvelle commande");
+        newPurchase = switchActionner.createMenuItem(cartManager, "Nouvelle commande");
         menu.add(shoppingCartMenu);
         shoppingCartMenu.add(newPurchase);
 
         // Stock Menu
         stockMenu = new JMenu("Stock");
-        stockReport = panelSwitchActionner.createMenuItem(stockInformation, "Rapport de stock");
-        lowStockProductReport = panelSwitchActionner.createMenuItem(LowStockProductPanel, "Produits ayant un stock insuffisant");
+        stockReport = switchActionner.createMenuItem(stockInformation, "Rapport de stock");
+        lowStockProductReport = switchActionner.createMenuItem(LowStockProductPanel, "Produits ayant un stock insuffisant");
         menu.add(stockMenu);
         stockMenu.add(stockReport);
         stockMenu.addSeparator();
