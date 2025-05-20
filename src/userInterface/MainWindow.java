@@ -19,7 +19,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() throws DAOException, ParseException, InvalidValueException {
         super("Accueil");
-        instance = this;
+        mainWindow = this;
         setBounds(0,0,1400,800);
         setLocationRelativeTo(null);
 
