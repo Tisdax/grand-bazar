@@ -29,10 +29,12 @@ public class ApplicationController {
         connectionManager.closeConnection();
     }
 
+    // Category
     public ArrayList<ProductCategory> getAllCategory() throws DAOException {
         return categoryManager.getAllCategory();
     }
 
+    // Product
     public boolean exists(String productid) throws DAOException {
         return productManager.exists(productid);
     }
@@ -61,16 +63,24 @@ public class ApplicationController {
         return productManager.productSalesSearch(startDate, endDate);
     }
 
+    // Address
+    public boolean exists(Address address) throws DAOException {
+        return addressManager.exist(address);
+    }
+    public Address getAddress(int localityZipCode, String localityName, String street, String houseNumber) throws DAOException, InvalidValueException {
+        return addressManager.getAddress(localityZipCode, localityName, street, houseNumber);
+    }
     public void addAddress(Address address) throws DAOException {
         addressManager.addAddress(address);
     }
 
-    public boolean exists(Address address) throws DAOException {
-        return addressManager.exist(address);
-    }
-
     public void addCustomer(Customer customer) throws DAOException {
         customerManager.addCustomer(customer);
+    }
+
+    // Customer
+    public Customer getCustomer(int customerId) throws DAOException, InvalidValueException {
+        return customerManager.getCustomer(customerId);
     }
 
     public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
@@ -89,6 +99,7 @@ public class ApplicationController {
         return customerManager.lastId();
     }
 
+    // Locality
     public ArrayList<Locality> localitiesList() throws DAOException, InvalidValueException {
         return localityManager.localitiesList();
     }

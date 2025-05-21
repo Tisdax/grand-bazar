@@ -275,7 +275,7 @@ public class CustomerForm extends JPanel {
                 localityZipCode, localityName, addressStreet, houseNumber, typeName);
     }
 
-    private void fillCustomerForm(Customer customer, Address address){
+    public void fillCustomerForm(Customer customer, Address address){
         updateButton();
         idField.setText(String.valueOf(customer.getId()));
         lastNameField.setText(customer.getLastName());

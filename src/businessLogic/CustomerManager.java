@@ -19,6 +19,9 @@ public class CustomerManager {
     public void addCustomer(Customer customer) throws DAOException {
         dao.addCustomer(customer);
     }
+    public Customer getCustomer(int customerId) throws DAOException, InvalidValueException {
+        return dao.getCustomer(customerId);
+    }
 
     public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
         return dao.deleteCustomer(customerId, deleteMode);

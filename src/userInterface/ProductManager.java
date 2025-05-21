@@ -38,7 +38,6 @@ public class ProductManager extends JPanel {
 
         editProductButton = new JButton("Modifier un produit");
         editProductButton.setPreferredSize(new Dimension(250, 60));
-        // Faire une méthode pour les boutons
 
         this.add(titleLabel);
         this.add(addProductButton);
