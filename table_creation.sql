@@ -209,10 +209,10 @@ values
     (1340, 'Ottignies', 'Rue du ruisseau', '24', 2),
     (5030, 'Gembloux', 'Rue du chêne', '7', 5);
 
-insert into customer(id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type)
+insert into customer(id, last_name, first_name, birthdate, is_subscribed_to_newsletter, vat_number, address_locality_zip_code, address_locality_name, address_street, address_house_number, type)
 values
-    (1, 'Locht', 'Julien', '2005-10-04', FALSE, '1340', 'Ottignies', 'Rue du ruisseau', '24', 'particulier'),
-    (2, 'Carton de Tournai', 'Martin', '2005-10-04', TRUE, '1340', 'Ottignies', 'Rue du ruisseau', '24', 'professionnel');
+    (1, 'Locht', 'Julien', '2005-10-04', FALSE, null, '1340', 'Ottignies', 'Rue du ruisseau', '24', 'particulier'),
+    (2, 'Carton de Tournai', 'Martin', '2005-10-04', TRUE, 'BE23869357964', '1340', 'Ottignies', 'Rue du ruisseau', '24', 'professionnel');
 
 insert into loyalty_card(number, total_points, is_valid, customer)
 values
