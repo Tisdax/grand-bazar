@@ -18,8 +18,9 @@ public class MethodTest {
         DAO dao = new DBAccess();
 
         try {
-            Customer customer = customerDAO.getCustomer(3);
-                System.out.println(customer.getFirstName());
+            Address address = addressDAO.getAddress(1340, "Ottignies", "Rue du ruisseau", "24");
+            System.out.println(address.getPostalBoxNumber());
+
         }
         catch (DAOException e) {
             System.out.println(e.getDescription());
