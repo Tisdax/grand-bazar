@@ -1,7 +1,4 @@
 package userInterface;
-
-import DAO.ProductDBAccess;
-import controller.ApplicationController;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Product;
@@ -21,7 +18,7 @@ public class ProductManager extends JPanel {
     private TableConstruct tableConstruct;
     private PanelSwitchActionner switchActionner;
 
-    public ProductManager() throws DAOException {
+    public ProductManager() {
         switchActionner = new PanelSwitchActionner();
         String[] columnNames = {
                 "ID", "Name", "Prix Net", "% TVA", "Pts Fidélité", "Eligible", "Quantité minimum",
@@ -33,7 +30,7 @@ public class ProductManager extends JPanel {
         titleLabel = new JLabel("Gestion des produits");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
-        addProductButton = switchActionner.createPanelSwitchButton("Ajouter un produit", ProductForm::new);
+        addProductButton = switchActionner.createButton("Ajouter un produit", ProductForm::new);
         // ProductForm::new = () -> new ProductForm()
         // () : Pas de paramètre, new ProductForm : l'instruction à executer
 

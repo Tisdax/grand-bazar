@@ -33,7 +33,7 @@ public class PanelSwitchActionner {
 //        });
 //        return button;
 //    }
-    public JButton createPanelSwitchButton(String buttonLabel, Callable<JPanel> callablePanel) {
+    public JButton createButton(String buttonLabel, Callable<JPanel> callablePanel) {
         JButton button = new JButton(buttonLabel);
         button.setPreferredSize(new Dimension(250, 60));
         button.addActionListener(e -> {
@@ -46,12 +46,24 @@ public class PanelSwitchActionner {
         });
         return button;
     }
-
-    public JMenuItem createMenuItem(JPanel panel, String menuItemLabel) {
+    public JMenuItem createMenuItem(String menuItemLabel, Callable<JPanel> callablePanel) {
         JMenuItem menuItem = new JMenuItem(menuItemLabel);
         menuItem.addActionListener(e -> {
-            addPanelToFrameTest(panel);
+            try {
+                JPanel panel = callablePanel.call();
+                addPanelToFrameTest(panel);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         });
         return menuItem;
     }
+
+//    public JMenuItem createMenuItem(JPanel panel, String menuItemLabel) {
+//        JMenuItem menuItem = new JMenuItem(menuItemLabel);
+//        menuItem.addActionListener(e -> {
+//            addPanelToFrameTest(panel);
+//        });
+//        return menuItem;
+//    }
 }

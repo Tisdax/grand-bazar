@@ -17,7 +17,7 @@ public class MainWindow extends JFrame {
     private ProductForm productForm;
     private JPanel mainPanel;
 
-    public MainWindow() throws DAOException, ParseException, InvalidValueException {
+    private MainWindow() throws DAOException, ParseException, InvalidValueException {
         super("Accueil");
         instance = this;
         setBounds(0,0,1400,800);
@@ -43,9 +43,12 @@ public class MainWindow extends JFrame {
 
         setVisible(true);
     }
-    public static MainWindow getInstance() {
+    public static MainWindow getInstance() throws DAOException, ParseException, InvalidValueException {
+        if (instance == null) {
+            instance = new MainWindow();
+        }
         return instance;
-    } // Erreur à gérer si mal initialisée ?
+    }
 
     public static void main(String[] args) throws DAOException, ParseException, InvalidValueException {
         MainWindow mainWindow = new MainWindow();
