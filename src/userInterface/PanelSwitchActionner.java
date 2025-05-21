@@ -45,7 +45,7 @@ public class PanelSwitchActionner {
         button.addActionListener(e -> {
             try {
                 CustomerForm customerForm = new CustomerForm();
-                Integer inputID = Integer.valueOf(JOptionPane.showInputDialog("ID du client à modifier :"));
+                int inputID = Integer.parseInt(JOptionPane.showInputDialog("ID du client à modifier :"));
                 Customer customer = controller.getCustomer(inputID);
 
                 customerForm.fillCustomerForm(customer);
