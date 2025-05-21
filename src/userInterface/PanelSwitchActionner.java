@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class PanelSwitchActionner {
     public void addPanelToFrameTest(JPanel panel) {
-            MainWindow mainWindow = MainWindow.getInstance();
+            MainWindow mainWindow = MainWindow.getMainWindow();
             mainWindow.getContentPane().removeAll();
             mainWindow.add(panel);
             mainWindow.revalidate();
