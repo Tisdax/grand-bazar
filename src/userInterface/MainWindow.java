@@ -17,7 +17,7 @@ public class MainWindow extends JFrame {
     private ProductForm productForm;
     private JPanel mainPanel;
 
-    public MainWindow(){
+    private MainWindow(){
         super("Accueil");
         instance = this;
         setBounds(0,0,1400,800);

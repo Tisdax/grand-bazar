@@ -10,7 +10,7 @@ import java.text.ParseException;
 
 public class MenuBar {
     public static JMenuBar CreateJMenuBar() {
-        PanelSwitchActionner switchActionner = new PanelSwitchActionner();
+        PanelSwitchActionner switchActionner = PanelSwitchActionner.getInstance();
         // Menu & Menu Items
         JMenuBar menu = new JMenuBar();
         JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;
