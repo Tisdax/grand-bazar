@@ -43,7 +43,7 @@ public class MainWindow extends JFrame {
 
         setVisible(true);
     }
-    public static MainWindow getInstance() throws DAOException, ParseException, InvalidValueException {
+    public static MainWindow getInstance() {
         if (instance == null) {
             instance = new MainWindow();
         }
@@ -51,7 +51,7 @@ public class MainWindow extends JFrame {
     }
 
     public static void main(String[] args) throws DAOException, ParseException, InvalidValueException {
-        MainWindow mainWindow = new MainWindow();
+        MainWindow.getInstance();
     }
 }
 

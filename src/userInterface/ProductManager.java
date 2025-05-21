@@ -19,7 +19,7 @@ public class ProductManager extends JPanel {
     private PanelSwitchActionner switchActionner;
 
     public ProductManager() {
-        switchActionner = new PanelSwitchActionner();
+        switchActionner = PanelSwitchActionner.getInstance();
         String[] columnNames = {
                 "ID", "Name", "Prix Net", "% TVA", "Pts Fidélité", "Eligible", "Quantité minimum",
                 "Quantité minimum promo", "Date mise en vente", "Temps avant retrait", "Catégorie"
