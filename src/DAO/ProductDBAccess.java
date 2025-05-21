@@ -27,6 +27,38 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
+    public Product getProduct(String productId) throws DAOException, InvalidValueException {
+        String sqlInstruction = "select * from product where id = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setString(1, productId);
+
+            ResultSet data = preparedStatement.executeQuery();
+            data.next();
+
+            Product product = new Product(data.getString("id"), data.getString("name"), data.getDouble("net_price"), data.getInt("vat_percentage"), data.getInt("loyalty_points_nb"), data.getBoolean("is_edible"), data.getDate("sale_date").toLocalDate(), data.getString("category"));
+
+            int minQuantity = data.getInt("min_quantity");
+            if (!data.wasNull())
+                product.setMinQuantity(minQuantity);
+
+            int promotionMinQuantity = data.getInt("promotion_min_quantity");
+            if (!data.wasNull())
+                product.setPromotionMinQuantity(promotionMinQuantity);
+
+            int timeBeforeRemoving = data.getInt("time_before_removing");
+            if (!data.wasNull())
+                product.setTimeBeforeRemoving(timeBeforeRemoving);
+
+            return product;
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur : id innexistant");
+        }
+    }
+
     public void addProduct(Product product) throws DAOException {
         String sqlInstruction = "insert into product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, sale_date, category) values (?, ?, ?, ?, ?, ?, ?, ?)";
         try {

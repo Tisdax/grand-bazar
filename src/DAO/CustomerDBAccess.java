@@ -26,7 +26,43 @@ public class CustomerDBAccess implements CustomerDAO {
             return data.next();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Cet id existe déjà");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'un client");
+        }
+    }
+
+    public Customer getCustomer(int customerId) throws DAOException, InvalidValueException {
+        String sqlInstruction = "select * from customer where id = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setInt(1, customerId);
+
+            ResultSet data = preparedStatement.executeQuery();
+            data.next();
+
+            Customer customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"),
+                    data.getDate("birthdate").toLocalDate(), data.getBoolean("is_subscribed_to_newsletter"),
+                    data.getInt("address_locality_zip_code"), data.getString("address_locality_name"),
+                    data.getString("address_street"), data.getString("address_house_number"),
+                    data.getString("type"));
+
+            String phone = data.getString("phone");
+            if (!data.wasNull())
+                customer.setPhone(phone);
+
+            String email = data.getString("email");
+            if (!data.wasNull())
+                customer.setEmail(email);
+
+            String vatNumber = data.getString("vat_number");
+            if (!data.wasNull())
+                customer.setVatNumber(vatNumber);
+
+            return customer;
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur : id innexistant");
         }
     }
 

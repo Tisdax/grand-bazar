@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public interface ProductDAO {
     public boolean exists(String productId) throws DAOException;
+    public Product getProduct(String productId) throws DAOException, InvalidValueException;
     public void addProduct(Product product) throws DAOException;
     public int deleteProduct(String productId) throws DAOException;
     public void updateProduct(Product product) throws DAOException;

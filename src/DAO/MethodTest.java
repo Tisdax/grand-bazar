@@ -18,11 +18,13 @@ public class MethodTest {
         DAO dao = new DBAccess();
 
         try {
-            ArrayList<Product> products = productDAO.productList();
-            for (Product product : products)
-                System.out.println(product.getId());
+            Customer customer = customerDAO.getCustomer(3);
+                System.out.println(customer.getFirstName());
         }
-        catch (DAOException | InvalidValueException e) {
+        catch (DAOException e) {
+            System.out.println(e.getDescription());
+        }
+        catch (InvalidValueException e) {
             System.out.println(e.getMessage());
         }
     }

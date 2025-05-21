@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public interface CustomerDAO {
     public boolean exists(int customerId) throws DAOException;
+    public Customer getCustomer(int customerId) throws DAOException, InvalidValueException;
     public int lastId() throws DAOException;
     public void addCustomer(Customer customer) throws DAOException;
     public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException;
