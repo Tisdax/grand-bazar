@@ -31,7 +31,7 @@ public class CustomerForm extends JPanel {
     private ApplicationController controller;
     JFormattedTextField phoneNumberField, vatNumberField;
 
-    public CustomerForm() throws DAOException, ParseException, InvalidValueException {
+    public CustomerForm() {
         controller = new ApplicationController();
 
         this.setLayout(new BorderLayout());
@@ -53,7 +53,11 @@ public class CustomerForm extends JPanel {
         // FORM PANEL
         idLabel = new JLabel("Identifiant client :", SwingConstants.RIGHT);
         idField = new JTextField();
-        idField.setText(String.valueOf(controller.lastId() + 1));
+        try {
+            idField.setText(String.valueOf(controller.lastId() + 1));
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de l'identifiant veuillez réesayer", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         idField.setEnabled(false);
         formPanel.add(idLabel);
         formPanel.add(idField);
@@ -70,7 +74,14 @@ public class CustomerForm extends JPanel {
 
         localityLabel = new JLabel("Catégorie du produit :", SwingConstants.RIGHT);
         localityComboBox = new JComboBox<>();
-        ArrayList<Locality> localities = controller.localitiesList();
+        ArrayList<Locality> localities = null;
+        try {
+            localities = controller.localitiesList();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidValueException e) {
+            throw new RuntimeException(e);
+        }
         for (Locality locality : localities) {
             localityComboBox.addItem(locality);
         }
@@ -104,7 +115,12 @@ public class CustomerForm extends JPanel {
         formPanel.add(phoneNumberCheckBox);
 
         phoneLabel = new JLabel("Numéro de téléphone :", SwingConstants.RIGHT);
-        MaskFormatter phoneFormatter = new MaskFormatter("####/##/##/##");
+        MaskFormatter phoneFormatter = null;
+        try {
+            phoneFormatter = new MaskFormatter("####/##/##/##");
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Erreur lors du formatage du numéro de téléphone veuillez réessayer", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         phoneFormatter.setPlaceholderCharacter('_');
         phoneNumberField = new JFormattedTextField(phoneFormatter);
         phoneNumberField.setEnabled(false);
@@ -140,7 +156,12 @@ public class CustomerForm extends JPanel {
         formPanel.add(typeComboBox);
 
         vatNumberLabel = new JLabel("Numéro de TVA (BE) :", SwingConstants.RIGHT);
-        MaskFormatter vatFormatter = new MaskFormatter("##########");
+        MaskFormatter vatFormatter = null;
+        try {
+            vatFormatter = new MaskFormatter("##########");
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Erreur lors du formatage du numéro de TVA veuillez réessayer", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         vatFormatter.setPlaceholderCharacter('_');
         vatNumberField = new JFormattedTextField(vatFormatter);
         vatNumberField.setEnabled(false);
