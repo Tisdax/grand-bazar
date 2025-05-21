@@ -45,11 +45,10 @@ public class PanelSwitchActionner {
         button.addActionListener(e -> {
             try {
                 CustomerForm customerForm = new CustomerForm();
-                Integer inputID = Integer.valueOf(JOptionPane.showInputDialog("ID du client à supprimer :"));
+                Integer inputID = Integer.valueOf(JOptionPane.showInputDialog("ID du client à modifier :"));
                 Customer customer = controller.getCustomer(inputID);
-                Address address = controller.getAddress(customer.getLocalityZipCode(), customer.getLocalityName(),
-                        customer.getAddressStreet(), customer.getHouseNumber());
-                customerForm.fillCustomerForm(customer, address);
+
+                customerForm.fillCustomerForm(customer);
                 addPanelToFrameTest(customerForm);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

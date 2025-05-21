@@ -275,22 +275,30 @@ public class CustomerForm extends JPanel {
                 localityZipCode, localityName, addressStreet, houseNumber, typeName);
     }
 
-    public void fillCustomerForm(Customer customer, Address address){
-        updateButton();
-        idField.setText(String.valueOf(customer.getId()));
-        lastNameField.setText(customer.getLastName());
-        firstNameField.setText(customer.getFirstName());
-        emailField.setText(customer.getEmail());
-        vatNumberField.setValue(customer.getVatNumber());
-        phoneNumberField.setValue(customer.getPhone());
-        birthdaySpinner.setValue(Date.from(customer.getBirthdate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        isSubscrideCheckbox.setSelected(customer.getSubscribedToNewsLetter());
-        typeComboBox.setSelectedItem(customer.getTypeName());
+    public void fillCustomerForm(Customer customer){
+        try {
+            Address address = controller.getAddress(customer.getLocalityZipCode(), customer.getLocalityName(),
+                    customer.getAddressStreet(), customer.getHouseNumber());
 
-        addressStreetField.setText(address.getStreet());
-        localityComboBox.setSelectedItem(address.getLocalityZipCode() + " " +address.getLocalityName());
-        houseNumberField.setText(address.getHouseNumber());
-        postalBoxNumberSpinner.setValue(address.getPostalBoxNumber());
+            updateButton();
+            idField.setText(String.valueOf(customer.getId()));
+            lastNameField.setText(customer.getLastName());
+            firstNameField.setText(customer.getFirstName());
+            emailField.setText(customer.getEmail());
+            vatNumberField.setValue(customer.getVatNumber());
+            phoneNumberField.setValue(customer.getPhone());
+            birthdaySpinner.setValue(Date.from(customer.getBirthdate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            isSubscrideCheckbox.setSelected(customer.getSubscribedToNewsLetter());
+            typeComboBox.setSelectedItem(customer.getTypeName());
+
+
+            addressStreetField.setText(address.getStreet());
+            localityComboBox.setSelectedItem(address.getLocalityZipCode() + " " +address.getLocalityName());
+            houseNumberField.setText(address.getHouseNumber());
+            postalBoxNumberSpinner.setValue(address.getPostalBoxNumber());
+        } catch (DAOException | InvalidValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void emptyForm(JTextField idField, JTextField lastNameField, JTextField firstNameField, JTextField addressStreetField, JComboBox localityComboBox, JTextField houseNumberField, JTextField emailField, JTextField vatNumberField, JFormattedTextField phoneNumberField, JSpinner birthdaySpinner, JCheckBox isSubscrideCheckbox, JComboBox typeComboBox, JCheckBox postalBoxNumberCheckBox ,JSpinner postalBoxNumberSpinner) throws DAOException {
