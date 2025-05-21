@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.text.ParseException;
 
 public class MenuBar {
-    public static JMenuBar CreateJMenuBar() throws DAOException, ParseException, InvalidValueException {
+    public static JMenuBar CreateJMenuBar() {
         PanelSwitchActionner switchActionner = new PanelSwitchActionner();
         // Menu & Menu Items
         JMenuBar menu = new JMenuBar();

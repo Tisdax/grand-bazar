@@ -21,7 +21,7 @@ public class ProductManager extends JPanel {
     private TableConstruct tableConstruct;
     private PanelSwitchActionner switchActionner;
 
-    public ProductManager() throws DAOException {
+    public ProductManager() {
         switchActionner = new PanelSwitchActionner();
         String[] columnNames = {
                 "ID", "Name", "Prix Net", "% TVA", "Pts Fidélité", "Eligible", "Quantité minimum",

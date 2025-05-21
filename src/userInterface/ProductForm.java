@@ -24,7 +24,7 @@ public class ProductForm extends JPanel {
     private JSpinner saleDateSpinner, loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, netPriceSpinner;
     private JButton addButton, updateButton;
     private ApplicationController controller;
-    public ProductForm() throws DAOException {
+    public ProductForm() {
         controller = new ApplicationController();
 
         this.setLayout(new BorderLayout());
@@ -112,7 +112,12 @@ public class ProductForm extends JPanel {
 
         categoryLabel = new JLabel("Catégorie du produit :", SwingConstants.RIGHT);
         categoryComboBox = new JComboBox<>();
-        ArrayList<ProductCategory> categories = controller.getAllCategory();
+        ArrayList<ProductCategory> categories = null;
+        try {
+            categories = controller.getAllCategory();
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, "Erreur lors de la recherche de catégorie veuillez réessayer", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         for (ProductCategory category : categories) {
             categoryComboBox.addItem(category.getName());
         }
