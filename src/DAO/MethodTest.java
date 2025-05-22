@@ -19,9 +19,9 @@ public class MethodTest {
         LoyaltyCardDAO loyaltyCardDAO = new LoyaltyCardDBAccess();
 
         try {
-
             System.out.println(loyaltyCardDAO.lastId());
-
+            loyaltyCardDAO.addLoyaltyCard(2);
+            dao.closeConnection();
         }
         catch (DAOException e) {
             System.out.println(e.getDescription());

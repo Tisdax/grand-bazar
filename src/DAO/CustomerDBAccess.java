@@ -1,6 +1,5 @@
 package DAO;
 
-import DAOinterfaces.DAO;
 import exceptions.DAOException;
 import DAOinterfaces.CustomerDAO;
 import exceptions.InvalidValueException;
@@ -9,7 +8,6 @@ import model.CustomerAddressInfo;
 import model.CustomerDeletionMode;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CustomerDBAccess implements CustomerDAO {
@@ -148,7 +146,7 @@ public class CustomerDBAccess implements CustomerDAO {
             LoyaltyCardDBAccess loyaltyCardDAO = new LoyaltyCardDBAccess();
             SaleDBAccess saleDBAccess = new SaleDBAccess();
 
-            nbUpdatedLines += loyaltyCardDAO.delete(customerId);
+            nbUpdatedLines += loyaltyCardDAO.deleteLoyaltyCard(customerId);
             switch(deleteMode) {
                 case DELETE_SALES : nbUpdatedLines += saleDBAccess.deleteSale(customerId); break;
                 case REMOVE_FROM_SALES : nbUpdatedLines += saleDBAccess.removeCustomerFromSales(customerId); break;
