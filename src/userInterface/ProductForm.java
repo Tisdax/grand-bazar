@@ -163,6 +163,13 @@ public class ProductForm extends JPanel {
 
         updateButton.addActionListener(e -> {
             try {
+                if (controller.exists(idField.getText())){
+                    JOptionPane.showMessageDialog(null, "L'identifiant " + idField.getText() + " est déjà utilisé. Veuillez en choisir un autre", "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+                LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if (saleDate == null || saleDate.isBefore(LocalDate.now())){
+                    JOptionPane.showMessageDialog(null, "Veuillez entrez une adresse supérieur à aujourd'hui", "Erreur",JOptionPane.ERROR_MESSAGE);
+                }
                 controller.updateProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
                 JOptionPane.showMessageDialog(null, "Produit modifié", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
@@ -182,13 +189,6 @@ public class ProductForm extends JPanel {
         LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String category = (String) categoryComboBox.getSelectedItem();
 
-        if (controller.exists(id)){
-            JOptionPane.showMessageDialog(null, "L'identifiant " + id + " est déjà utilisé. Veuillez en choisir un autre", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-
-        if (saleDate == null || saleDate.isBefore(LocalDate.now())){
-            JOptionPane.showMessageDialog(null, "Veuillez entrez une adresse supérieur à aujourd'hui", "Erreur",JOptionPane.ERROR_MESSAGE);
-        }
 
         Integer minQuant;
         if (minquantCheckBox.isSelected()) {

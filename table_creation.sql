@@ -254,20 +254,24 @@ INSERT INTO command_line (sale, product, quantity)
 
 INSERT INTO shelf (id, is_refrigirated)
 VALUES
-    (1, FALSE),
-    (2, TRUE);
+    (1, TRUE),
+    (2, TRUE),
+    (3, TRUE),
+    (4, FALSE),
+    (5, FALSE),
+    (6, FALSE);
 
 INSERT INTO stock (shelf, shelf_level, product, quantity)
 VALUES
-    (1, 1, 'P001', 50),
-    (1, 3, 'P001', 50),
-    (1, 2, 'P002', 40),
-    (1, 3, 'P002', 40),
-    (1, 3, 'P005', 30),
-    (2, 1, 'P003', 60),
-    (2, 2, 'P004', 55),
-    (1, 2, 'P006', 45),
-    (1, 1, 'P007', 25);
+    (4, 1, 'P001', 50),
+    (4, 2, 'P001', 50),
+    (4, 3, 'P002', 40),
+    (4, 4, 'P002', 40),
+    (5, 1, 'P005', 30),
+    (5, 2, 'P003', 60),
+    (5, 3, 'P004', 55),
+    (1, 1, 'P006', 45),
+    (6, 1, 'P007', 25);
 
 INSERT INTO promotion (id, min_quantity, reduction_percentage, product, start_date, end_date)
 VALUES
