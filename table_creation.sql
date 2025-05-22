@@ -216,8 +216,8 @@ values
 
 insert into loyalty_card(number, total_points, is_valid, customer)
 values
-    (5342632, 500, true, 1),
-    (4562278, 875, true, 2);
+    (1, 500, true, 1),
+    (2, 875, true, 2);
 
 insert into employee(id, last_name, first_name, address_locality_zip_code, address_locality_name, address_street, address_house_number)
 values

@@ -16,17 +16,18 @@ public class MethodTest {
         CategoryDAO categoryDAO = new CategoryDBAccess();
         LocalityDAO localityDAO = new LocalityDBAccess();
         DAO dao = new DBAccess();
+        LoyaltyCardDAO loyaltyCardDAO = new LoyaltyCardDBAccess();
 
         try {
-            Address address = addressDAO.getAddress(1340, "Ottignies", "Rue du ruisseau", "24");
-            System.out.println(address.getPostalBoxNumber());
+
+            System.out.println(loyaltyCardDAO.lastId());
 
         }
         catch (DAOException e) {
             System.out.println(e.getDescription());
         }
-        catch (InvalidValueException e) {
-            System.out.println(e.getMessage());
-        }
+//        catch (InvalidValueException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 }
