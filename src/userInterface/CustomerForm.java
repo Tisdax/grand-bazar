@@ -72,7 +72,7 @@ public class CustomerForm extends JPanel {
         formPanel.add(firstNameLabel);
         formPanel.add(firstNameField);
 
-        localityLabel = new JLabel("Catégorie du produit :", SwingConstants.RIGHT);
+        localityLabel = new JLabel("Catégorie du client :", SwingConstants.RIGHT);
         localityComboBox = new JComboBox<>();
         ArrayList<Locality> localities = null;
         try {
