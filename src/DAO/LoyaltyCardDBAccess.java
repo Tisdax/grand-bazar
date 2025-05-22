@@ -22,4 +22,5 @@ public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
             throw new DAOException(e.getMessage(), "Erreur lors de la suppression de la carte de fidélité");
         }
     }
+
 }

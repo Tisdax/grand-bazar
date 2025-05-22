@@ -15,6 +15,7 @@ public class ApplicationController {
     private AddressManager addressManager;
     private CustomerManager customerManager;
     private LocalityManager localityManager;
+    private LoyaltyCardManager loyaltyCardManager;
 
     public ApplicationController(){
         connectionManager = new ConnectionManager();
@@ -23,6 +24,7 @@ public class ApplicationController {
         addressManager = new AddressManager();
         customerManager = new CustomerManager();
         localityManager = new LocalityManager();
+        loyaltyCardManager = new LoyaltyCardManager();
     }
 
     public void closeConnection() throws DAOException {
@@ -102,5 +104,9 @@ public class ApplicationController {
     // Locality
     public ArrayList<Locality> localitiesList() throws DAOException, InvalidValueException {
         return localityManager.localitiesList();
+    }
+
+    public void addLoyaltyCard(int customerId) throws DAOException {
+        loyaltyCardManager.addLoyaltyCard(customerId);
     }
 }
