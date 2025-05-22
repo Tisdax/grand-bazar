@@ -33,10 +33,7 @@ public class CustomerManager extends JPanel {
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
         addCustomerButton = switchActionner.createButton("Ajouter un client", CustomerForm::new);
-
-        removeCustomerButton = new JButton("Supprimer un client");
-        removeCustomerButton.setPreferredSize(new Dimension(250, 60));
-
+        removeCustomerButton = switchActionner.createDeleteCustomerButton();
         editCustomerButton = switchActionner.createEditCustomerButton();
 
 //        editCustomerButton = new JButton("Modifier un client");

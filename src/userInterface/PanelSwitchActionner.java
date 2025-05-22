@@ -4,6 +4,7 @@ import controller.ApplicationController;
 import exceptions.DAOException;
 import model.Address;
 import model.Customer;
+import model.CustomerDeletionMode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,11 +33,12 @@ public class PanelSwitchActionner {
         });
         return button;
     }
-    // Surcharge avec dimensions par défaut
     public JButton createButton(String buttonLabel, Callable<JPanel> callablePanel) {
         return createButton(buttonLabel, callablePanel, 250, 60);
     }
 
+
+    // Customer buttons :
     public JButton createEditCustomerButton(int width, int height) {
         JButton button = new JButton("Modifier un client");
         button.setPreferredSize(new Dimension(width, height));
@@ -45,9 +47,20 @@ public class PanelSwitchActionner {
         });
         return button;
     }
-    // Surcharge avec dimensions par défaut
     public JButton createEditCustomerButton() {
         return createEditCustomerButton(250, 60);
+    }
+
+    public JButton createDeleteCustomerButton(int width, int height) {
+        JButton button = new JButton("Supprimer un client");
+        button.setPreferredSize(new Dimension(width, height));
+        button.addActionListener(e -> {
+            deleteCustomerActionner();
+        });
+        return button;
+    }
+    public JButton createDeleteCustomerButton() {
+        return createDeleteCustomerButton(250, 60);
     }
 
 
@@ -90,6 +103,25 @@ public class PanelSwitchActionner {
             customerForm.fillCustomerForm(customer);
             addPanelToFrameTest(customerForm);
 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void deleteCustomerActionner() {
+        try {
+            CustomerDeletionMode deletionMode;
+            Object[] options = {"Supprimer uniquement client", "Supprimmer client et ses achats", "Annuler"};
+            int inputID = Integer.parseInt(JOptionPane.showInputDialog("ID du client à supprimer :"));
+            int choice = JOptionPane.showOptionDialog(null, "Il y a potentiellement des achats liés à ce client",
+                    "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+            if (choice == 0) {
+                deletionMode = CustomerDeletionMode.REMOVE_FROM_SALES;
+                controller.deleteCustomer(inputID, deletionMode);
+            } else if (choice == 1) {
+                deletionMode = CustomerDeletionMode.DELETE_SALES;
+                controller.deleteCustomer(inputID, deletionMode);
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
