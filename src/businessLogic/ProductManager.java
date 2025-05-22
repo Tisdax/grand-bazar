@@ -22,6 +22,10 @@ public class ProductManager {
         return dao.exists(productid);
     }
 
+    public Product getProduct(String productId) throws DAOException, InvalidValueException {
+        return dao.getProduct(productId);
+    }
+
     public void addProduct(Product product) throws DAOException {
         dao.addProduct(product);
     }

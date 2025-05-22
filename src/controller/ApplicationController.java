@@ -44,8 +44,10 @@ public class ApplicationController {
     public void addProduct(Product product) throws DAOException {
         productManager.addProduct(product);
     }
-
-    public int deletProduct(String productId) throws DAOException {
+    public Product getProduct(String productId) throws DAOException, InvalidValueException {
+        return productManager.getProduct(productId);
+    }
+    public int deleteProduct(String productId) throws DAOException {
         return productManager.deleteProduct(productId);
     }
 
