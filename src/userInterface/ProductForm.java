@@ -217,7 +217,7 @@ public class ProductForm extends JPanel {
         return new Product(id, name, netPrice, vat, loyaltyPoints, minQuant, promotionMinQuant, timeBeforeRemoving, isEdible, saleDate, category);
     }
 
-    private void fillProductForm(Product product){
+    public void fillProductForm(Product product){
         updateButton();
         idField.setText(product.getId());
         idField.setEnabled(false);

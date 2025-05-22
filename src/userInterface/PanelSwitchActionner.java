@@ -5,6 +5,7 @@ import exceptions.DAOException;
 import model.Address;
 import model.Customer;
 import model.CustomerDeletionMode;
+import model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,6 +64,18 @@ public class PanelSwitchActionner {
         return createDeleteCustomerButton(250, 60);
     }
 
+    // Product buttons :
+    public JButton createEditProductButton(int width, int height) {
+        JButton button = new JButton("Modifier un produit");
+        button.setPreferredSize(new Dimension(width, height));
+        button.addActionListener(e -> {
+            editProductActionner();
+        });
+        return button;
+    }
+    public JButton createEditProductButton() {
+        return createEditProductButton(250, 60);
+    }
 
 
     // MenuItems
@@ -122,6 +135,18 @@ public class PanelSwitchActionner {
                 deletionMode = CustomerDeletionMode.DELETE_SALES;
                 controller.deleteCustomer(inputID, deletionMode);
             }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void editProductActionner() {
+        try {
+            ProductForm productForm = new ProductForm();
+            String inputID = JOptionPane.showInputDialog("ID du produit à modifier :");
+            Product product = controller.getProduct(inputID);
+            productForm.fillProductForm(product);
+            addPanelToFrameTest(productForm);
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
