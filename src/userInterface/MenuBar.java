@@ -16,7 +16,7 @@ public class MenuBar {
         JMenuBar menu = new JMenuBar();
         JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;
         JMenuItem welcomePage, leave, createProduct, readProduct, updateProduct, deleteProduct, createCustomer, readCustomer,
-                updateCustomer, deleteCustomer, newPurchase, stockReport, lowStockProductReport;
+                updateCustomer, deleteCustomer, newPurchase, stockReport, lowStockProductReport, productStockForm;
 
         // Application Menu
         applicationMenu = new JMenu("Application");
@@ -66,8 +66,11 @@ public class MenuBar {
         stockMenu = new JMenu("Stock");
         stockReport = switchActionner.createMenuItem("Rapport de stock", StockInformation::new);
         lowStockProductReport = switchActionner.createMenuItem("Produits ayant un stock insuffisant", LowStockProductPanel::new);
+        productStockForm = switchActionner.createMenuItem("Gèrer le stock des produit", ProductStockForm::new);
         menu.add(stockMenu);
         stockMenu.add(stockReport);
+        stockMenu.addSeparator();
+        stockMenu.add(productStockForm);
         stockMenu.addSeparator();
         stockMenu.add(lowStockProductReport);
 

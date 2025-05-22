@@ -63,13 +63,13 @@ public class Product {
 
     public void setMinQuantity(Integer minQuantity) throws InvalidValueException {
         if (minQuantity != null && minQuantity <= 0)
-            throw new InvalidValueException("La quantité minimale doit être laissée vide ou être un nombre positif.", minQuantity);
+            throw new InvalidValueException("La quantité minimale doit être décochée ou être un nombre positif.", minQuantity);
         this.minQuantity = minQuantity;
     }
 
     public void setPromotionMinQuantity(Integer promotionMinQuantity) throws InvalidValueException {
         if (promotionMinQuantity != null && promotionMinQuantity <= 0)
-            throw new InvalidValueException("La quantité minimale en promotion doit être laissée vide ou être un nombre positif.", promotionMinQuantity);
+            throw new InvalidValueException("La quantité minimale en promotion doit être décochée ou être un nombre positif.", promotionMinQuantity);
         this.promotionMinQuantity = promotionMinQuantity;
     }
 

@@ -16,6 +16,8 @@ public class ApplicationController {
     private CustomerManager customerManager;
     private LocalityManager localityManager;
     private LoyaltyCardManager loyaltyCardManager;
+    private ShelfManager shelfManager;
+    private StockManager stockManager;
 
     public ApplicationController(){
         connectionManager = new ConnectionManager();
@@ -25,6 +27,8 @@ public class ApplicationController {
         customerManager = new CustomerManager();
         localityManager = new LocalityManager();
         loyaltyCardManager = new LoyaltyCardManager();
+        shelfManager = new ShelfManager();
+        stockManager = new StockManager();
     }
 
     public void closeConnection() throws DAOException {
@@ -110,5 +114,25 @@ public class ApplicationController {
 
     public void addLoyaltyCard(int customerId) throws DAOException {
         loyaltyCardManager.addLoyaltyCard(customerId);
+    }
+
+    public ArrayList<Shelf> shelfList() throws DAOException {
+        return shelfManager.shelfList();
+    }
+
+    public int deleteStock(String productId) throws DAOException {
+        return stockManager.deleteStock(productId);
+    }
+
+    public void addStock(Stock stock) throws DAOException {
+        stockManager.addStock(stock);
+    }
+
+    public boolean exists(Stock stock) throws DAOException {
+        return stockManager.exists(stock);
+    }
+
+    public void updateStock(Stock stock) throws DAOException{
+        stockManager.updateStock(stock);
     }
 }

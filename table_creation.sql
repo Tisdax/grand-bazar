@@ -254,16 +254,16 @@ INSERT INTO command_line (sale, product, quantity)
 
 INSERT INTO shelf (id, is_refrigirated)
 VALUES
-    (1, TRUE),
-    (2, TRUE),
-    (3, TRUE),
-    (4, FALSE),
-    (5, FALSE),
-    (6, FALSE);
+    (1, true),
+    (2, true),
+    (3, true),
+    (4, false),
+    (5, false),
+    (6, false);
 
 INSERT INTO stock (shelf, shelf_level, product, quantity)
 VALUES
-    (4, 1, 'P001', 50),
+    (4, 1, 'P001', 40),
     (4, 2, 'P001', 50),
     (4, 3, 'P002', 40),
     (4, 4, 'P002', 40),

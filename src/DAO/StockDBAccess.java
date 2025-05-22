@@ -2,10 +2,11 @@ package DAO;
 
 import DAOinterfaces.StockDAO;
 import exceptions.DAOException;
+import model.Address;
+import model.Customer;
+import model.Stock;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class StockDBAccess implements StockDAO {
     public int deleteStock(String productId) throws DAOException {
@@ -20,6 +21,67 @@ public class StockDBAccess implements StockDAO {
         }
         catch (SQLException e) {
             throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'un stock");
+        }
+    }
+
+    public boolean exists(Stock stock) throws DAOException{
+        String sqlInstruction = "select * from stock where shelf = ? and shelf_level = ? and product = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setInt(1, stock.getIdShelf());
+            preparedStatement.setInt(2, stock.getShelfLevel());
+            preparedStatement.setString(3, stock.getProductId());
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            return data.next();
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'un produit en stock");
+        }
+    }
+
+
+
+    public void addStock(Stock stock) throws DAOException {
+        String sqlInstruction = "insert into stock(shelf, shelf_level, product, quantity) values (?, ?, ?, ?)";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setInt(1, stock.getIdShelf());
+            preparedStatement.setInt(2, stock.getShelfLevel());
+            preparedStatement.setString(3, stock.getProductId());
+            preparedStatement.setInt(4, stock.getQuantity());
+
+            preparedStatement.executeUpdate();
+
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout d'un produit en stock");
+        }
+    }
+
+    public void updateStock(Stock stock) throws DAOException {
+        String sqlInstruction = "update stock set quantity = ? where shelf = ? and shelf_level  = ? and product  = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+
+            preparedStatement.setInt(1, stock.getQuantity());
+            preparedStatement.setInt(2, stock.getIdShelf());
+            preparedStatement.setInt(3, stock.getShelfLevel());
+            preparedStatement.setString(4, stock.getProductId());
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur lors de la modification d'un produit en stock");
         }
     }
 }
