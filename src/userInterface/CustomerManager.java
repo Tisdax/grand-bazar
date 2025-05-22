@@ -16,10 +16,11 @@ public class CustomerManager extends JPanel {
     private JLabel titleLabel;
     private JButton addCustomerButton;
     private JButton removeCustomerButton;
+    private JButton editCustomerButton;
     private TableConstruct customerTable;
 
     public CustomerManager() {
-        PanelSwitchActionner switchActionner = PanelSwitchActionner.getInstance();
+        PanelSwitchActionner switchActionner = new PanelSwitchActionner();
         String[] columnNames = {
                 "ID", "Nom", "Prénom", "Date de naissance", "Num Téléphone", "Email",
                 "Est abonné newsletter", "Numéro TVA", "Localité zip code",
@@ -36,9 +37,18 @@ public class CustomerManager extends JPanel {
         removeCustomerButton = new JButton("Supprimer un client");
         removeCustomerButton.setPreferredSize(new Dimension(250, 60));
 
+        editCustomerButton = switchActionner.createEditCustomerButton();
+
+//        editCustomerButton = new JButton("Modifier un client");
+//        editCustomerButton.setPreferredSize(new Dimension(250, 60));
+//        editCustomerButton.addActionListener(e -> {
+//            Integer inputID = Integer.valueOf(JOptionPane.showInputDialog("ID du client à supprimer :"));
+//        });
+
         this.add(titleLabel);
         this.add(addCustomerButton);
         this.add(removeCustomerButton);
+        this.add(editCustomerButton);
         this.add(new JScrollPane(customerTable.getTable()));
     }
 

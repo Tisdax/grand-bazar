@@ -19,7 +19,6 @@ public class MainWindow extends JFrame {
 
     private MainWindow(){
         super("Accueil");
-        instance = this;
         setBounds(0,0,1400,800);
         setLocationRelativeTo(null);
 

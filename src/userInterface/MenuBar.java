@@ -11,7 +11,7 @@ import java.text.ParseException;
 
 public class MenuBar {
     public static JMenuBar CreateJMenuBar() {
-        PanelSwitchActionner switchActionner = PanelSwitchActionner.getInstance();
+        PanelSwitchActionner switchActionner = new PanelSwitchActionner();
         // Menu & Menu Items
         JMenuBar menu = new JMenuBar();
         JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;
@@ -45,7 +45,7 @@ public class MenuBar {
         customerMenu = new JMenu("Gestion client");
         createCustomer = switchActionner.createMenuItem("Nouveau client", CustomerForm::new);
         readCustomer = switchActionner.createMenuItem("Afficher client", CustomerManager::new);
-        updateCustomer = switchActionner.createMenuItem("Modifier client", CustomerManager::new);
+        updateCustomer = switchActionner.createEditCustomerMenuItem();
         deleteCustomer = switchActionner.createMenuItem("Supprimer client", CustomerManager::new);
         menu.add(customerMenu);
         customerMenu.add(createCustomer);
