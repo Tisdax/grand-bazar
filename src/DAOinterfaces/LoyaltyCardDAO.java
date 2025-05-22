@@ -5,5 +5,5 @@ import exceptions.DAOException;
 public interface LoyaltyCardDAO {
     public int delete(int loyaltyCardId) throws DAOException;
 
-    void addLoyaltyCard(int customerId);
+    void addLoyaltyCard(int customerId) throws DAOException;
 }
