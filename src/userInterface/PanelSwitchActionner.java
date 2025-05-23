@@ -91,10 +91,26 @@ public class PanelSwitchActionner {
         });
         return menuItem;
     }
+    // Customer MenuItems :
     public JMenuItem createEditCustomerMenuItem() {
         JMenuItem menuItem = new JMenuItem("Modifier un client");
         menuItem.addActionListener(e -> {
             editCustomerActionner();
+        });
+        return menuItem;
+    }
+    public JMenuItem createDeleteCustomerMenuItem() {
+        JMenuItem menuItem = new JMenuItem("Supprimer un client");
+        menuItem.addActionListener(e -> {
+            deleteCustomerActionner();
+        });
+        return menuItem;
+    }
+    // Product MenuItems :
+    public JMenuItem createEditProductMenuItem() {
+        JMenuItem menuItem = new JMenuItem("Modifier un produit");
+        menuItem.addActionListener(e -> {
+            editProductActionner();
         });
         return menuItem;
     }
@@ -108,6 +124,7 @@ public class PanelSwitchActionner {
         mainWindow.repaint();
     }
 
+    // Customer methods
     private void editCustomerActionner() {
         try {
             CustomerForm customerForm = new CustomerForm();
@@ -139,6 +156,7 @@ public class PanelSwitchActionner {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
+    // Product methods
     private void editProductActionner() {
         try {
             ProductForm productForm = new ProductForm();
@@ -151,4 +169,5 @@ public class PanelSwitchActionner {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
+    private void deleteProductActionner() {}
 }

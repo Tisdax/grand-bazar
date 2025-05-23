@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
             public void windowClosing (WindowEvent e) {
                 try {
                     ProductForm productForm;
-                    ApplicationController controller = new ApplicationController();
+                    ApplicationController controller = new   ApplicationController();
                     controller.closeConnection();
                     System.exit(0);
                 } catch (DAOException ex) {
