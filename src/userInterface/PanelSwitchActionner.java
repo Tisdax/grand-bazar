@@ -77,6 +77,19 @@ public class PanelSwitchActionner {
         return createEditProductButton(250, 60);
     }
 
+    public JButton createDeleteProductButton(int width, int height) {
+        JButton button = new JButton("Supprimer un produit");
+        button.setPreferredSize(new Dimension(width, height));
+        button.addActionListener(e -> {
+            deleteProductActionner();
+        });
+        return button;
+    }
+    public JButton createDeleteProductButton() {
+        return createDeleteProductButton(250, 60);
+    }
+
+
 
     // MenuItems
     public JMenuItem createMenuItem(String menuItemLabel, Callable<JPanel> callablePanel) {
@@ -91,6 +104,7 @@ public class PanelSwitchActionner {
         });
         return menuItem;
     }
+
     // Customer MenuItems :
     public JMenuItem createEditCustomerMenuItem() {
         JMenuItem menuItem = new JMenuItem("Modifier un client");
@@ -106,6 +120,7 @@ public class PanelSwitchActionner {
         });
         return menuItem;
     }
+
     // Product MenuItems :
     public JMenuItem createEditProductMenuItem() {
         JMenuItem menuItem = new JMenuItem("Modifier un produit");
@@ -114,6 +129,14 @@ public class PanelSwitchActionner {
         });
         return menuItem;
     }
+    public JMenuItem createDeleteProductMenuItem() {
+        JMenuItem menuItem = new JMenuItem("Supprimer un produit");
+        menuItem.addActionListener(e -> {
+            deleteProductActionner();
+        });
+        return menuItem;
+    }
+
 
     //
     private void addPanelToFrameTest(JPanel panel) {
@@ -169,5 +192,18 @@ public class PanelSwitchActionner {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private void deleteProductActionner() {}
+    private void deleteProductActionner() {
+        Object[] options = {"Supprimer produit", "Annuler"};
+        String inputID = JOptionPane.showInputDialog("ID du produit à supprimer :");
+        int choice = JOptionPane.showOptionDialog(null, "Etes-vous sur de vouloir supprimer ce produit ?",
+                "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        if(choice == 0) {
+            try {
+                controller.deleteProduct(inputID);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }
 }

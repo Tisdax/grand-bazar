@@ -33,8 +33,7 @@ public class ProductManager extends JPanel {
         // ProductForm::new = () -> new ProductForm()
         // () : Pas de paramètre, new ProductForm : l'instruction à executer
 
-        removeProductButton = new JButton("Supprimer un produit");
-        removeProductButton.setPreferredSize(new Dimension(250, 60));
+        removeProductButton = switchActionner.createDeleteProductButton();
 
         editProductButton = switchActionner.createEditProductButton();
 

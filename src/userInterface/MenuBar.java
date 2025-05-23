@@ -31,7 +31,7 @@ public class MenuBar {
         createProduct = switchActionner.createMenuItem("Nouveau produit", ProductForm::new);
         readProduct = switchActionner.createMenuItem("Afficher produit", ProductManager::new);
         updateProduct = switchActionner.createEditProductMenuItem();
-        deleteProduct = switchActionner.createMenuItem("Supprimer produit", ProductManager::new);
+        deleteProduct = switchActionner.createDeleteProductMenuItem();
         menu.add(productMenu);
         productMenu.add(createProduct);
         productMenu.addSeparator();
