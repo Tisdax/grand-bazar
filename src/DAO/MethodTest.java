@@ -18,9 +18,11 @@ public class MethodTest {
         DAO dao = new DBAccess();
 
         try {
-            Address address = addressDAO.getAddress(1340, "Ottignies", "Rue du ruisseau", "24");
-            System.out.println(address.getPostalBoxNumber());
-
+            ArrayList<ProductLowStockInfo> productLowStockInfos = productDAO.productLowStockSearch();
+            for (ProductLowStockInfo productLowStockInfo : productLowStockInfos) {
+                System.out.println(productLowStockInfo.getProductName());
+            }
+            dao.closeConnection();
         }
         catch (DAOException e) {
             System.out.println(e.getDescription());

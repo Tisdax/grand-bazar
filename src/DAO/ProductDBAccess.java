@@ -181,6 +181,7 @@ public class ProductDBAccess implements ProductDAO {
         try {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
             ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Product> products = new ArrayList<>();
@@ -221,6 +222,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.setString(1, categoryId);
 
             ResultSet data = preparedStatement.executeQuery();
+
             ArrayList<ProductStockInfo> productsInfos = new ArrayList<>();
             ProductStockInfo productInfos;
 
@@ -246,6 +248,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.setDate(2, java.sql.Date.valueOf(endDate));
 
             ResultSet data = preparedStatement.executeQuery();
+
             ArrayList<ProductOrderSummary> productsOrderSummaries = new ArrayList<>();
             ProductOrderSummary productOrderSummary;
 
@@ -259,5 +262,29 @@ public class ProductDBAccess implements ProductDAO {
         catch (SQLException e) {
             throw new DAOException(e.getMessage(), "Erreur lors de la recherche des produits sur base de dates");
         }
+    }
+
+    public ArrayList<ProductLowStockInfo> productLowStockSearch() throws DAOException, InvalidValueException {
+        String sqlInstruction = "select p.id as 'product_id', p.name as 'product_name', sum(s.quantity) as 'stock_quantity', p.min_quantity as 'product_min_quantity' from product p inner join stock s on p.id = s.product group by p.id having p.min_quantity is not null";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            ArrayList<ProductLowStockInfo> productsLowStockInfos = new ArrayList<>();
+            ProductLowStockInfo productLowStockInfo;
+
+            while (data.next()) {
+                productLowStockInfo = new ProductLowStockInfo(data.getString("product_id"), data.getString("product_name"), data.getInt("stock_quantity"), data.getInt("product_min_quantity"));
+                productsLowStockInfos.add(productLowStockInfo);
+            }
+
+            return productsLowStockInfos;
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche des produits ayant une quantité en stock trop faible");
+        }
+
     }
 }

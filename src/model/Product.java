@@ -13,7 +13,7 @@ public class Product {
     private Boolean isEdible;
     private LocalDate saleDate;
 
-    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Integer minQuantity, Integer promotionMinQuantity, Integer timeBeforeRemoving, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException, DAOException {
+    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Integer minQuantity, Integer promotionMinQuantity, Integer timeBeforeRemoving, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException {
         setId(id);
         setName(name);
         setNetPrice(netPrice);
@@ -27,20 +27,18 @@ public class Product {
         this.categoryName = categoryName;
     }
 
-    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException, DAOException {
+    public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException {
         this(id, name, netPrice, vatPercentage, loyaltyPointsNb, null, null, null, isEdible, saleDate, categoryName);
     }
 
-    public void setId(String id) throws InvalidValueException, DAOException {
-        if (id == null || id.isEmpty()){
+    public void setId(String id) throws InvalidValueException {
+        if (id == null || id.isEmpty())
             throw new InvalidValueException("Veuillez entrez un identifiant", id);
-        } else {
-            if (id.length() > 13){
-                throw new InvalidValueException("L'identifiant doit avoir maximum 13 caractères", id);
-            } else {
-                this.id = id;
-            }
-        }
+
+        if (id.length() > 13)
+            throw new InvalidValueException("L'identifiant doit avoir maximum 13 caractères", id);
+
+        this.id = id;
     }
 
     public void setName(String name) throws InvalidValueException {
@@ -79,7 +77,7 @@ public class Product {
         this.timeBeforeRemoving = timeBeforeRemoving;
     }
 
-    public void setSaleDate(LocalDate saleDate) throws InvalidValueException {
+    public void setSaleDate(LocalDate saleDate) {
         this.saleDate = saleDate;
     }
 

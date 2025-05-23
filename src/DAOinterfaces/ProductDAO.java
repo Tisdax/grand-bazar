@@ -3,6 +3,7 @@ package DAOinterfaces;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Product;
+import model.ProductLowStockInfo;
 import model.ProductOrderSummary;
 import model.ProductStockInfo;
 
@@ -18,4 +19,5 @@ public interface ProductDAO {
     public ArrayList<Product> productList() throws DAOException, InvalidValueException;
     public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException, InvalidValueException;
     public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException;
+    public ArrayList<ProductLowStockInfo> productLowStockSearch() throws DAOException, InvalidValueException;
 }
