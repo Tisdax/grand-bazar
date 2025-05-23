@@ -1,19 +1,15 @@
 package userInterface;
 
-import DAO.CustomerDBAccess;
-import DAO.ProductDBAccess;
 import controller.ApplicationController;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Customer;
 import model.Product;
-import model.ProductCategory;
 import model.ProductStockInfo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class TableConstruct {
     DefaultTableModel tableModel;
@@ -32,7 +28,7 @@ public class TableConstruct {
     }
     public void fillProductTable() {
         try {
-            ArrayList<Product> products = controller.productList();
+            ArrayList<Product> products = controller.findAllProducts();
             for(Product product : products) {
                 tableModel.addRow(new Object[] {
                         product.getId(), product.getName(), product.getNetPrice(), product.getVatPercentage(),
@@ -47,7 +43,7 @@ public class TableConstruct {
     }
     public void fillCustomerTable() {
         try {
-            ArrayList<Customer> customers = controller.customerList();
+            ArrayList<Customer> customers = controller.findAllCustomers();
             for(Customer customer : customers) {
                 tableModel.addRow(new Object[] {
                         customer.getId(), customer.getLastName(), customer.getFirstName(), customer.getBirthdate(), customer.getPhone(),
@@ -61,7 +57,7 @@ public class TableConstruct {
     }
     public void fillStockTable(String category) {
         try {
-            ArrayList<ProductStockInfo> productStockInfos = controller.productStockSearch(category);
+            ArrayList<ProductStockInfo> productStockInfos = controller.findProductsByCategoryId(category);
             for (ProductStockInfo productStockInfo : productStockInfos) {
                 tableModel.addRow(new Object[] {
                      productStockInfo.getProductName(), productStockInfo.getStockQuantity(), productStockInfo.getShelfLevel(),

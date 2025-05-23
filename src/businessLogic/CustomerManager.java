@@ -16,23 +16,23 @@ public class CustomerManager {
         dao = new CustomerDBAccess();
     }
 
-    public void addCustomer(Customer customer) throws DAOException {
-        dao.addCustomer(customer);
+    public void save(Customer customer) throws DAOException {
+        dao.save(customer);
     }
-    public Customer getCustomer(int customerId) throws DAOException, InvalidValueException {
-        return dao.getCustomer(customerId);
-    }
-
-    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
-        return dao.deleteCustomer(customerId, deleteMode);
+    public Customer findById(int customerId) throws DAOException, InvalidValueException {
+        return dao.findById(customerId);
     }
 
-    public void updateCustomer(Customer customer) throws DAOException {
-        dao.updateCustomer(customer);
+    public int delete(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
+        return dao.delete(customerId, deleteMode);
     }
 
-    public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
-        return dao.customerList();
+    public void update(Customer customer) throws DAOException {
+        dao.update(customer);
+    }
+
+    public ArrayList<Customer> findAll() throws DAOException, InvalidValueException {
+        return dao.findAll();
     }
 
     public int lastId() throws DAOException {

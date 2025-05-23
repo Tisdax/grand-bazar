@@ -114,7 +114,7 @@ public class ProductForm extends JPanel {
         categoryComboBox = new JComboBox<>();
         ArrayList<ProductCategory> categories = null;
         try {
-            categories = controller.getAllCategory();
+            categories = controller.findAllCategories();
         } catch (DAOException e) {
             JOptionPane.showMessageDialog(null, "Erreur lors de la recherche de catégorie veuillez réessayer", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -153,14 +153,14 @@ public class ProductForm extends JPanel {
 
         addButton.addActionListener(e -> {
             try {
-                if (controller.exists(idField.getText())){
+                if (controller.productExistsById(idField.getText())){
                     JOptionPane.showMessageDialog(null, "L'identifiant " + idField.getText() + " est déjà utilisé. Veuillez en choisir un autre", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
                 LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 if (saleDate == null || saleDate.isBefore(LocalDate.now())){
                     JOptionPane.showMessageDialog(null, "Veuillez entrez une adresse supérieur à aujourd'hui", "Erreur",JOptionPane.ERROR_MESSAGE);
                 }
-                controller.addProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
+                controller.saveProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
                 JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
             } catch (DAOException | InvalidValueException ex) {

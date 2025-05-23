@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SaleDBAccess implements SaleDAO {
-    public int deleteSale(int customerId) throws DAOException, InvalidValueException {
+    public int delete(int customerId) throws DAOException, InvalidValueException {
         String sqlInstruction = "delete from sale where customer = ?";
         try {
             int nbUpdatedLines = 0;
@@ -22,9 +22,9 @@ public class SaleDBAccess implements SaleDAO {
 
             preparedStatement.setInt(1, customerId);
 
-            ArrayList<Sale> sales = getSales(customerId);
+            ArrayList<Sale> sales = findByCustomer(customerId);
             for (Sale sale : sales) {
-                nbUpdatedLines += commandLineDBAccess.deleteCommandLine(sale.getId());
+                nbUpdatedLines += commandLineDBAccess.deleteBySale(sale.getId());
             }
 
             nbUpdatedLines += preparedStatement.executeUpdate();
@@ -36,7 +36,7 @@ public class SaleDBAccess implements SaleDAO {
         }
     }
 
-    public ArrayList<Sale> getSales(int customerId) throws DAOException, InvalidValueException {
+    public ArrayList<Sale> findByCustomer(int customerId) throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from sale where customer = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -57,7 +57,7 @@ public class SaleDBAccess implements SaleDAO {
         }
     }
 
-    public int removeCustomerFromSales(int customerId) throws DAOException {
+    public int removeCustomer(int customerId) throws DAOException {
         String sqlInstruction = "update sale set customer = null where customer = ?";
         try {
             Connection connection = SingletonConnection.getInstance();

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ShelfDBAccess implements ShelfDAO {
-    public ArrayList<Shelf> shelfList() throws DAOException {
+    public ArrayList<Shelf> findAll() throws DAOException {
         String sqlInstruction = "select * from shelf";
         try {
             Connection connection = SingletonConnection.getInstance();

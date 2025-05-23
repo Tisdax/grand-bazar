@@ -3,6 +3,6 @@ package DAOinterfaces;
 import exceptions.DAOException;
 
 public interface CommandLineDAO {
-    public int deleteCommandLine(int saleId) throws DAOException;
-    public int deleteCommandLine(String productId) throws DAOException;
+    public int deleteBySale(int saleId) throws DAOException;
+    public int deleteByProduct(String productId) throws DAOException;
 }

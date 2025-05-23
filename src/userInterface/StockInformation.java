@@ -1,14 +1,10 @@
 package userInterface;
 
-import DAO.CategoryDBAccess;
-import businessLogic.CategoryManager;
 import controller.ApplicationController;
 import exceptions.DAOException;
-import exceptions.InvalidValueException;
 import model.ProductCategory;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -31,7 +27,7 @@ public class StockInformation extends JPanel {
         // ComboBox
         categoryComboBox = new JComboBox<>();
         try {
-            ArrayList<ProductCategory> categories = controller.getAllCategory();
+            ArrayList<ProductCategory> categories = controller.findAllCategories();
             for (ProductCategory category : categories) {
                 categoryComboBox.addItem(category.getName());
             }

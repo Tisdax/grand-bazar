@@ -6,5 +6,5 @@ import model.Shelf;
 import java.util.ArrayList;
 
 public interface ShelfDAO {
-    public ArrayList<Shelf> shelfList() throws DAOException;
+    public ArrayList<Shelf> findAll() throws DAOException;
 }

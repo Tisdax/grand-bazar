@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductDBAccess implements ProductDAO {
-    public boolean exists(String productId) throws DAOException {
+    public boolean existsById(String productId) throws DAOException {
         String sqlInstruction = "select * from product where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -27,7 +27,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public Product getProduct(String productId) throws DAOException, InvalidValueException {
+    public Product findById(String productId) throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from product where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -59,7 +59,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public void addProduct(Product product) throws DAOException {
+    public void save(Product product) throws DAOException {
         String sqlInstruction = "insert into product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, sale_date, category) values (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -111,7 +111,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public int deleteProduct(String productId) throws DAOException {
+    public int delete(String productId) throws DAOException {
         String sqlInstruction = "delete from product where id = ?";
         try {
             int nbUpdatedLines = 0;
@@ -121,9 +121,9 @@ public class ProductDBAccess implements ProductDAO {
             PromotionDBAccess promotionDBAccess = new PromotionDBAccess();
             StockDBAccess stockDBAccess = new StockDBAccess();
 
-            nbUpdatedLines += commandLineDBAccess.deleteCommandLine(productId);
-            nbUpdatedLines += promotionDBAccess.deletePromotion(productId);
-            nbUpdatedLines += stockDBAccess.deleteStock(productId);
+            nbUpdatedLines += commandLineDBAccess.deleteByProduct(productId);
+            nbUpdatedLines += promotionDBAccess.delete(productId);
+            nbUpdatedLines += stockDBAccess.deleteById(productId);
 
             preparedStatement.setString(1, productId);
 
@@ -137,7 +137,7 @@ public class ProductDBAccess implements ProductDAO {
 
     }
 
-    public void updateProduct(Product product) throws DAOException {
+    public void update(Product product) throws DAOException {
         String sqlInstruction = "update product set name = ?, net_price = ?, vat_percentage = ?, loyalty_points_nb = ?, is_edible = ?, min_quantity = ?, promotion_min_quantity = ?, sale_date = ?, time_before_removing = ?, category = ? where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -176,7 +176,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Product> productList() throws DAOException, InvalidValueException {
+    public ArrayList<Product> findAll() throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from product";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -213,7 +213,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException, InvalidValueException {
+    public ArrayList<ProductStockInfo> findByCategoryId(String categoryId) throws DAOException, InvalidValueException {
         String sqlInstruction = "select p.name as 'product_name', st.quantity as 'stock_quantity', st.shelf_level as 'shelf_level', sh.id as 'shelf_id', sh.is_refrigirated as 'is_shelf_refregirated' from product p inner join stock st on p.id = st.product inner join shelf sh on st.shelf = sh.id where p.category = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -238,7 +238,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
+    public ArrayList<ProductOrderSummary> findBySaleDate(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
         String sqlInstruction = "select p.id as 'product_id', p.name as 'product_name', p.net_price as 'product_net_price', c.quantity, s.id as 'sale_id', s.date as 'sale_date' from product p inner join command_line c on c.product = p.id inner join sale s on c.sale = s.id where s.date between ? and ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -264,7 +264,7 @@ public class ProductDBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<ProductLowStockInfo> productLowStockSearch() throws DAOException, InvalidValueException {
+    public ArrayList<ProductLowStockInfo> findByLowStock() throws DAOException, InvalidValueException {
         String sqlInstruction = "select p.id as 'product_id', p.name as 'product_name', sum(s.quantity) as 'stock_quantity', p.min_quantity as 'product_min_quantity' from product p inner join stock s on p.id = s.product group by p.id having p.min_quantity is not null";
         try {
             Connection connection = SingletonConnection.getInstance();

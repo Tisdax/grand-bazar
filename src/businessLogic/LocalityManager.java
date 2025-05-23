@@ -15,7 +15,7 @@ public class LocalityManager {
         dao = new LocalityDBAccess();
     }
 
-    public ArrayList<Locality> localitiesList() throws DAOException, InvalidValueException {
-        return dao.localitiesList();
+    public ArrayList<Locality> findAll() throws DAOException, InvalidValueException {
+        return dao.findAll();
     }
 }

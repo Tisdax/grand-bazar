@@ -11,7 +11,7 @@ public class LoyaltyCardManager {
         dao = new LoyaltyCardDBAccess();
     }
 
-    public void addLoyaltyCard(int customerId) throws DAOException {
-        dao.addLoyaltyCard(customerId);
+    public void save(int customerId) throws DAOException {
+        dao.save(customerId);
     }
 }

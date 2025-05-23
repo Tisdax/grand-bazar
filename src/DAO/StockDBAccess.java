@@ -7,7 +7,7 @@ import model.Stock;
 import java.sql.*;
 
 public class StockDBAccess implements StockDAO {
-    public boolean exists(Stock stock) throws DAOException{
+    public boolean existsById(Stock stock) throws DAOException{
         String sqlInstruction = "select * from stock where shelf = ? and shelf_level = ? and product = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -26,7 +26,7 @@ public class StockDBAccess implements StockDAO {
         }
     }
 
-    public void addStock(Stock stock) throws DAOException {
+    public void save(Stock stock) throws DAOException {
         String sqlInstruction = "insert into stock(shelf, shelf_level, product, quantity) values (?, ?, ?, ?)";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -47,7 +47,7 @@ public class StockDBAccess implements StockDAO {
         }
     }
 
-    public int deleteStock(String productId) throws DAOException {
+    public int deleteById(String productId) throws DAOException {
         String sqlInstruction = "delete from stock where product = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -62,7 +62,7 @@ public class StockDBAccess implements StockDAO {
         }
     }
 
-    public void updateStock(Stock stock) throws DAOException {
+    public void update(Stock stock) throws DAOException {
         String sqlInstruction = "update stock set quantity = ? where shelf = ? and shelf_level = ? and product = ?";
         try {
             Connection connection = SingletonConnection.getInstance();

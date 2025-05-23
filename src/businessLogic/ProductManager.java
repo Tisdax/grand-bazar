@@ -18,34 +18,34 @@ public class ProductManager {
         dao = new ProductDBAccess();
     }
 
-    public boolean exists(String productid) throws DAOException {
-        return dao.exists(productid);
+    public boolean existsById(String productid) throws DAOException {
+        return dao.existsById(productid);
     }
 
-    public Product getProduct(String productId) throws DAOException, InvalidValueException {
-        return dao.getProduct(productId);
+    public Product findById(String productId) throws DAOException, InvalidValueException {
+        return dao.findById(productId);
     }
 
-    public void addProduct(Product product) throws DAOException {
-        dao.addProduct(product);
+    public void save(Product product) throws DAOException {
+        dao.save(product);
     }
 
-    public int deleteProduct(String productId) throws DAOException {
-        return dao.deleteProduct(productId);
+    public int delete(String productId) throws DAOException {
+        return dao.delete(productId);
     }
 
-    public void updateProduct(Product product) throws DAOException {
-        dao.updateProduct(product);
+    public void update(Product product) throws DAOException {
+        dao.update(product);
     }
 
-    public ArrayList<Product> productList() throws DAOException, InvalidValueException {
-        return dao.productList();
+    public ArrayList<Product> findAll() throws DAOException, InvalidValueException {
+        return dao.findAll();
     }
-    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException, InvalidValueException {
-        return dao.productStockSearch(categoryId);
+    public ArrayList<ProductStockInfo> findByCategoryId(String categoryId) throws DAOException, InvalidValueException {
+        return dao.findByCategoryId(categoryId);
     }
-    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
-        return dao.productSalesSearch(startDate, endDate);
+    public ArrayList<ProductOrderSummary> findBySaleDate(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
+        return dao.findBySaleDate(startDate, endDate);
     }
 
 }

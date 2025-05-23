@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
-    public int deleteLoyaltyCard(int customerId) throws DAOException {
+    public int delete(int customerId) throws DAOException {
         String sqlInstruction = "delete from loyalty_card where customer = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -36,7 +36,7 @@ public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
             throw new DAOException(e.getMessage(), "Erreur lors de la recheche du dernier identifiant de carte de fidélité.");
         }
     }
-    public void addLoyaltyCard(int customerId) throws DAOException {
+    public void save(int customerId) throws DAOException {
         String sqlInstruction = "insert into loyalty_card(number, total_points, is_valid, customer) values (?, 0, true, ?)";
         try {
             Connection connection = SingletonConnection.getInstance();

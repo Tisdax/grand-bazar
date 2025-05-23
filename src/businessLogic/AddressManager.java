@@ -15,13 +15,13 @@ public class AddressManager {
         dao = new AddressDBAccess();
     }
 
-    public boolean exist(Address address) throws DAOException {
-        return dao.exists(address);
+    public boolean existsById(Address address) throws DAOException {
+        return dao.existsById(address);
     }
-    public Address getAddress(int localityZipCode, String localityName, String street, String houseNumber) throws DAOException, InvalidValueException {
-        return dao.getAddress(localityZipCode, localityName, street, houseNumber);
+    public Address findById(int localityZipCode, String localityName, String street, String houseNumber) throws DAOException, InvalidValueException {
+        return dao.findById(localityZipCode, localityName, street, houseNumber);
     }
-    public void addAddress(Address address) throws DAOException {
-        dao.addAddress(address);
+    public void save(Address address) throws DAOException {
+        dao.save(address);
     }
 }

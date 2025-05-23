@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LocalityDBAccess implements LocalityDAO {
-    public ArrayList<Locality> localitiesList() throws DAOException, InvalidValueException {
+    public ArrayList<Locality> findAll() throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from locality";
         try {
             Connection connection = SingletonConnection.getInstance();

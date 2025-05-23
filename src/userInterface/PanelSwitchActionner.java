@@ -1,8 +1,6 @@
 package userInterface;
 
 import controller.ApplicationController;
-import exceptions.DAOException;
-import model.Address;
 import model.Customer;
 import model.CustomerDeletionMode;
 import model.Product;
@@ -10,7 +8,6 @@ import model.Product;
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.Callable;
-import java.util.function.Supplier;
 
 public class PanelSwitchActionner {
     private static final int BUTTON_WIDTH = 350;
@@ -154,7 +151,7 @@ public class PanelSwitchActionner {
         try {
             CustomerForm customerForm = new CustomerForm();
             int inputID = Integer.parseInt(JOptionPane.showInputDialog("ID du client à modifier :"));
-            Customer customer = controller.getCustomer(inputID);
+            Customer customer = controller.findCustomerById(inputID);
             customerForm.fillCustomerForm(customer);
             addPanelToFrameTest(customerForm);
 
@@ -186,7 +183,7 @@ public class PanelSwitchActionner {
         try {
             ProductForm productForm = new ProductForm();
             String inputID = JOptionPane.showInputDialog("ID du produit à modifier :");
-            Product product = controller.getProduct(inputID);
+            Product product = controller.findProductById(inputID);
             productForm.fillProductForm(product);
             addPanelToFrameTest(productForm);
         } catch (Exception ex) {

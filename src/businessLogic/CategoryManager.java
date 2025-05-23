@@ -14,8 +14,8 @@ public class CategoryManager {
         dao = new CategoryDBAccess();
     }
 
-    public ArrayList<ProductCategory> getAllCategory() throws DAOException {
-        return dao.categoriesList();
+    public ArrayList<ProductCategory> findAll() throws DAOException {
+        return dao.findAll();
     }
 
 }

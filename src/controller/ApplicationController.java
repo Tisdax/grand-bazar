@@ -36,103 +36,102 @@ public class ApplicationController {
     }
 
     // Category
-    public ArrayList<ProductCategory> getAllCategory() throws DAOException {
-        return categoryManager.getAllCategory();
+    public ArrayList<ProductCategory> findAllCategories() throws DAOException {
+        return categoryManager.findAll();
     }
 
     // Product
-    public boolean exists(String productid) throws DAOException {
-        return productManager.exists(productid);
+    public boolean productExistsById(String productid) throws DAOException {
+        return productManager.existsById(productid);
     }
 
-    public void addProduct(Product product) throws DAOException {
-        productManager.addProduct(product);
+    public void saveProduct(Product product) throws DAOException {
+        productManager.save(product);
     }
-    public Product getProduct(String productId) throws DAOException, InvalidValueException {
-        return productManager.getProduct(productId);
+    public Product findProductById(String productId) throws DAOException, InvalidValueException {
+        return productManager.findById(productId);
     }
     public int deleteProduct(String productId) throws DAOException {
-        return productManager.deleteProduct(productId);
+        return productManager.delete(productId);
     }
 
     public void updateProduct(Product product) throws DAOException {
-        productManager.updateProduct(product);
+        productManager.update(product);
     }
 
-    public ArrayList<Product> productList() throws DAOException, InvalidValueException {
-        return productManager.productList();
+    public ArrayList<Product> findAllProducts() throws DAOException, InvalidValueException {
+        return productManager.findAll();
     }
 
-    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException, InvalidValueException {
-        return productManager.productStockSearch(categoryId);
+    public ArrayList<ProductStockInfo> findProductsByCategoryId(String categoryId) throws DAOException, InvalidValueException {
+        return productManager.findByCategoryId(categoryId);
     }
 
-    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
-        return productManager.productSalesSearch(startDate, endDate);
+    public ArrayList<ProductOrderSummary> findProductsBySaleDate(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
+        return productManager.findBySaleDate(startDate, endDate);
     }
 
     // Address
-    public boolean exists(Address address) throws DAOException {
-        return addressManager.exist(address);
+    public boolean addressExistsById(Address address) throws DAOException {
+        return addressManager.existsById(address);
     }
-    public Address getAddress(int localityZipCode, String localityName, String street, String houseNumber) throws DAOException, InvalidValueException {
-        return addressManager.getAddress(localityZipCode, localityName, street, houseNumber);
+    public Address findAddressById(int localityZipCode, String localityName, String street, String houseNumber) throws DAOException, InvalidValueException {
+        return addressManager.findById(localityZipCode, localityName, street, houseNumber);
     }
-    public void addAddress(Address address) throws DAOException {
-        addressManager.addAddress(address);
-    }
-
-    public void addCustomer(Customer customer) throws DAOException {
-        customerManager.addCustomer(customer);
+    public void saveAddress(Address address) throws DAOException {
+        addressManager.save(address);
     }
 
     // Customer
-    public Customer getCustomer(int customerId) throws DAOException, InvalidValueException {
-        return customerManager.getCustomer(customerId);
+    public void saveCustomer(Customer customer) throws DAOException {
+        customerManager.save(customer);
+    }
+    public Customer findCustomerById(int customerId) throws DAOException, InvalidValueException {
+        return customerManager.findById(customerId);
     }
 
     public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
-        return customerManager.deleteCustomer(customerId, deleteMode);
+        return customerManager.delete(customerId, deleteMode);
     }
 
     public void updateCustomer(Customer customer) throws DAOException {
-        customerManager.updateCustomer(customer);
+        customerManager.update(customer);
     }
 
-    public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
-        return customerManager.customerList();
+    public ArrayList<Customer> findAllCustomers() throws DAOException, InvalidValueException {
+        return customerManager.findAll();
     }
 
-    public int lastId() throws DAOException {
+    public int lastCustomerId() throws DAOException {
         return customerManager.lastId();
     }
 
     // Locality
-    public ArrayList<Locality> localitiesList() throws DAOException, InvalidValueException {
-        return localityManager.localitiesList();
+    public ArrayList<Locality> findAllLocalities() throws DAOException, InvalidValueException {
+        return localityManager.findAll();
     }
 
-    public void addLoyaltyCard(int customerId) throws DAOException {
-        loyaltyCardManager.addLoyaltyCard(customerId);
+    public void saveLoyaltyCard(int customerId) throws DAOException {
+        loyaltyCardManager.save(customerId);
     }
 
-    public ArrayList<Shelf> shelfList() throws DAOException {
-        return shelfManager.shelfList();
+    public ArrayList<Shelf> findAllShelves() throws DAOException {
+        return shelfManager.findAll();
     }
 
     public int deleteStock(String productId) throws DAOException {
-        return stockManager.deleteStock(productId);
+        return stockManager.deleteById(productId);
     }
 
-    public void addStock(Stock stock) throws DAOException {
-        stockManager.addStock(stock);
+    public void saveStock(Stock stock) throws DAOException {
+        stockManager.save(stock);
     }
 
-    public boolean exists(Stock stock) throws DAOException {
-        return stockManager.exists(stock);
+    public boolean stockExistsById(Stock stock) throws DAOException {
+        return stockManager.existsById(stock);
     }
 
     public void updateStock(Stock stock) throws DAOException{
-        stockManager.updateStock(stock);
+        stockManager.update(stock);
     }
 }

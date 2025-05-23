@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CommandLineDBAccess implements CommandLineDAO {
-    public int deleteCommandLine(int saleId) throws DAOException {
+    public int deleteBySale(int saleId) throws DAOException {
         String sqlInstruction = "delete from command_line where sale = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -23,7 +23,7 @@ public class CommandLineDBAccess implements CommandLineDAO {
         }
     }
 
-    public int deleteCommandLine(String productId) throws DAOException {
+    public int deleteByProduct(String productId) throws DAOException {
         String sqlInstruction = "delete from command_line where product = ?";
         try {
             Connection connection = SingletonConnection.getInstance();

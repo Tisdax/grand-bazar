@@ -9,13 +9,12 @@ import model.CustomerDeletionMode;
 import java.util.ArrayList;
 
 public interface CustomerDAO {
-    public boolean exists(int customerId) throws DAOException;
-    public Customer getCustomer(int customerId) throws DAOException, InvalidValueException;
+    public boolean existsById(int customerId) throws DAOException;
+    public Customer findById(int customerId) throws DAOException, InvalidValueException;
     public int lastId() throws DAOException;
-    public void addCustomer(Customer customer) throws DAOException;
-    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException;
-    public void updateCustomer(Customer customer) throws DAOException;
-    public ArrayList<Customer> customerList() throws DAOException, InvalidValueException;
-
-    public ArrayList<CustomerAddressInfo> CustomerAddressSearch(int nbPointsMin, int nbPointsMax) throws DAOException, InvalidValueException;
+    public void save(Customer customer) throws DAOException;
+    public int delete(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException;
+    public void update(Customer customer) throws DAOException;
+    public ArrayList<Customer> findAll() throws DAOException, InvalidValueException;
+    public ArrayList<CustomerAddressInfo> findByLoyaltyPoints(int nbPointsMin, int nbPointsMax) throws DAOException, InvalidValueException;
 }

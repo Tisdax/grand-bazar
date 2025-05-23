@@ -3,7 +3,6 @@ package userInterface;
 import controller.ApplicationController;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
-import model.ProductCategory;
 import model.Shelf;
 import model.Stock;
 
@@ -72,7 +71,7 @@ public class ProductStockForm extends JPanel {
         shelfComboBox = new JComboBox<>();
         ArrayList<Shelf> shelfs = null;
         try {
-            shelfs = controller.shelfList();
+            shelfs = controller.findAllShelves();
         } catch (DAOException e) {
             JOptionPane.showMessageDialog(null, "Erreur lors de la recherche des étagères veuillez réessayer", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -99,7 +98,7 @@ public class ProductStockForm extends JPanel {
 
         addButton.addActionListener(e -> {
             try {
-                if (!controller.exists(productIdField.getText())){
+                if (!controller.productExistsById(productIdField.getText())){
                     JOptionPane.showMessageDialog(null, "Le produit que vous voulez ajouter au stock n'as pas été créer veuillez l'ajouter", "Erreur", JOptionPane.ERROR_MESSAGE);
                 } else {
                     Stock stock = null;
@@ -109,10 +108,10 @@ public class ProductStockForm extends JPanel {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                     try {
-                        if (controller.exists(stock)) {
+                        if (controller.stockExistsById(stock)) {
                             JOptionPane.showMessageDialog(null, "Ce produit est déjà inscrit à cette emplacement.", "Erreur", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            controller.addStock(stock);
+                            controller.saveStock(stock);
                             JOptionPane.showMessageDialog(null, "Produit ajouté au stock", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                             emptyForm(productIdField, productQuantitySpinner, shelfComboBox, shelfLevelComBox);
                         }
@@ -127,7 +126,7 @@ public class ProductStockForm extends JPanel {
 
         updateButton.addActionListener(e -> {
             try {
-                if (!controller.exists(productIdField.getText())){
+                if (!controller.productExistsById(productIdField.getText())){
                     JOptionPane.showMessageDialog(null, "Le produit que vous voulez modifier n'as pas été créer veuillez l'ajouter", "Erreur", JOptionPane.ERROR_MESSAGE);
                 } else {
                     Stock stock = null;
@@ -137,7 +136,7 @@ public class ProductStockForm extends JPanel {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                     try {
-                        if (controller.exists(stock)) {
+                        if (controller.stockExistsById(stock)) {
                             controller.updateStock(stock);
                             JOptionPane.showMessageDialog(null, "Produit modifié", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                             emptyForm(productIdField, productQuantitySpinner, shelfComboBox, shelfLevelComBox);

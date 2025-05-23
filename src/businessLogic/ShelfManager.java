@@ -14,7 +14,7 @@ public class ShelfManager {
         dao = new ShelfDBAccess();
     }
 
-    public ArrayList<Shelf> shelfList() throws DAOException {
-        return dao.shelfList();
+    public ArrayList<Shelf> findAll() throws DAOException {
+        return dao.findAll();
     }
 }

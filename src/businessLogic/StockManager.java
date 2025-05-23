@@ -12,19 +12,19 @@ public class StockManager {
         dao = new StockDBAccess();
     }
 
-    public int deleteStock(String productId) throws DAOException {
-        return dao.deleteStock(productId);
+    public int deleteById(String productId) throws DAOException {
+        return dao.deleteById(productId);
     }
 
-    public void addStock(Stock stock) throws DAOException {
-        dao.addStock(stock);
+    public void save(Stock stock) throws DAOException {
+        dao.save(stock);
     }
 
-    public boolean exists(Stock stock) throws DAOException {
-        return dao.exists(stock);
+    public boolean existsById(Stock stock) throws DAOException {
+        return dao.existsById(stock);
     }
 
-    public void updateStock(Stock stock) throws DAOException{
-        dao.updateStock(stock);
+    public void update(Stock stock) throws DAOException{
+        dao.update(stock);
     }
 }

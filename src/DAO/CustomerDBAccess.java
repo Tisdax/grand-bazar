@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerDBAccess implements CustomerDAO {
-    public boolean exists(int customerId) throws DAOException {
+    public boolean existsById(int customerId) throws DAOException {
         String sqlInstruction = "select * from customer where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -28,7 +28,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public Customer getCustomer(int customerId) throws DAOException, InvalidValueException {
+    public Customer findById(int customerId) throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from customer where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -83,7 +83,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public void addCustomer(Customer customer) throws DAOException {
+    public void save(Customer customer) throws DAOException {
         String sqlInstruction = "insert into customer (id, last_name, first_name, birthdate, is_subscribed_to_newsletter, address_locality_zip_code, address_locality_name, address_street, address_house_number, type) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -137,7 +137,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public int deleteCustomer(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
+    public int delete(int customerId, CustomerDeletionMode deleteMode) throws DAOException, InvalidValueException {
         String sqlInstruction = "delete from customer where id = ?";
         try {
             int nbUpdatedLines = 0;
@@ -146,10 +146,10 @@ public class CustomerDBAccess implements CustomerDAO {
             LoyaltyCardDBAccess loyaltyCardDAO = new LoyaltyCardDBAccess();
             SaleDBAccess saleDBAccess = new SaleDBAccess();
 
-            nbUpdatedLines += loyaltyCardDAO.deleteLoyaltyCard(customerId);
+            nbUpdatedLines += loyaltyCardDAO.delete(customerId);
             switch(deleteMode) {
-                case DELETE_SALES : nbUpdatedLines += saleDBAccess.deleteSale(customerId); break;
-                case REMOVE_FROM_SALES : nbUpdatedLines += saleDBAccess.removeCustomerFromSales(customerId); break;
+                case DELETE_SALES : nbUpdatedLines += saleDBAccess.delete(customerId); break;
+                case REMOVE_FROM_SALES : nbUpdatedLines += saleDBAccess.removeCustomer(customerId); break;
             }
 
             preparedStatement.setInt(1, customerId);
@@ -162,7 +162,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public void updateCustomer(Customer customer) throws DAOException {
+    public void update(Customer customer) throws DAOException {
         String sqlInstruction = "update customer set last_name = ?, first_name = ?, birthdate = ?, phone = ?, email = ?, is_subscribed_to_newsletter = ?, vat_number = ?, address_locality_zip_code = ?, address_locality_name = ?, address_street = ?, address_house_number = ?, type = ? where id = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -203,7 +203,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public ArrayList<Customer> customerList() throws DAOException, InvalidValueException {
+    public ArrayList<Customer> findAll() throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from customer";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -242,7 +242,7 @@ public class CustomerDBAccess implements CustomerDAO {
         }
     }
 
-    public ArrayList<CustomerAddressInfo> CustomerAddressSearch(int nbPointsMin, int nbPointsMax) throws DAOException, InvalidValueException {
+    public ArrayList<CustomerAddressInfo> findByLoyaltyPoints(int nbPointsMin, int nbPointsMax) throws DAOException, InvalidValueException {
         String sqlInstruction = "select c.last_name as 'customer_last_name', c.first_name as 'customer_first_name', a.street, a.house_number, a.postal_box_number, l.zip_code, l.name as 'locality_name' from customer c inner join address a on c.address_locality_zip_code = a.locality_zip_code and c.address_locality_name = a.locality_name and c.address_street = a.street and c.address_house_number = a.house_number inner join locality l on a.locality_zip_code = l.zip_code and a.locality_name = l.name inner join loyalty_card lc on lc.customer = c.id where lc.total_points between ? and ?";
         try {
             Connection connection = SingletonConnection.getInstance();

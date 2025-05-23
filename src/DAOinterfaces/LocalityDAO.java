@@ -7,5 +7,5 @@ import model.Locality;
 import java.util.ArrayList;
 
 public interface LocalityDAO {
-    public ArrayList<Locality> localitiesList() throws DAOException, InvalidValueException;
+    public ArrayList<Locality> findAll() throws DAOException, InvalidValueException;
 }

@@ -6,7 +6,6 @@ import exceptions.InvalidValueException;
 import model.Address;
 import model.Customer;
 import model.Locality;
-import model.ProductCategory;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -54,7 +53,7 @@ public class CustomerForm extends JPanel {
         idLabel = new JLabel("Identifiant client :", SwingConstants.RIGHT);
         idField = new JTextField();
         try {
-            idField.setText(String.valueOf(controller.lastId() + 1));
+            idField.setText(String.valueOf(controller.lastCustomerId() + 1));
         } catch (DAOException e) {
             JOptionPane.showMessageDialog(null, "Erreur lors de l'ajout de l'identifiant veuillez réesayer", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -76,7 +75,7 @@ public class CustomerForm extends JPanel {
         localityComboBox = new JComboBox<>();
         ArrayList<Locality> localities = null;
         try {
-            localities = controller.localitiesList();
+            localities = controller.findAllLocalities();
         } catch (DAOException e) {
             throw new RuntimeException(e);
         } catch (InvalidValueException e) {
@@ -197,11 +196,11 @@ public class CustomerForm extends JPanel {
 
         addButton.addActionListener(e -> {
             try {
-                if (!controller.exists(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
-                    controller.addAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
+                if (!controller.addressExistsById(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
+                    controller.saveAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
                 }
-                controller.addCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
-                controller.addLoyaltyCard(controller.lastId()+1);
+                controller.saveCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
+                controller.saveLoyaltyCard(controller.lastCustomerId()+1);
                 JOptionPane.showMessageDialog(null, "Client ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox, postalBoxNumberCheckBox, postalBoxNumberSpinner);
             } catch (DAOException | InvalidValueException ex) {
@@ -211,8 +210,8 @@ public class CustomerForm extends JPanel {
 
         updateButton.addActionListener(e -> {
             try {
-                if (!controller.exists(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
-                    controller.addAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
+                if (!controller.addressExistsById(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
+                    controller.saveAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
                 }
                 controller.updateCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
                 JOptionPane.showMessageDialog(null, "Client modifié", "Réussite", JOptionPane.INFORMATION_MESSAGE);
@@ -278,7 +277,7 @@ public class CustomerForm extends JPanel {
 
     public void fillCustomerForm(Customer customer){
         try {
-            Address address = controller.getAddress(customer.getLocalityZipCode(),
+            Address address = controller.findAddressById(customer.getLocalityZipCode(),
                     customer.getLocalityName(),
                     customer.getAddressStreet(),
                     customer.getHouseNumber());
@@ -346,7 +345,7 @@ public class CustomerForm extends JPanel {
 //    }
 
     private void emptyForm(JTextField idField, JTextField lastNameField, JTextField firstNameField, JTextField addressStreetField, JComboBox localityComboBox, JTextField houseNumberField, JTextField emailField, JTextField vatNumberField, JFormattedTextField phoneNumberField, JSpinner birthdaySpinner, JCheckBox isSubscrideCheckbox, JComboBox typeComboBox, JCheckBox postalBoxNumberCheckBox ,JSpinner postalBoxNumberSpinner) throws DAOException {
-        idField.setText(String.valueOf(controller.lastId() + 1));
+        idField.setText(String.valueOf(controller.lastCustomerId() + 1));
         lastNameField.setText("");
         firstNameField.setText("");
         emailField.setText("");

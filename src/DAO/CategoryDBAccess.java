@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CategoryDBAccess implements CategoryDAO {
-    public ArrayList<ProductCategory> categoriesList() throws DAOException {
+    public ArrayList<ProductCategory> findAll() throws DAOException {
         String sqlInstruction = "select * from category";
         try {
             Connection connection = SingletonConnection.getInstance();

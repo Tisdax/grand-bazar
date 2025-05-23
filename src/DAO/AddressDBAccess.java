@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AddressDBAccess implements AddressDAO {
-    public boolean exists(Address address) throws DAOException {
+    public boolean existsById(Address address) throws DAOException {
         String sqlInstruction = "select * from address where locality_zip_code = ? and locality_name = ? and street = ? and house_number = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -31,7 +31,7 @@ public class AddressDBAccess implements AddressDAO {
         }
     }
 
-    public Address getAddress(int localityZipCode, String localityName, String street, String houseNumber) throws DAOException, InvalidValueException {
+    public Address findById(int localityZipCode, String localityName, String street, String houseNumber) throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from address where locality_zip_code = ? and locality_name = ? and street = ? and house_number = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -58,7 +58,7 @@ public class AddressDBAccess implements AddressDAO {
         }
     }
 
-    public void addAddress(Address address) throws DAOException {
+    public void save(Address address) throws DAOException {
         String sqlInstruction = "insert into address(locality_zip_code, locality_name, street, house_number) values (?, ?, ?, ?)";
         try {
             Connection connection = SingletonConnection.getInstance();

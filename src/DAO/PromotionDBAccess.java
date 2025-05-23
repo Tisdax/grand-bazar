@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PromotionDBAccess implements PromotionDAO {
-    public int deletePromotion(String productId) throws DAOException {
+    public int delete(String productId) throws DAOException {
         String sqlInstruction = "delete from promotion where product = ?";
         try {
             Connection connection = SingletonConnection.getInstance();

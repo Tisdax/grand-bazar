@@ -11,13 +11,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface ProductDAO {
-    public boolean exists(String productId) throws DAOException;
-    public Product getProduct(String productId) throws DAOException, InvalidValueException;
-    public void addProduct(Product product) throws DAOException;
-    public int deleteProduct(String productId) throws DAOException;
-    public void updateProduct(Product product) throws DAOException;
-    public ArrayList<Product> productList() throws DAOException, InvalidValueException;
-    public ArrayList<ProductStockInfo> productStockSearch(String categoryId) throws DAOException, InvalidValueException;
-    public ArrayList<ProductOrderSummary> productSalesSearch(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException;
-    public ArrayList<ProductLowStockInfo> productLowStockSearch() throws DAOException, InvalidValueException;
+    public boolean existsById(String productId) throws DAOException;
+    public Product findById(String productId) throws DAOException, InvalidValueException;
+    public void save(Product product) throws DAOException;
+    public int delete(String productId) throws DAOException;
+    public void update(Product product) throws DAOException;
+    public ArrayList<Product> findAll() throws DAOException, InvalidValueException;
+    public ArrayList<ProductStockInfo> findByCategoryId(String categoryId) throws DAOException, InvalidValueException;
+    public ArrayList<ProductOrderSummary> findBySaleDate(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException;
+    public ArrayList<ProductLowStockInfo> findByLowStock() throws DAOException, InvalidValueException;
 }
