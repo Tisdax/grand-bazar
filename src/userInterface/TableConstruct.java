@@ -5,6 +5,7 @@ import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Customer;
 import model.Product;
+import model.ProductLowStockInfo;
 import model.ProductStockInfo;
 
 import javax.swing.*;
@@ -68,6 +69,29 @@ public class TableConstruct {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
+    public void fillLowProductTable() {
+        try {
+            ArrayList<ProductLowStockInfo> products = controller.findProductsByLowStock();
+
+            for (ProductLowStockInfo product : products) {
+                String qtBasedOnTotal, nbMissingProducts;
+                double qtPercentage;
+
+                qtBasedOnTotal = product.getStockQuantity() +" / "+ product.getProductMinQuantity();
+                qtPercentage = ((double)product.getStockQuantity() / product.getProductMinQuantity()) * 100;
+                nbMissingProducts = (product.getProductMinQuantity() - product.getStockQuantity()) + " produits manquants";
+
+                tableModel.addRow(new Object[]{
+                        product.getProductId(), product.getProductName(),
+                        qtBasedOnTotal, qtPercentage + "%", nbMissingProducts});
+            }
+
+        } catch (DAOException | InvalidValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
 
     public JTable getTable() {
         return table;

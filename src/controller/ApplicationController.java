@@ -134,4 +134,8 @@ public class ApplicationController {
     public void updateStock(Stock stock) throws DAOException{
         stockManager.update(stock);
     }
+
+    public ArrayList<ProductLowStockInfo> findProductsByLowStock() throws DAOException, InvalidValueException {
+        return productManager.findByLowStock();
+    }
 }

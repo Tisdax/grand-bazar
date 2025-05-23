@@ -5,6 +5,7 @@ import DAOinterfaces.ProductDAO;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Product;
+import model.ProductLowStockInfo;
 import model.ProductOrderSummary;
 import model.ProductStockInfo;
 
@@ -46,6 +47,9 @@ public class ProductManager {
     }
     public ArrayList<ProductOrderSummary> findBySaleDate(LocalDate startDate, LocalDate endDate) throws DAOException, InvalidValueException {
         return dao.findBySaleDate(startDate, endDate);
+    }
+    public ArrayList<ProductLowStockInfo> findByLowStock() throws DAOException, InvalidValueException {
+        return dao.findByLowStock();
     }
 
 }
