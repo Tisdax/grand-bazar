@@ -21,6 +21,15 @@ public class CustomerManager extends JPanel {
 
     public CustomerManager() {
         PanelSwitchActionner switchActionner = new PanelSwitchActionner();
+        // Main Layout
+        setLayout(new BorderLayout(0, 50));
+        setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 100));
+        // Buttons Layout
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        // Title Panel
+        JPanel titlePanel = new JPanel();
+
+        // Table
         String[] columnNames = {
                 "ID", "Nom", "Prénom", "Date de naissance", "Num Téléphone", "Email",
                 "Est abonné newsletter", "Numéro TVA", "Localité zip code",
@@ -31,22 +40,19 @@ public class CustomerManager extends JPanel {
 
         titleLabel = new JLabel("Gestion des clients");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+        titlePanel.add(titleLabel);
 
+        // Buttons
         addCustomerButton = switchActionner.createButton("Ajouter un client", CustomerForm::new);
         removeCustomerButton = switchActionner.createDeleteCustomerButton();
         editCustomerButton = switchActionner.createEditCustomerButton();
+        buttonPanel.add(addCustomerButton);
+        buttonPanel.add(removeCustomerButton);
+        buttonPanel.add(editCustomerButton);
 
-//        editCustomerButton = new JButton("Modifier un client");
-//        editCustomerButton.setPreferredSize(new Dimension(250, 60));
-//        editCustomerButton.addActionListener(e -> {
-//            Integer inputID = Integer.valueOf(JOptionPane.showInputDialog("ID du client à supprimer :"));
-//        });
-
-        this.add(titleLabel);
-        this.add(addCustomerButton);
-        this.add(removeCustomerButton);
-        this.add(editCustomerButton);
-        this.add(new JScrollPane(customerTable.getTable()));
+        this.add(titlePanel, BorderLayout.NORTH);
+        this.add(buttonPanel, BorderLayout.CENTER);
+        this.add(new JScrollPane(customerTable.getTable()), BorderLayout.SOUTH);
     }
 
 

@@ -13,6 +13,8 @@ import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 public class PanelSwitchActionner {
+    private static final int BUTTON_WIDTH = 350;
+    private static final int BUTTON_HEIGHT = 80;
     private ApplicationController controller;
 
     public PanelSwitchActionner() {
@@ -35,7 +37,7 @@ public class PanelSwitchActionner {
         return button;
     }
     public JButton createButton(String buttonLabel, Callable<JPanel> callablePanel) {
-        return createButton(buttonLabel, callablePanel, 250, 60);
+        return createButton(buttonLabel, callablePanel, BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
 
@@ -49,7 +51,7 @@ public class PanelSwitchActionner {
         return button;
     }
     public JButton createEditCustomerButton() {
-        return createEditCustomerButton(250, 60);
+        return createEditCustomerButton(BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
     public JButton createDeleteCustomerButton(int width, int height) {
@@ -61,7 +63,7 @@ public class PanelSwitchActionner {
         return button;
     }
     public JButton createDeleteCustomerButton() {
-        return createDeleteCustomerButton(250, 60);
+        return createDeleteCustomerButton(BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
     // Product buttons :
@@ -74,7 +76,7 @@ public class PanelSwitchActionner {
         return button;
     }
     public JButton createEditProductButton() {
-        return createEditProductButton(250, 60);
+        return createEditProductButton(BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
     public JButton createDeleteProductButton(int width, int height) {
@@ -86,7 +88,7 @@ public class PanelSwitchActionner {
         return button;
     }
     public JButton createDeleteProductButton() {
-        return createDeleteProductButton(250, 60);
+        return createDeleteProductButton(BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
 
