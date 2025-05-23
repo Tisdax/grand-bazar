@@ -265,7 +265,7 @@ public class ProductDBAccess implements ProductDAO {
     }
 
     public ArrayList<ProductLowStockInfo> findByLowStock() throws DAOException, InvalidValueException {
-        String sqlInstruction = "select p.id as 'product_id', p.name as 'product_name', sum(s.quantity) as 'stock_quantity', p.min_quantity as 'product_min_quantity' from product p inner join stock s on p.id = s.product group by p.id having p.min_quantity is not null";
+        String sqlInstruction = "select p.id as 'product_id', p.name as 'product_name', sum(s.quantity) as 'stock_quantity', p.min_quantity as 'product_min_quantity' from product p inner join stock s on p.id = s.product group by p.id having p.min_quantity is not null and stock_quantity < product_min_quantity";
         try {
             Connection connection = SingletonConnection.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);

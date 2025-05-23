@@ -231,7 +231,7 @@ values
 
 INSERT INTO product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, min_quantity, promotion_min_quantity, sale_date, time_before_removing, category)
 VALUES
-    ('P001', 'Pomme', 1.20, 6, 10, TRUE, 1, 3, '2025-05-29', 10, 'fruits'),
+    ('P001', 'Pomme', 1.20, 6, 10, TRUE, 100, 3, '2025-05-29', 10, 'fruits'),
     ('P002', 'Banane', 0.90, 6, 8, TRUE, 1, 2, '2025-07-02', 7, 'fruits'),
     ('P003', 'Carotte', 0.60, 6, 5, TRUE, 1, 2, '2025-08-03', 12, 'légumes'),
     ('P004', 'Tomate', 1.10, 6, 6, TRUE, 1, 2, '2024-05-04', 8, 'légumes'),
