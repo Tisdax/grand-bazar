@@ -23,7 +23,7 @@ public class ProductDBAccess implements ProductDAO {
             return data.next();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'un produit");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche du produit " + productId + " pour savoir s'il existe.");
         }
     }
 
@@ -55,7 +55,7 @@ public class ProductDBAccess implements ProductDAO {
             return product;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur : id innexistant");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupération du produit " + productId + " dans la base de données");
         }
     }
 
@@ -107,7 +107,7 @@ public class ProductDBAccess implements ProductDAO {
             }
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout du produit");
+            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout du produit " + product.getId() + " " + product.getName() + ".");
         }
     }
 
@@ -132,7 +132,7 @@ public class ProductDBAccess implements ProductDAO {
             return nbUpdatedLines;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la supprression du produit");
+            throw new DAOException(e.getMessage(), "Erreur lors de la supprression du produit " + productId + ".");
         }
 
     }
@@ -172,7 +172,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression du produit");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression du produit " + product.getId() + " " + product.getName() + ".");
         }
     }
 
@@ -209,7 +209,7 @@ public class ProductDBAccess implements ProductDAO {
             return products;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la lecture des produits dans la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupération de la liste des produits.");
         }
     }
 
@@ -234,7 +234,7 @@ public class ProductDBAccess implements ProductDAO {
             return productsInfos;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la recherche des produits sur base de la catégorie" + categoryId);
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche des produits sur base de la catégorie " + categoryId + ".");
         }
     }
 
@@ -260,7 +260,7 @@ public class ProductDBAccess implements ProductDAO {
             return productsOrderSummaries;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la recherche des produits sur base de dates");
+            throw new DAOException(e.getMessage(), "Erreur lors de récupération de la liste des produits entre les dates " + startDate.getDayOfMonth() + "/" + startDate.getMonthValue() + "/" + startDate.getYear() + " et " + endDate.getDayOfMonth() + "/" + endDate.getMonthValue() + "/" + endDate.getYear() + ".");
         }
     }
 
@@ -283,7 +283,7 @@ public class ProductDBAccess implements ProductDAO {
             return productsLowStockInfos;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la recherche des produits ayant une quantité en stock trop faible");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche des produits ayant une quantité en stock trop faible.");
         }
 
     }

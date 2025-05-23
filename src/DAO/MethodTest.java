@@ -18,10 +18,8 @@ public class MethodTest {
         DAO dao = new DBAccess();
 
         try {
-            ArrayList<ProductLowStockInfo> productLowStockInfos = productDAO.productLowStockSearch();
-            for (ProductLowStockInfo productLowStockInfo : productLowStockInfos) {
-                System.out.println(productLowStockInfo.getProductName());
-            }
+            Address address = new Address("Rue du ruisseau",1340, "Ottignies", "24", 2);
+            System.out.println(address);
             dao.closeConnection();
         }
         catch (DAOException e) {

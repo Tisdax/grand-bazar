@@ -19,7 +19,7 @@ public class PromotionDBAccess implements PromotionDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une promotion");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une promotion liée au produit " + productId + ".");
         }
     }
 }

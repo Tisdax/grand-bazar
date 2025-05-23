@@ -11,7 +11,7 @@ public class DBAccess implements DAO {
             SingletonConnection.getInstance().close();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la fermeture de la connexion à la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la fermeture de la connexion à la base de données.");
         }
     }
 }

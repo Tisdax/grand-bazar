@@ -2,8 +2,6 @@ package DAO;
 
 import DAOinterfaces.ShelfDAO;
 import exceptions.DAOException;
-import exceptions.InvalidValueException;
-import model.ProductCategory;
 import model.Shelf;
 
 import java.sql.Connection;
@@ -28,7 +26,7 @@ public class ShelfDBAccess implements ShelfDAO {
             return shelfs;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la lecture des catégories dans la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupération de la liste des catégories.");
         }
     }
 }

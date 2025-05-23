@@ -19,7 +19,7 @@ public class CommandLineDBAccess implements CommandLineDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une ligne de commande");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une ligne de commande attachée à la vente " + saleId + ".");
         }
     }
 
@@ -34,7 +34,7 @@ public class CommandLineDBAccess implements CommandLineDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une ligne de commande");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une ligne de commande attachée au produit " + productId + ".");
         }
     }
 }

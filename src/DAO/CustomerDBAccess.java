@@ -1,6 +1,5 @@
 package DAO;
 
-import DAOinterfaces.DAO;
 import exceptions.DAOException;
 import DAOinterfaces.CustomerDAO;
 import exceptions.InvalidValueException;
@@ -9,7 +8,6 @@ import model.CustomerAddressInfo;
 import model.CustomerDeletionMode;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CustomerDBAccess implements CustomerDAO {
@@ -26,7 +24,7 @@ public class CustomerDBAccess implements CustomerDAO {
             return data.next();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'un client");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche du client " + customerId + " pour savoir s'il existe.");
         }
     }
 
@@ -62,7 +60,7 @@ public class CustomerDBAccess implements CustomerDAO {
             return customer;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur : id innexistant");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupération du client " + customerId + ".");
         }
     }
 
@@ -81,7 +79,7 @@ public class CustomerDBAccess implements CustomerDAO {
             }
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Problème lors de la recheche du dernier identifiant");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recheche du dernier identifiant client.");
         }
     }
 
@@ -135,7 +133,7 @@ public class CustomerDBAccess implements CustomerDAO {
             }
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout du client");
+            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout du client " + customer.getId() + " (" + customer.getLastName() + " " + customer.getFirstName() + ").");
         }
     }
 
@@ -148,7 +146,7 @@ public class CustomerDBAccess implements CustomerDAO {
             LoyaltyCardDBAccess loyaltyCardDAO = new LoyaltyCardDBAccess();
             SaleDBAccess saleDBAccess = new SaleDBAccess();
 
-            nbUpdatedLines += loyaltyCardDAO.delete(customerId);
+            nbUpdatedLines += loyaltyCardDAO.deleteLoyaltyCard(customerId);
             switch(deleteMode) {
                 case DELETE_SALES : nbUpdatedLines += saleDBAccess.deleteSale(customerId); break;
                 case REMOVE_FROM_SALES : nbUpdatedLines += saleDBAccess.removeCustomerFromSales(customerId); break;
@@ -160,7 +158,7 @@ public class CustomerDBAccess implements CustomerDAO {
             return nbUpdatedLines;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression du client");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression du client " + customerId + ".");
         }
     }
 
@@ -201,7 +199,7 @@ public class CustomerDBAccess implements CustomerDAO {
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la modification du client");
+            throw new DAOException(e.getMessage(), "Erreur lors de la modification du client " + customer.getId() + " (" + customer.getLastName() + " " + customer.getFirstName() + ").");
         }
     }
 
@@ -240,7 +238,7 @@ public class CustomerDBAccess implements CustomerDAO {
             return customers;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la lecture des clients dans la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupération de la liste des clients.");
         }
     }
 
@@ -270,7 +268,7 @@ public class CustomerDBAccess implements CustomerDAO {
             return customersAddressInfos;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la recherche de clients sur base d'un nombre de points de fidélité");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupération de la liste des clients ayant entre " + nbPointsMin + " et " + nbPointsMax + " points de fidélité sur leur carte de fidélité.");
         }
     }
 }

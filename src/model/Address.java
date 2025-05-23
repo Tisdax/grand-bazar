@@ -63,4 +63,8 @@ public class Address {
     public Integer getPostalBoxNumber() {
         return postalBoxNumber;
     }
+
+    public String toString() {
+        return street + " " + houseNumber + (postalBoxNumber != null ? " boite n°" + postalBoxNumber : "") + ", " + localityZipCode + " " + localityName;
+    }
 }

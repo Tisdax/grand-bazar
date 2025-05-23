@@ -1,6 +1,5 @@
 package DAO;
 
-import DAOinterfaces.DAO;
 import exceptions.DAOException;
 import DAOinterfaces.AddressDAO;
 import exceptions.InvalidValueException;
@@ -28,7 +27,7 @@ public class AddressDBAccess implements AddressDAO {
             return data.next();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'une adresse dans la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recherche de l'adresse " + address + " pour savoir si elle existe.");
         }
     }
 
@@ -55,7 +54,7 @@ public class AddressDBAccess implements AddressDAO {
             return address;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur : id innexistant");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupération de l'adresse" + street + " " + houseNumber + ", " + localityZipCode + " " + localityName + " dans la base de données");
         }
     }
 
@@ -90,7 +89,7 @@ public class AddressDBAccess implements AddressDAO {
 
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout d'une adresse");
+            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout de l'adresse " + address);
         }
     }
 }

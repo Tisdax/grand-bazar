@@ -26,7 +26,7 @@ public class LocalityDBAccess implements LocalityDAO {
             return localities;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la lecture des localités dans la base de données");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupétation de la liste des localités.");
         }
     }
 }

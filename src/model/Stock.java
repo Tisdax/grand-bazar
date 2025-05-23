@@ -3,18 +3,18 @@ package model;
 import exceptions.InvalidValueException;
 
 public class Stock {
-    private Integer idShelf, shelfLevel, quantity;
+    private Integer shelfId, shelfLevel, quantity;
     private String productId;
 
-    public Stock(Integer idShelf, Integer shelfLevel, Integer quantity, String productId) throws InvalidValueException {
-        setIdShelf(idShelf);
+    public Stock(Integer shelfId, Integer shelfLevel, Integer quantity, String productId) throws InvalidValueException {
+        setShelfId(shelfId);
         setShelfLevel(shelfLevel);
         setQuantity(quantity);
         setProductId(productId);
     }
 
-    public void setIdShelf(Integer idShelf) {
-        this.idShelf = idShelf;
+    public void setShelfId(Integer shelfId) {
+        this.shelfId = shelfId;
     }
 
     public void setShelfLevel(Integer shelfLevel) {
@@ -31,8 +31,8 @@ public class Stock {
         this.productId = productId;
     }
 
-    public Integer getIdShelf() {
-        return idShelf;
+    public Integer getShelfId() {
+        return shelfId;
     }
 
     public Integer getShelfLevel() {

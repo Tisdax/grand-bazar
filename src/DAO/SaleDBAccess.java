@@ -32,7 +32,7 @@ public class SaleDBAccess implements SaleDAO {
             return nbUpdatedLines;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une vente");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'une vente liée au client " + customerId + ".");
         }
     }
 
@@ -47,13 +47,13 @@ public class SaleDBAccess implements SaleDAO {
             ResultSet data = preparedStatement.executeQuery();
             ArrayList<Sale> sales = new ArrayList<>();
             while (data.next()) {
-                sales.add(new Sale(data.getInt("id"), customerId, data.getDate("date").toLocalDate(), data.getInt("employee")));
+                sales.add(new Sale(data.getInt("id"), data.getInt("customer"), data.getDate("date").toLocalDate(), data.getInt("employee")));
             }
 
             return sales;
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la recherche d'une vente");
+            throw new DAOException(e.getMessage(), "Erreur lors de la récupération des ventes sur base de client " + customerId + ".");
         }
     }
 
@@ -68,7 +68,7 @@ public class SaleDBAccess implements SaleDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression d'un client de la table vente");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression du client " + customerId + " de ses ventes.");
         }
     }
 }

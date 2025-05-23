@@ -26,13 +26,13 @@ public class Sale {
     }
 
     public void setEmployee(Integer employee) throws InvalidValueException {
-        if (employee >= 0)
+        if (employee == null || employee <= 0)
             throw new InvalidValueException("L'id employé est obligatoire et doit être un nombre positif.", employee);
         this.employee = employee;
     }
 
     public void setCustomer(Integer customer) throws InvalidValueException {
-        if (customer >= 0)
+        if (customer <= 0)
             throw new InvalidValueException("L'id client doit être laissé vide ou être un nombre positif.", customer);
         this.customer = customer;
     }

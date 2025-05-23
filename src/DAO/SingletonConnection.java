@@ -15,7 +15,7 @@ public class SingletonConnection {
                 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/le_grand_bazar", "root", "legrandbzar");
             }
             catch (SQLException e) {
-                throw new DAOException(e.getMessage(), "Erreur lors de la connexion à la base de données");
+                throw new DAOException(e.getMessage(), "Erreur lors de la connexion à la base de données.");
             }
         }
         return connection;

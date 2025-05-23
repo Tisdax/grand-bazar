@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
-    public int delete(int customerId) throws DAOException {
+    public int deleteLoyaltyCard(int customerId) throws DAOException {
         String sqlInstruction = "delete from loyalty_card where customer = ?";
         try {
             Connection connection = SingletonConnection.getInstance();
@@ -20,7 +20,7 @@ public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression de la carte de fidélité");
+            throw new DAOException(e.getMessage(), "Erreur lors de la suppression de la carte de fidélité.");
         }
     }
     public int lastId() throws DAOException {
@@ -33,7 +33,7 @@ public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
 
             return data.next() ? data.getInt(1) : 0;
         } catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Problème lors de la recheche du dernier identifiant");
+            throw new DAOException(e.getMessage(), "Erreur lors de la recheche du dernier identifiant de carte de fidélité.");
         }
     }
     public void addLoyaltyCard(int customerId) throws DAOException {
@@ -48,7 +48,7 @@ public class LoyaltyCardDBAccess implements LoyaltyCardDAO {
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout de carte de fidélité");
+            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout de carte de fidélité pour le client " + customerId + ".");
         }
     }
 }
