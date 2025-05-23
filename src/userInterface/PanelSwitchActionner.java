@@ -189,7 +189,6 @@ public class PanelSwitchActionner {
             Product product = controller.getProduct(inputID);
             productForm.fillProductForm(product);
             addPanelToFrameTest(productForm);
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

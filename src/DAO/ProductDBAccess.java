@@ -172,7 +172,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression du produit");
+            throw new DAOException(e.getMessage(), "Erreur lors de la mise à jour du produit");
         }
     }
 

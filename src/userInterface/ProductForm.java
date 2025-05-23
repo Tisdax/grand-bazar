@@ -224,9 +224,13 @@ public class ProductForm extends JPanel {
         nameField.setText(product.getName());
         netPriceSpinner.setValue(product.getNetPrice());
         loyaltyPointsSpinner.setValue(product.getLoyaltyPointsNb());
-        minQuantSpinner.setValue(product.getMinQuantity());
-        promotionQuantSpinner.setValue(product.getPromotionMinQuantity());
-        timeBeforeRemovingSpinner.setValue(product.getTimeBeforeRemoving());
+        if (product.getMinQuantity() != null)
+            minQuantSpinner.setValue(product.getMinQuantity());
+        if (product.getPromotionMinQuantity() != null)
+            promotionQuantSpinner.setValue(product.getPromotionMinQuantity());
+        if (product.getTimeBeforeRemoving() != null) {
+            timeBeforeRemovingSpinner.setValue(product.getTimeBeforeRemoving());
+        }
         isEdibleCheckBox.setSelected(product.getEdible());
         saleDateSpinner.setValue(Date.from(product.getSaleDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         vatComboBox.setSelectedItem(product.getVatPercentage());
