@@ -1,16 +1,9 @@
 package userInterface;
 
-import DAO.CustomerDBAccess;
-import DAO.ProductDBAccess;
-import exceptions.DAOException;
-import exceptions.InvalidValueException;
-import model.Customer;
-import model.Product;
+import userInterface.TableConstructs.TableConstruct;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class CustomerManager extends JPanel {
     private JLabel titleLabel;

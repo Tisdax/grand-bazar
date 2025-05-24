@@ -1,14 +1,8 @@
 package userInterface;
-import exceptions.DAOException;
-import exceptions.InvalidValueException;
-import model.Product;
+import userInterface.TableConstructs.TableConstruct;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class ProductManager extends JPanel {
     private JLabel titleLabel;
