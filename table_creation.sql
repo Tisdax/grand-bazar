@@ -225,14 +225,14 @@ values
 
 insert into sale(id, customer, date, employee)
 values
-    (101, 1, '2024-05-09', 1),
-    (102, 1, '2025-05-09', 1),
-    (103, 1, '2024-12-01', 1);
+    (1, 1, '2024-05-09', 1),
+    (2, 1, '2025-05-09', 1),
+    (3, 1, '2024-12-01', 1);
 
 INSERT INTO product (id, name, net_price, vat_percentage, loyalty_points_nb, is_edible, min_quantity, promotion_min_quantity, sale_date, time_before_removing, category)
 VALUES
     ('P001', 'Pomme', 1.20, 6, 10, TRUE, 100, 3, '2025-05-29', 10, 'fruits'),
-    ('P002', 'Banane', 0.90, 6, 8, TRUE, 1, 2, '2025-07-02', 7, 'fruits'),
+    ('P002', 'Banane', 0.90, 6, 8, TRUE, 200, 2, '2025-07-02', 7, 'fruits'),
     ('P003', 'Carotte', 0.60, 6, 5, TRUE, 1, 2, '2025-08-03', 12, 'légumes'),
     ('P004', 'Tomate', 1.10, 6, 6, TRUE, 1, 2, '2024-05-04', 8, 'légumes'),
     ('P005', 'Poire', 1.30, 6, 9, TRUE, 1, 3, '2025-05-05', 9, 'fruits'),
@@ -242,15 +242,15 @@ VALUES
 -- Sale 101
 INSERT INTO command_line (sale, product, quantity)
     VALUES
-   (101, 'P001', 2),
-   (101, 'P003', 1),
-   (101, 'P005', 4),
-   (102, 'P002', 3),
-   (102, 'P004', 2),
-   (102, 'P001', 1),
-   (103, 'P003', 2),
-   (103, 'P004', 1),
-   (103, 'P002', 2);
+   (1, 'P001', 2),
+   (1, 'P003', 1),
+   (1, 'P005', 4),
+   (2, 'P002', 3),
+   (2, 'P004', 2),
+   (2, 'P001', 1),
+   (3, 'P003', 2),
+   (3, 'P004', 1),
+   (3, 'P002', 2);
 
 INSERT INTO shelf (id, is_refrigirated)
 VALUES

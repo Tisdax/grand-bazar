@@ -12,6 +12,48 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SaleDBAccess implements SaleDAO {
+    public int lastId() throws DAOException {
+        String sqlInstruction = "select MAX(id) from sale";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            return data.next() ? data.getInt(1) : 0;
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur lors de la recheche du dernier identifiant de vente.");
+        }
+    }
+
+    public void save(Sale sale) throws DAOException {
+        String sqlInstruction = "insert into sale(id, date, employee) values (?, ?, ?)";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setInt(1, sale.getId());
+            preparedStatement.setDate(2, java.sql.Date.valueOf(sale.getDate()));
+            preparedStatement.setInt(3, sale.getEmployee());
+
+            preparedStatement.executeUpdate();
+
+            if (sale.getCustomer() != null) {
+                sqlInstruction = "update sale set customer = ? where id = ?";
+
+                preparedStatement = connection.prepareStatement(sqlInstruction);
+                preparedStatement.setInt(1, sale.getCustomer());
+                preparedStatement.setInt(2, sale.getId());
+
+                preparedStatement.executeUpdate();
+            }
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur lors de l'ajout de la vente " + sale.getId());
+        }
+    }
+
     public int delete(int customerId) throws DAOException, InvalidValueException {
         String sqlInstruction = "delete from sale where customer = ?";
         try {

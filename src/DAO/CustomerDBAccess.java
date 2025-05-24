@@ -72,11 +72,7 @@ public class CustomerDBAccess implements CustomerDAO {
 
             ResultSet data = preparedStatement.executeQuery();
 
-            if (data.next()) {
-                return data.getInt(1);
-            } else {
-                return 0;
-            }
+            return data.next() ? data.getInt(1) : 0;
         }
         catch (SQLException e) {
             throw new DAOException(e.getMessage(), "Erreur lors de la recheche du dernier identifiant client.");

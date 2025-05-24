@@ -15,11 +15,17 @@ public class MethodTest {
         AddressDAO addressDAO = new AddressDBAccess();
         CategoryDAO categoryDAO = new CategoryDBAccess();
         LocalityDAO localityDAO = new LocalityDBAccess();
+        SaleDAO saleDAO = new SaleDBAccess();
         DAO dao = new DBAccess();
+        CommandLineDAO commandLineDAO = new CommandLineDBAccess();
 
         try {
-            Address address = new Address("Rue du ruisseau",1340, "Ottignies", "24", 2);
-            System.out.println(address);
+            Sale sale = new Sale(saleDAO.lastId()+1, 1, LocalDate.now(), 1);
+            saleDAO.save(sale);
+            CommandLine commandLine = new CommandLine(saleDAO.lastId(), "P001", 5);
+            CommandLine commandLine2 = new CommandLine(saleDAO.lastId(), "P002", 3);
+            commandLineDAO.save(commandLine);
+            commandLineDAO.save(commandLine2);
             dao.closeConnection();
         }
         catch (DAOException e) {
