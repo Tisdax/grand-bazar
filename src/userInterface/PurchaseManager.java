@@ -6,24 +6,23 @@ import userInterface.TableConstructs.TableConstruct;
 import javax.swing.*;
 import java.awt.*;
 
-public class LowStockProductPanel extends JPanel {
+public class PurchaseManager extends JPanel {
     private JLabel titleLabel;;
-    private TableConstruct stockTable;
+    private TableConstruct purchaseTable;
 
-    public LowStockProductPanel() {
+    public PurchaseManager() {
         ApplicationController controller = new ApplicationController();
         setLayout(new BorderLayout(0, 50));
 
-        String[] columnNames = {"ID", "Nom", "Qt Stock / Qt min", "%", "Nb manquants"};
-        stockTable = new TableConstruct(columnNames);
-        stockTable.fillLowProductTable();
+        String[] columnNames = {"ID Produit", "Nom", "Prix HTVA", "Qt", "ID Vente", "Date de Vente"};
+        purchaseTable = new TableConstruct(columnNames);
+        // purchaseTable.fill
 
-        titleLabel = new JLabel("Produits ayant un stock insuffisant");
+        titleLabel = new JLabel("Infos sur les achats effectués dans ce laps de temps :");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
 
         this.add(titleLabel, BorderLayout.NORTH);
-        this.add(new JScrollPane(stockTable.getTable()), BorderLayout.CENTER);
+        this.add(new JScrollPane(purchaseTable.getTable()), BorderLayout.CENTER);
     }
-
 }

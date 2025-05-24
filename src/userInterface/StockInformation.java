@@ -3,6 +3,7 @@ package userInterface;
 import controller.ApplicationController;
 import exceptions.DAOException;
 import model.ProductCategory;
+import userInterface.TableConstructs.TableConstruct;
 
 import javax.swing.*;
 import java.awt.*;

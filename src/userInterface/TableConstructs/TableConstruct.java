@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.TableConstructs;
 
 import controller.ApplicationController;
 import exceptions.DAOException;
@@ -13,9 +13,9 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class TableConstruct {
-    DefaultTableModel tableModel;
-    JTable table;
-    ApplicationController controller;
+    private DefaultTableModel tableModel;
+    private JTable table;
+    private ApplicationController controller;
 
     public TableConstruct(String[] columnNames) {
         tableModel = new DefaultTableModel();
