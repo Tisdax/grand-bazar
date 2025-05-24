@@ -18,6 +18,7 @@ public class ProductTable extends TableConstruct {
     public void fillTable() {
         try {
             ArrayList<Product> products = controller.findAllProducts();
+            super.refreshTable();
             for(Product product : products) {
                 tableModel.addRow(new Object[] {
                         product.getId(), product.getName(), product.getNetPrice(), product.getVatPercentage(),

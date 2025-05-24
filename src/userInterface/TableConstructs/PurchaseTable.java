@@ -16,6 +16,7 @@ public class PurchaseTable extends TableConstruct {
     public void fillPurchaseTable(LocalDate startDate, LocalDate endDate) {
         try {
             ArrayList<ProductOrderSummary> products = controller.findProductsBySaleDate(startDate, endDate);
+            super.refreshTable();
             for(ProductOrderSummary product : products) {
                 tableModel.addRow(new Object[] {
                         product.getProductId(), product.getProductName(), product.getProductNetPrice(),

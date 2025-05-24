@@ -19,6 +19,7 @@ public class CustomerTable extends TableConstruct {
     public void fillTable() {
             try {
                 ArrayList<Customer> customers = controller.findAllCustomers();
+                super.refreshTable();
                 for(Customer customer : customers) {
                     tableModel.addRow(new Object[] {
                             customer.getId(), customer.getLastName(), customer.getFirstName(), customer.getBirthdate(), customer.getPhone(),

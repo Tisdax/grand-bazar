@@ -16,7 +16,7 @@ public class LowStockTable extends TableConstruct {
     public void fillTable() {
         try {
             ArrayList<ProductLowStockInfo> products = controller.findProductsByLowStock();
-
+            super.refreshTable();
             for (ProductLowStockInfo product : products) {
                 String qtBasedOnTotal, nbMissingProducts;
                 double qtPercentage;

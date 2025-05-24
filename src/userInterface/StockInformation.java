@@ -35,7 +35,6 @@ public class StockInformation extends JPanel {
         }
 
         categoryComboBox.addActionListener(e -> {
-            stockTable.refreshTable();
             String selectedCategory = (String) categoryComboBox.getSelectedItem();
             stockTable.fillTable(selectedCategory);
         });

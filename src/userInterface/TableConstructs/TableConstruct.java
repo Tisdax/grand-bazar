@@ -27,6 +27,7 @@ public class TableConstruct {
             tableModel.addColumn(columnName);
         }
     }
+
     public JTable getTable() {
         return table;
     }

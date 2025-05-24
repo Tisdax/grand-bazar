@@ -16,6 +16,7 @@ public class StockTable extends TableConstruct {
     public void fillTable(String category) {
         try {
             ArrayList<ProductStockInfo> productStockInfos = controller.findProductsByCategoryId(category);
+            super.refreshTable();
             for (ProductStockInfo productStockInfo : productStockInfos) {
                 tableModel.addRow(new Object[] {
                         productStockInfo.getProductName(), productStockInfo.getStockQuantity(), productStockInfo.getShelfLevel(),
