@@ -1,5 +1,6 @@
 package userInterface;
 
+import userInterface.TableConstructs.CustomerTable;
 import userInterface.TableConstructs.TableConstruct;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ public class CustomerManager extends JPanel {
     private JButton addCustomerButton;
     private JButton removeCustomerButton;
     private JButton editCustomerButton;
-    private TableConstruct customerTable;
+    private CustomerTable customerTable;
 
     public CustomerManager() {
         PanelSwitchActionner switchActionner = new PanelSwitchActionner();
@@ -23,13 +24,7 @@ public class CustomerManager extends JPanel {
         JPanel titlePanel = new JPanel();
 
         // Table
-        String[] columnNames = {
-                "ID", "Nom", "Prénom", "Date de naissance", "Num Téléphone", "Email",
-                "Est abonné newsletter", "Numéro TVA", "Localité zip code",
-                "Nom localité", "Rue", "Numéro maison", "Type"
-        };
-        customerTable = new TableConstruct(columnNames);
-        customerTable.fillCustomerTable();
+        customerTable = new CustomerTable();
 
         titleLabel = new JLabel("Gestion des clients");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -47,7 +42,4 @@ public class CustomerManager extends JPanel {
         this.add(buttonPanel, BorderLayout.CENTER);
         this.add(new JScrollPane(customerTable.getTable()), BorderLayout.SOUTH);
     }
-
-
-
 }

@@ -3,6 +3,7 @@ package userInterface;
 import controller.ApplicationController;
 import exceptions.DAOException;
 import model.ProductCategory;
+import userInterface.TableConstructs.StockTable;
 import userInterface.TableConstructs.TableConstruct;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public class StockInformation extends JPanel {
     private JLabel titleLabel;;
-    private TableConstruct stockTable;
+    private StockTable stockTable;
     private JComboBox<String> categoryComboBox;
     private ApplicationController controller;
 
@@ -20,10 +21,7 @@ public class StockInformation extends JPanel {
         controller = new ApplicationController();
 
         // Table
-        String[] columnsNames = {
-                "Nom ¨produit", "Qt en stock", "Shelf Level", "Shelf ID", "Est réfrigérer"
-        };
-        stockTable = new TableConstruct(columnsNames);
+        stockTable = new StockTable();
 
         // ComboBox
         categoryComboBox = new JComboBox<>();
@@ -39,7 +37,7 @@ public class StockInformation extends JPanel {
         categoryComboBox.addActionListener(e -> {
             stockTable.refreshTable();
             String selectedCategory = (String) categoryComboBox.getSelectedItem();
-            stockTable.fillStockTable(selectedCategory);
+            stockTable.fillTable(selectedCategory);
         });
 
 
