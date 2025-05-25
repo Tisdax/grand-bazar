@@ -13,9 +13,9 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class TableConstruct {
-    private DefaultTableModel tableModel;
-    private JTable table;
-    private ApplicationController controller;
+    protected DefaultTableModel tableModel;
+    protected JTable table;
+    protected ApplicationController controller;
 
     public TableConstruct(String[] columnNames) {
         tableModel = new DefaultTableModel();
@@ -27,71 +27,6 @@ public class TableConstruct {
             tableModel.addColumn(columnName);
         }
     }
-    public void fillProductTable() {
-        try {
-            ArrayList<Product> products = controller.findAllProducts();
-            for(Product product : products) {
-                tableModel.addRow(new Object[] {
-                        product.getId(), product.getName(), product.getNetPrice(), product.getVatPercentage(),
-                        product.getLoyaltyPointsNb(), product.getEdible(), product.getMinQuantity(), product.getPromotionMinQuantity(),
-                        product.getSaleDate(), product.getTimeBeforeRemoving(), product.getCategoryName()
-                });
-            }
-
-        } catch (DAOException | InvalidValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    public void fillCustomerTable() {
-        try {
-            ArrayList<Customer> customers = controller.findAllCustomers();
-            for(Customer customer : customers) {
-                tableModel.addRow(new Object[] {
-                        customer.getId(), customer.getLastName(), customer.getFirstName(), customer.getBirthdate(), customer.getPhone(),
-                        customer.getEmail(), customer.getSubscribedToNewsLetter(), customer.getVatNumber(), customer.getLocalityZipCode(),
-                        customer.getLocalityName(), customer.getAddressStreet(), customer.getHouseNumber(), customer.getTypeName()
-                });
-            }
-        } catch (DAOException | InvalidValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    public void fillStockTable(String category) {
-        try {
-            ArrayList<ProductStockInfo> productStockInfos = controller.findProductsByCategoryId(category);
-            for (ProductStockInfo productStockInfo : productStockInfos) {
-                tableModel.addRow(new Object[] {
-                     productStockInfo.getProductName(), productStockInfo.getStockQuantity(), productStockInfo.getShelfLevel(),
-                        productStockInfo.getShelfId(), productStockInfo.getShelfRefregirated()
-                });
-            }
-        } catch (DAOException | InvalidValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    public void fillLowProductTable() {
-        try {
-            ArrayList<ProductLowStockInfo> products = controller.findProductsByLowStock();
-
-            for (ProductLowStockInfo product : products) {
-                String qtBasedOnTotal, nbMissingProducts;
-                double qtPercentage;
-
-                qtBasedOnTotal = product.getStockQuantity() +" / "+ product.getProductMinQuantity();
-                qtPercentage = ((double)product.getStockQuantity() / product.getProductMinQuantity()) * 100;
-                nbMissingProducts = (product.getProductMinQuantity() - product.getStockQuantity()) + " produits manquants";
-
-                tableModel.addRow(new Object[]{
-                        product.getProductId(), product.getProductName(),
-                        qtBasedOnTotal, qtPercentage + "%", nbMissingProducts});
-            }
-
-        } catch (DAOException | InvalidValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-
 
     public JTable getTable() {
         return table;

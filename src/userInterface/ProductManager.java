@@ -1,4 +1,5 @@
 package userInterface;
+import userInterface.TableConstructs.ProductTable;
 import userInterface.TableConstructs.TableConstruct;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ public class ProductManager extends JPanel {
     private JButton addProductButton;
     private JButton removeProductButton;
     private JButton editProductButton;
-    private TableConstruct tableConstruct;
+    private ProductTable productTable;
 
     public ProductManager() {
         PanelSwitchActionner switchActionner = new PanelSwitchActionner();
@@ -22,12 +23,7 @@ public class ProductManager extends JPanel {
         JPanel titlePanel = new JPanel();
 
         // Table
-        String[] columnNames = {
-                "ID", "Name", "Prix Net", "% TVA", "Pts Fidélité", "Eligible", "Qt min",
-                "Qt min en promo", "Date mise en vente", "Temps avant retrait", "Catégorie"
-        };
-        tableConstruct = new TableConstruct(columnNames);
-        tableConstruct.fillProductTable();
+        productTable = new ProductTable();
 
         titleLabel = new JLabel("Gestion des produits");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -43,6 +39,6 @@ public class ProductManager extends JPanel {
 
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.CENTER);
-        this.add(new JScrollPane(tableConstruct.getTable()), BorderLayout.SOUTH);
+        this.add(new JScrollPane(productTable.getTable()), BorderLayout.SOUTH);
     }
 }
