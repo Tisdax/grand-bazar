@@ -98,6 +98,10 @@ public class ApplicationController {
         customerManager.update(customer);
     }
 
+    public boolean customerExistsById(int customerId) throws DAOException {
+        return customerManager.customerExistsById(customerId);
+    }
+
     public ArrayList<Customer> findAllCustomers() throws DAOException, InvalidValueException {
         return customerManager.findAll();
     }

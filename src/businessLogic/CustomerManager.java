@@ -42,4 +42,8 @@ public class CustomerManager {
     public ArrayList<CustomerAddressInfo> findByLoyaltyPoints(int nbPointsMin, int nbPointsMax) throws DAOException, InvalidValueException {
         return dao.findByLoyaltyPoints(nbPointsMin, nbPointsMax);
     }
+
+    public boolean customerExistsById(int customerId) throws DAOException {
+        return dao.existsById(customerId);
+    }
 }

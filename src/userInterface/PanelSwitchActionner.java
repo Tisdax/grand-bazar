@@ -1,6 +1,7 @@
 package userInterface;
 
 import controller.ApplicationController;
+import exceptions.DAOException;
 import model.Customer;
 import model.CustomerDeletionMode;
 import model.Product;
@@ -148,75 +149,123 @@ public class PanelSwitchActionner {
 
     // Customer methods
     private void editCustomerActionner() {
+        CustomerForm customerForm = new CustomerForm();
+        String inputID = JOptionPane.showInputDialog("ID du client à modifier :");
+        if (inputID == null){
+            return;
+        }
+
+        int inputIdInt;
         try {
-            CustomerForm customerForm = new CustomerForm();
-            String inputID = JOptionPane.showInputDialog("ID du client à modifier :");
-            if (inputID == null || inputID.trim().isEmpty()){
-                return;
+            inputIdInt = Integer.parseInt(inputID);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Veuillez entrer un identifiant ne contenant que des chiffres entiers", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            if (controller.customerExistsById(inputIdInt)) {
+                try {
+                    Customer customer = controller.findCustomerById(inputIdInt);
+                    customerForm.fillCustomerForm(customer);
+                    addPanelToFrameTest(customerForm);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Cet identifiant n'existe pas veuillez essayer avec un identifiant valide", "Erreur",JOptionPane.ERROR_MESSAGE);
             }
-
-            Customer customer = controller.findCustomerById(Integer.parseInt(inputID));
-            customerForm.fillCustomerForm(customer);
-            addPanelToFrameTest(customerForm);
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
     private void deleteCustomerActionner() {
+        CustomerDeletionMode deletionMode;
+        Object[] options = {"Supprimer uniquement client", "Supprimmer client et ses achats", "Annuler"};
+        String inputID = JOptionPane.showInputDialog("ID du client à supprimer :");
+        if (inputID == null) {
+            return;
+        }
+
+        int inputIdInt;
         try {
-            CustomerDeletionMode deletionMode;
-            Object[] options = {"Supprimer uniquement client", "Supprimmer client et ses achats", "Annuler"};
-            String inputID = JOptionPane.showInputDialog("ID du client à supprimer :");
-            if (inputID == null || inputID.trim().isEmpty()){
-                return;
-            }
+            inputIdInt = Integer.parseInt(inputID);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Veuillez entrer un identifiant ne contenant que des chiffres entiers", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            int choice = JOptionPane.showOptionDialog(null, "Il y a potentiellement des achats liés à ce client",
-                    "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        try {
+            if (controller.customerExistsById(inputIdInt)) {
+                try {
+                    int choice = JOptionPane.showOptionDialog(null, "Il y a potentiellement des achats liés à ce client",
+                            "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-            if (choice == 0) {
-                deletionMode = CustomerDeletionMode.REMOVE_FROM_SALES;
-                controller.deleteCustomer(Integer.parseInt(inputID), deletionMode);
-            } else if (choice == 1) {
-                deletionMode = CustomerDeletionMode.DELETE_SALES;
-                controller.deleteCustomer(Integer.parseInt(inputID), deletionMode);
+                    if (choice == 0) {
+                        deletionMode = CustomerDeletionMode.REMOVE_FROM_SALES;
+                        controller.deleteCustomer(inputIdInt, deletionMode);
+                    } else if (choice == 1) {
+                        deletionMode = CustomerDeletionMode.DELETE_SALES;
+                        controller.deleteCustomer(inputIdInt, deletionMode);
+                    }
+                } catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Cet identifiant n'existe pas veuillez essayer avec un identifiant valide", "Erreur",JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
     // Product methods
     private void editProductActionner() {
-        try {
-            ProductForm productForm = new ProductForm();
-            String inputID = JOptionPane.showInputDialog("ID du produit à modifier :");
-            if (inputID == null || inputID.trim().isEmpty()){
-                return;
-            }
+        ProductForm productForm = new ProductForm();
+        String inputID = JOptionPane.showInputDialog("ID du produit à modifier :");
+        if (inputID == null){
+            return;
+        }
 
-            Product product = controller.findProductById(inputID);
-            productForm.fillProductForm(product);
-            addPanelToFrameTest(productForm);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (controller.productExistsById(inputID)) {
+                try {
+                    Product product = controller.findProductById(inputID);
+                    productForm.fillProductForm(product);
+                    addPanelToFrameTest(productForm);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Cet identifiant n'existe pas veuillez essayer avec un identifiant valide", "Erreur",JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
     private void deleteProductActionner() {
         Object[] options = {"Supprimer produit", "Annuler"};
         String inputID = JOptionPane.showInputDialog("ID du produit à supprimer :");
-        if (inputID == null || inputID.trim().isEmpty()){
+        if (inputID == null){
             return;
         }
 
-        int choice = JOptionPane.showOptionDialog(null, "Etes-vous sur de vouloir supprimer ce produit ?", "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        try {
+            if (controller.productExistsById(inputID)){
+                int choice = JOptionPane.showOptionDialog(null, "Etes-vous sur de vouloir supprimer ce produit ?", "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-        if(choice == 0) {
-            try {
-                controller.deleteProduct(inputID);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                if(choice == 0) {
+                    try {
+                        controller.deleteProduct(inputID);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Cet identifiant n'existe pas veuillez essayer avec un identifiant valide", "Erreur",JOptionPane.ERROR_MESSAGE);
             }
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
