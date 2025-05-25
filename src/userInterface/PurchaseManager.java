@@ -43,7 +43,7 @@ public class PurchaseManager extends JPanel {
         endDate.setEditor(new JSpinner.DateEditor(endDate, "dd/MM/yyyy"));
         datePanel.add(dernieresVentes);
         datePanel.add(endDate);
-        endDate.addChangeListener(e -> { dataUpdate(); });
+        endDate.addChangeListener(e -> { dataUpdate();});
 
 
         titleLabel = new JLabel("Infos sur les achats effectués dans un laps de temps :");

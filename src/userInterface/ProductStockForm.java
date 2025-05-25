@@ -25,7 +25,6 @@ public class ProductStockForm extends JPanel {
         titlePanel = new JPanel();
         formPanel = new JPanel(new GridBagLayout());
         buttonPanel = new JPanel();
-        formPanel.setSize(100, 100);
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);

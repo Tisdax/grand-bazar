@@ -106,6 +106,9 @@ public class ApplicationController {
         return customerManager.lastId();
     }
 
+    public ArrayList<CustomerAddressInfo> findCustomersByLoyaltyPoints(int nbPointsMin, int nbPointsMax) throws DAOException, InvalidValueException {
+        return customerManager.findByLoyaltyPoints(nbPointsMin, nbPointsMax);
+    }
     // Locality
     public ArrayList<Locality> findAllLocalities() throws DAOException, InvalidValueException {
         return localityManager.findAll();

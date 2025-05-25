@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class StockTable extends TableConstruct {
     public StockTable() {
         super(new String[] {
-                "Nom ¨produit", "Qt en stock", "Shelf Level", "Shelf ID", "Est réfrigérer"
+                "Nom produit", "Qt en stock", "Shelf Level", "Shelf ID", "Est réfrigérer"
         });
     }
     public void fillTable(String category) {

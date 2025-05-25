@@ -35,7 +35,7 @@ public class CustomerForm extends JPanel {
 
         this.setLayout(new BorderLayout());
         titlePanel = new JPanel();
-        formPanel = new JPanel(new GridLayout(16, 2, 5, 10));
+        formPanel = new JPanel(new GridLayout(16, 2, 5, 15));
         buttonPanel = new JPanel();
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
