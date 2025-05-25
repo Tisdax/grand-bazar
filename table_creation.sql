@@ -206,7 +206,7 @@ values
 
 insert into address(locality_zip_code, locality_name, street, house_number, postal_box_number)
 values
-    (1340, 'Ottignies', 'Rue du ruisseau', '24', 2),
+    (1340, 'Ottignies', 'Rue du ruisseau', '24', null),
     (5030, 'Gembloux', 'Rue du chêne', '7', 5);
 
 insert into customer(id, last_name, first_name, birthdate, is_subscribed_to_newsletter, vat_number, address_locality_zip_code, address_locality_name, address_street, address_house_number, type)

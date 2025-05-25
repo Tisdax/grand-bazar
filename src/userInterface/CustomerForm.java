@@ -5,6 +5,7 @@ import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Address;
 import model.Customer;
+import model.CustomerType;
 import model.Locality;
 
 import javax.swing.*;
@@ -50,7 +51,7 @@ public class CustomerForm extends JPanel {
 
 
         // FORM PANEL
-        idLabel = new JLabel("Identifiant client :", SwingConstants.RIGHT);
+        idLabel = new JLabel("Identifiant :", SwingConstants.RIGHT);
         idField = new JTextField();
         try {
             idField.setText(String.valueOf(controller.lastCustomerId() + 1));
@@ -71,23 +72,21 @@ public class CustomerForm extends JPanel {
         formPanel.add(firstNameLabel);
         formPanel.add(firstNameField);
 
-        localityLabel = new JLabel("Catégorie du client :", SwingConstants.RIGHT);
+        localityLabel = new JLabel("Localité :", SwingConstants.RIGHT);
         localityComboBox = new JComboBox<>();
-        ArrayList<Locality> localities = null;
+        ArrayList<Locality> localities;
         try {
             localities = controller.findAllLocalities();
-        } catch (DAOException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidValueException e) {
-            throw new RuntimeException(e);
-        }
-        for (Locality locality : localities) {
-            localityComboBox.addItem(locality);
+            for (Locality locality : localities) {
+                localityComboBox.addItem(locality);
+            }
+        } catch (DAOException | InvalidValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         formPanel.add(localityLabel);
         formPanel.add(localityComboBox);
 
-        addressStreetLabel = new JLabel("Nom de la rue :", SwingConstants.RIGHT);
+        addressStreetLabel = new JLabel("Rue :", SwingConstants.RIGHT);
         addressStreetField = new JTextField();
         formPanel.add(addressStreetLabel);
         formPanel.add(addressStreetField);
@@ -97,7 +96,7 @@ public class CustomerForm extends JPanel {
         formPanel.add(houseNumberLabel);
         formPanel.add(houseNumberField);
 
-        postalBoxNumberCBLabel = new JLabel("Définir numéro de boite postale :", SwingConstants.RIGHT);
+        postalBoxNumberCBLabel = new JLabel("A un numéro de boite postale :", SwingConstants.RIGHT);
         postalBoxNumberCheckBox = new JCheckBox();
         formPanel.add(postalBoxNumberCBLabel);
         formPanel.add(postalBoxNumberCheckBox);
@@ -108,7 +107,7 @@ public class CustomerForm extends JPanel {
         formPanel.add(postalBoxNumberLabel);
         formPanel.add(postalBoxNumberSpinner);
 
-        phoneNumberCBLabel = new JLabel("Définir numéro de téléphone :", SwingConstants.RIGHT);
+        phoneNumberCBLabel = new JLabel("Communiquer un numéro de téléphone :", SwingConstants.RIGHT);
         phoneNumberCheckBox = new JCheckBox();
         formPanel.add(phoneNumberCBLabel);
         formPanel.add(phoneNumberCheckBox);
@@ -126,12 +125,12 @@ public class CustomerForm extends JPanel {
         formPanel.add(phoneLabel);
         formPanel.add(phoneNumberField);
 
-        emailCBLabel = new JLabel("Définir email :", SwingConstants.RIGHT);
+        emailCBLabel = new JLabel("Communiquer un email :", SwingConstants.RIGHT);
         emailCheckBox = new JCheckBox();
         formPanel.add(emailCBLabel);
         formPanel.add(emailCheckBox);
 
-        emailLabel = new JLabel("adresse mail :", SwingConstants.RIGHT);
+        emailLabel = new JLabel("Email :", SwingConstants.RIGHT);
         emailField = new JTextField();
         emailField.setEnabled(false);
         formPanel.add(emailLabel);
@@ -149,8 +148,17 @@ public class CustomerForm extends JPanel {
         formPanel.add(birthdayLabel);
         formPanel.add(birthdaySpinner);
 
-        typeLabel = new JLabel("Type de client :", SwingConstants.RIGHT);
-        typeComboBox = new JComboBox<>(new String[]{"particulier", "professionnel"});
+        typeLabel = new JLabel("Type :", SwingConstants.RIGHT);
+        typeComboBox = new JComboBox<>();
+        ArrayList<CustomerType> types;
+        try {
+            types = controller.findAllCustomerTypes();
+            for (CustomerType type : types) {
+                typeComboBox.addItem(type.getName());
+            }
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         formPanel.add(typeLabel);
         formPanel.add(typeComboBox);
 
@@ -188,10 +196,7 @@ public class CustomerForm extends JPanel {
         });
 
         typeComboBox.addItemListener(e -> {
-            if (Objects.equals(typeComboBox.getSelectedItem(), "professionnel"))
-                vatNumberField.setEnabled(true);
-            else
-                vatNumberField.setEnabled(false);
+            vatNumberField.setEnabled(Objects.equals(typeComboBox.getSelectedItem(), "professionnel"));
         });
 
         addButton.addActionListener(e -> {

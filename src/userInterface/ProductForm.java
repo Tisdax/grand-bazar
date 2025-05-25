@@ -39,7 +39,7 @@ public class ProductForm extends JPanel {
 
 
         // TITLE PANEL
-        titleLabel = new JLabel("Formulaire de Produit");
+        titleLabel = new JLabel("Formulaire produit");
         Font font = new Font("Arial", Font.BOLD, 20);
         titleLabel.setFont(font);
         titlePanel.add(titleLabel);
@@ -51,7 +51,7 @@ public class ProductForm extends JPanel {
         formPanel.add(idLabel);
         formPanel.add(idField);
 
-        nameLabel = new JLabel("Nom du produit :", SwingConstants.RIGHT);
+        nameLabel = new JLabel("Nom :", SwingConstants.RIGHT);
         nameField = new JTextField(15);
         formPanel.add(nameLabel);
         formPanel.add(nameField);
@@ -65,22 +65,22 @@ public class ProductForm extends JPanel {
         formPanel.add(netPriceLabel);
         formPanel.add(netPriceSpinner);
 
-        vatLabel = new JLabel("Taux de TVA :", SwingConstants.RIGHT);
+        vatLabel = new JLabel("Taux de TVA (%) :", SwingConstants.RIGHT);
         vatComboBox = new JComboBox<>(new Integer[]{6, 12, 21});
         formPanel.add(vatLabel);
         formPanel.add(vatComboBox);
 
-        isEdibleLabel = new JLabel("Le produit est-il comestible :", SwingConstants.RIGHT);
+        isEdibleLabel = new JLabel("Est commestible :", SwingConstants.RIGHT);
         isEdibleCheckBox = new JCheckBox();
         formPanel.add(isEdibleLabel);
         formPanel.add(isEdibleCheckBox);
 
         loyaltyPointsLabel = new JLabel("Nombre de points de fidélité :", SwingConstants.RIGHT);
-        loyaltyPointsSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 10));
+        loyaltyPointsSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 10));
         formPanel.add(loyaltyPointsLabel);
         formPanel.add(loyaltyPointsSpinner);
 
-        minQuantCBLabel = new JLabel("Définir une quantité minimale :", SwingConstants.RIGHT);
+        minQuantCBLabel = new JLabel("A une quantité minimale en stock :", SwingConstants.RIGHT);
         minquantCheckBox = new JCheckBox();
         formPanel.add(minQuantCBLabel);
         formPanel.add(minquantCheckBox);
@@ -90,7 +90,7 @@ public class ProductForm extends JPanel {
         formPanel.add(minQuantLabel);
         formPanel.add(minQuantSpinner);
 
-        promoMinQuantCBLabel = new JLabel("Définir une quantité minimale lors de promotion :", SwingConstants.RIGHT);
+        promoMinQuantCBLabel = new JLabel("A une quantité minimale en stock en cas de promotion :", SwingConstants.RIGHT);
         promoMinQuantCheckBox = new JCheckBox();
         formPanel.add(promoMinQuantCBLabel);
         formPanel.add(promoMinQuantCheckBox);
@@ -100,7 +100,7 @@ public class ProductForm extends JPanel {
         formPanel.add(promotionQuantLabel);
         formPanel.add(promotionQuantSpinner);
 
-        timeBeforeRemovingCBLabel = new JLabel("Définir une durée avant la suppression des rayons :", SwingConstants.RIGHT);
+        timeBeforeRemovingCBLabel = new JLabel("A une durée avant la suppression des rayons :", SwingConstants.RIGHT);
         timeBeforeRemovingCheckBox = new JCheckBox();
         formPanel.add(timeBeforeRemovingCBLabel);
         formPanel.add(timeBeforeRemovingCheckBox);
@@ -110,23 +110,23 @@ public class ProductForm extends JPanel {
         formPanel.add(timeBeforeRemovingLabel);
         formPanel.add(timeBeforeRemovingSpinner);
 
-        categoryLabel = new JLabel("Catégorie du produit :", SwingConstants.RIGHT);
+        categoryLabel = new JLabel("Catégorie :", SwingConstants.RIGHT);
         categoryComboBox = new JComboBox<>();
-        ArrayList<ProductCategory> categories = null;
+        ArrayList<ProductCategory> categories;
         try {
             categories = controller.findAllCategories();
+            for (ProductCategory category : categories) {
+                categoryComboBox.addItem(category.getName());
+            }
         } catch (DAOException e) {
-            JOptionPane.showMessageDialog(null, "Erreur lors de la recherche de catégorie veuillez réessayer", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        for (ProductCategory category : categories) {
-            categoryComboBox.addItem(category.getName());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         formPanel.add(categoryLabel);
         formPanel.add(categoryComboBox);
 
         saleDateLabel = new JLabel("Date de mise en vente :", SwingConstants.RIGHT);
         Date today = new Date();
-        saleDateSpinner = new JSpinner(new SpinnerDateModel(today, today, null, Calendar.MONTH));
+        saleDateSpinner = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.MONTH));
         saleDateSpinner.setEditor(new JSpinner.DateEditor(saleDateSpinner, "dd/MM/yyyy"));
         formPanel.add(saleDateLabel);
         formPanel.add(saleDateSpinner);
@@ -155,14 +155,11 @@ public class ProductForm extends JPanel {
             try {
                 if (controller.productExistsById(idField.getText())){
                     JOptionPane.showMessageDialog(null, "L'identifiant " + idField.getText() + " est déjà utilisé. Veuillez en choisir un autre", "Erreur", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    controller.saveProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
+                    JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
+                    emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
                 }
-                LocalDate saleDate = ((Date) saleDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                if (saleDate == null || saleDate.isBefore(LocalDate.now())){
-                    JOptionPane.showMessageDialog(null, "Veuillez entrez une adresse supérieur à aujourd'hui", "Erreur",JOptionPane.ERROR_MESSAGE);
-                }
-                controller.saveProduct(tansformProduct(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox));
-                JOptionPane.showMessageDialog(null, "Produit ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
-                emptyForm(idField, nameField, netPriceSpinner, vatComboBox,loyaltyPointsSpinner, minQuantSpinner, promotionQuantSpinner, timeBeforeRemovingSpinner, isEdibleCheckBox, saleDateSpinner, categoryComboBox, minquantCheckBox, promoMinQuantCheckBox, timeBeforeRemovingCheckBox);
             } catch (DAOException | InvalidValueException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problèmes lors de l'ajout", JOptionPane.ERROR_MESSAGE);
             }

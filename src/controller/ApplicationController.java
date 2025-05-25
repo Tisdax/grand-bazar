@@ -1,5 +1,6 @@
 package controller;
 
+import DAOinterfaces.CustomerTypeDAO;
 import businessLogic.*;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
@@ -18,6 +19,7 @@ public class ApplicationController {
     private LoyaltyCardManager loyaltyCardManager;
     private ShelfManager shelfManager;
     private StockManager stockManager;
+    private CustomerTypeManager customerTypeManager;
 
     public ApplicationController(){
         connectionManager = new ConnectionManager();
@@ -29,6 +31,7 @@ public class ApplicationController {
         loyaltyCardManager = new LoyaltyCardManager();
         shelfManager = new ShelfManager();
         stockManager = new StockManager();
+        customerTypeManager = new CustomerTypeManager();
     }
 
     public void closeConnection() throws DAOException {
@@ -144,5 +147,10 @@ public class ApplicationController {
 
     public ArrayList<ProductLowStockInfo> findProductsByLowStock() throws DAOException, InvalidValueException {
         return productManager.findByLowStock();
+    }
+
+    // CustomerType
+    public ArrayList<CustomerType> findAllCustomerTypes() throws DAOException {
+        return customerTypeManager.findAll();
     }
 }

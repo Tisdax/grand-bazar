@@ -27,9 +27,9 @@ public class MenuBar {
         applicationMenu.add(leave);
 
         // Product Menu
-        productMenu = new JMenu("Gestion produit");
+        productMenu = new JMenu("Gestion des produits");
         createProduct = switchActionner.createMenuItem("Nouveau produit", ProductForm::new);
-        readProduct = switchActionner.createMenuItem("Afficher produit", ProductManager::new);
+        readProduct = switchActionner.createMenuItem("Afficher produits", ProductManager::new);
         updateProduct = switchActionner.createEditProductMenuItem();
         deleteProduct = switchActionner.createDeleteProductMenuItem();
         menu.add(productMenu);
@@ -42,12 +42,12 @@ public class MenuBar {
         productMenu.add(deleteProduct);
 
         // Customer Menu
-        customerMenu = new JMenu("Gestion client");
+        customerMenu = new JMenu("Gestion des clients");
         createCustomer = switchActionner.createMenuItem("Nouveau client", CustomerForm::new);
-        readCustomer = switchActionner.createMenuItem("Afficher client", CustomerManager::new);
+        readCustomer = switchActionner.createMenuItem("Afficher clients", CustomerManager::new);
         updateCustomer = switchActionner.createEditCustomerMenuItem();
         deleteCustomer = switchActionner.createDeleteCustomerMenuItem();
-        loyaltyCardsInfos = switchActionner.createMenuItem("Pts fidélités des clients", LoyaltyCardPanel::new);
+        loyaltyCardsInfos = switchActionner.createMenuItem("Infos clients intervalle pts fidélité", LoyaltyCardPanel::new);
         menu.add(customerMenu);
         customerMenu.add(createCustomer);
         customerMenu.addSeparator();
@@ -62,17 +62,17 @@ public class MenuBar {
         // Cart Menu
         shoppingCartMenu = new JMenu("Achats");
         newPurchase = switchActionner.createMenuItem("Nouvelle commande", CartManager::new);
-        purchaseInfos = switchActionner.createMenuItem("Infos Achats", PurchaseManager::new);
+        purchaseInfos = switchActionner.createMenuItem("Infos Achats entre deux dates", PurchaseManager::new);
         menu.add(shoppingCartMenu);
         shoppingCartMenu.add(newPurchase);
         shoppingCartMenu.addSeparator();
         shoppingCartMenu.add(purchaseInfos);
 
         // Stock Menu
-        stockMenu = new JMenu("Stock");
-        stockReport = switchActionner.createMenuItem("Rapport de stock", StockInformation::new);
+        stockMenu = new JMenu("Stocks");
+        stockReport = switchActionner.createMenuItem("Rapport de stocks selon catégorie produit", StockInformation::new);
         lowStockProductReport = switchActionner.createMenuItem("Produits ayant un stock insuffisant", LowStockProductPanel::new);
-        productStockForm = switchActionner.createMenuItem("Gèrer le stock des produit", ProductStockForm::new);
+        productStockForm = switchActionner.createMenuItem("Ajout/Mise à jour stock produit", ProductStockForm::new);
         menu.add(stockMenu);
         stockMenu.add(stockReport);
         stockMenu.addSeparator();
@@ -87,10 +87,9 @@ public class MenuBar {
                 controller.closeConnection();
                 System.exit(0);
             } catch (DAOException ex) {
-                JOptionPane.showMessageDialog(null, ex.getDescription(), "Problème lors de la fermeture de la BD",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problème lors de la fermeture de la BD",JOptionPane.ERROR_MESSAGE);
             }
         });
-        //
         return menu;
     }
 }

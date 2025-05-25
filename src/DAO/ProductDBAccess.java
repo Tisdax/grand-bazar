@@ -172,7 +172,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DAOException(e.getMessage(), "Erreur lors de la suppression du produit " + product.getId() + " " + product.getName() + ".");
+            throw new DAOException(e.getMessage(), "Erreur lors de la modification du produit " + product.getId() + " " + product.getName() + ".");
         }
     }
 
@@ -285,6 +285,5 @@ public class ProductDBAccess implements ProductDAO {
         catch (SQLException e) {
             throw new DAOException(e.getMessage(), "Erreur lors de la recherche des produits ayant une quantité en stock trop faible.");
         }
-
     }
 }
