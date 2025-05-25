@@ -150,8 +150,12 @@ public class PanelSwitchActionner {
     private void editCustomerActionner() {
         try {
             CustomerForm customerForm = new CustomerForm();
-            int inputID = Integer.parseInt(JOptionPane.showInputDialog("ID du client à modifier :"));
-            Customer customer = controller.findCustomerById(inputID);
+            String inputID = JOptionPane.showInputDialog("ID du client à modifier :");
+            if (inputID == null || inputID.trim().isEmpty()){
+                return;
+            }
+
+            Customer customer = controller.findCustomerById(Integer.parseInt(inputID));
             customerForm.fillCustomerForm(customer);
             addPanelToFrameTest(customerForm);
 
@@ -163,16 +167,20 @@ public class PanelSwitchActionner {
         try {
             CustomerDeletionMode deletionMode;
             Object[] options = {"Supprimer uniquement client", "Supprimmer client et ses achats", "Annuler"};
-            int inputID = Integer.parseInt(JOptionPane.showInputDialog("ID du client à supprimer :"));
+            String inputID = JOptionPane.showInputDialog("ID du client à supprimer :");
+            if (inputID == null || inputID.trim().isEmpty()){
+                return;
+            }
+
             int choice = JOptionPane.showOptionDialog(null, "Il y a potentiellement des achats liés à ce client",
                     "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
             if (choice == 0) {
                 deletionMode = CustomerDeletionMode.REMOVE_FROM_SALES;
-                controller.deleteCustomer(inputID, deletionMode);
+                controller.deleteCustomer(Integer.parseInt(inputID), deletionMode);
             } else if (choice == 1) {
                 deletionMode = CustomerDeletionMode.DELETE_SALES;
-                controller.deleteCustomer(inputID, deletionMode);
+                controller.deleteCustomer(Integer.parseInt(inputID), deletionMode);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -183,6 +191,10 @@ public class PanelSwitchActionner {
         try {
             ProductForm productForm = new ProductForm();
             String inputID = JOptionPane.showInputDialog("ID du produit à modifier :");
+            if (inputID == null || inputID.trim().isEmpty()){
+                return;
+            }
+
             Product product = controller.findProductById(inputID);
             productForm.fillProductForm(product);
             addPanelToFrameTest(productForm);
@@ -193,8 +205,12 @@ public class PanelSwitchActionner {
     private void deleteProductActionner() {
         Object[] options = {"Supprimer produit", "Annuler"};
         String inputID = JOptionPane.showInputDialog("ID du produit à supprimer :");
-        int choice = JOptionPane.showOptionDialog(null, "Etes-vous sur de vouloir supprimer ce produit ?",
-                "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        if (inputID == null || inputID.trim().isEmpty()){
+            return;
+        }
+
+        int choice = JOptionPane.showOptionDialog(null, "Etes-vous sur de vouloir supprimer ce produit ?", "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
         if(choice == 0) {
             try {
                 controller.deleteProduct(inputID);
@@ -202,6 +218,5 @@ public class PanelSwitchActionner {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }
 }
