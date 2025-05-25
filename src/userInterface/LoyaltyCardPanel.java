@@ -24,7 +24,7 @@ public class LoyaltyCardPanel extends JPanel {
 
         // min points
         minPointsLabel = new JLabel("Minimum de points :");
-        minPoints = new JSpinner(new SpinnerNumberModel(0, 0, 100000, 100));
+        minPoints = new JSpinner(new SpinnerNumberModel(0, 0, 900, 100));
         pointsPanel.add(minPointsLabel);
         pointsPanel.add(minPoints);
 
