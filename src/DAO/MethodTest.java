@@ -18,6 +18,7 @@ public class MethodTest {
         SaleDAO saleDAO = new SaleDBAccess();
         DAO dao = new DBAccess();
         CommandLineDAO commandLineDAO = new CommandLineDBAccess();
+        StockDAO stockDAO = new StockDBAccess();
 
         try {
             Sale sale = new Sale(saleDAO.lastId()+1, 1, LocalDate.now(), 1);
@@ -54,6 +55,11 @@ public class MethodTest {
             ArrayList<CommandLine> commandLines = commandLineDAO.findBySale(saleDAO.lastId());
             for (CommandLine commandLiiiine : commandLines)
                 System.out.println(commandLiiiine.getProduct() + " " + commandLiiiine.getQuantity());
+
+            System.out.println(stockDAO.findQuantityByProduct("P020"));
+
+            stockDAO.lowerStocks("P001", 89);
+
             dao.closeConnection();
         }
         catch (DAOException e) {

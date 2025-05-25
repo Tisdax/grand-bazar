@@ -270,7 +270,7 @@ VALUES
     (5, 1, 'P005', 30),
     (5, 2, 'P003', 60),
     (5, 3, 'P004', 55),
-    (1, 1, 'P006', 45),
+    (1, 2, 'P006', 70),
     (6, 1, 'P007', 25);
 
 INSERT INTO promotion (id, min_quantity, reduction_percentage, product, start_date, end_date)

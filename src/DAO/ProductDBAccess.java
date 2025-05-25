@@ -123,7 +123,7 @@ public class ProductDBAccess implements ProductDAO {
 
             nbUpdatedLines += commandLineDBAccess.deleteByProduct(productId);
             nbUpdatedLines += promotionDBAccess.delete(productId);
-            nbUpdatedLines += stockDBAccess.deleteById(productId);
+            nbUpdatedLines += stockDBAccess.deleteByProduct(productId);
 
             preparedStatement.setString(1, productId);
 
