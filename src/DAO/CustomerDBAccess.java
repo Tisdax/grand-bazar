@@ -203,8 +203,10 @@ public class CustomerDBAccess implements CustomerDAO {
         String sqlInstruction = "select * from customer";
         try {
             Connection connection = SingletonConnection.getInstance();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction); // utiliser une variable connection
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
             ResultSet data = preparedStatement.executeQuery();
+
             ArrayList<Customer> customers = new ArrayList<>();
             Customer customer;
             String phone, email, vatNumber;

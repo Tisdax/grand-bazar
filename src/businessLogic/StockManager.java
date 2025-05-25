@@ -13,7 +13,7 @@ public class StockManager {
     }
 
     public int deleteById(String productId) throws DAOException {
-        return dao.deleteById(productId);
+        return dao.deleteByProduct(productId);
     }
 
     public void save(Stock stock) throws DAOException {
