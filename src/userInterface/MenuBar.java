@@ -16,7 +16,7 @@ public class MenuBar {
         JMenuBar menu = new JMenuBar();
         JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;
         JMenuItem welcomePage, leave, createProduct, readProduct, updateProduct, deleteProduct, createCustomer, readCustomer,
-                updateCustomer, deleteCustomer, newPurchase, stockReport, lowStockProductReport, productStockForm, purchaseInfos;
+                updateCustomer, deleteCustomer, newPurchase, stockReport, lowStockProductReport, productStockForm, purchaseInfos, loyaltyCardsInfos;
 
         // Application Menu
         applicationMenu = new JMenu("Application");
@@ -47,6 +47,7 @@ public class MenuBar {
         readCustomer = switchActionner.createMenuItem("Afficher client", CustomerManager::new);
         updateCustomer = switchActionner.createEditCustomerMenuItem();
         deleteCustomer = switchActionner.createDeleteCustomerMenuItem();
+        loyaltyCardsInfos = switchActionner.createMenuItem("Pts fidélités des clients", LoyaltyCardPanel::new);
         menu.add(customerMenu);
         customerMenu.add(createCustomer);
         customerMenu.addSeparator();
@@ -55,6 +56,8 @@ public class MenuBar {
         customerMenu.add(updateCustomer);
         customerMenu.addSeparator();
         customerMenu.add(deleteCustomer);
+        customerMenu.addSeparator();
+        customerMenu.add(loyaltyCardsInfos);
 
         // Cart Menu
         shoppingCartMenu = new JMenu("Achats");
