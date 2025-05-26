@@ -20,14 +20,14 @@ public class Address {
 
     public void setStreet(String street) throws InvalidValueException {
         if (street == null || street.isEmpty()){
-            throw new InvalidValueException("Veuillez entrez une adresse valide", street);
+            throw new InvalidValueException("Veuillez entrez une adresse valide.", street);
         }
         this.street = street;
     }
 
     public void setHouseNumber(String houseNumber) throws InvalidValueException {
-        if (houseNumber == null || houseNumber.isEmpty()){
-            throw new InvalidValueException("Veuillez entrez un numéro de maison valide", houseNumber);
+        if (houseNumber == null || houseNumber.isEmpty() || houseNumber.length() > 5) {
+            throw new InvalidValueException("Le numéro de maison peut faire 5 caractères maximum et ne peut pas être vide.", houseNumber);
         }
         this.houseNumber = houseNumber;
     }

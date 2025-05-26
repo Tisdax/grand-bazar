@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class ProductTable extends TableConstruct {
     public ProductTable() {
         super(new String[] {
-                "ID", "Name", "Prix Net", "% TVA", "Pts Fidélité", "Eligible", "Qt min",
-                "Qt min en promo", "Date mise en vente", "Temps avant retrait", "Catégorie"
+                "ID", "Nom", "Prix HTVA", "% TVA", "Nombre points fidélité", "Commestible", "Qtt min",
+                "Qtt min en promo", "Date de mise en vente", "Temps avant retrait", "Catégorie"
         });
         fillTable();
     }
@@ -22,7 +22,7 @@ public class ProductTable extends TableConstruct {
             for(Product product : products) {
                 tableModel.addRow(new Object[] {
                         product.getId(), product.getName(), product.getNetPrice(), product.getVatPercentage(),
-                        product.getLoyaltyPointsNb(), product.getEdible(), product.getMinQuantity(), product.getPromotionMinQuantity(),
+                        product.getLoyaltyPointsNb(), product.getEdible() ? "Oui" : "Non", product.getMinQuantity(), product.getPromotionMinQuantity(),
                         product.getSaleDate(), product.getTimeBeforeRemoving(), product.getCategoryName()
                 });
             }

@@ -30,8 +30,8 @@ public class MenuBar {
         productMenu = new JMenu("Gestion des produits");
         createProduct = switchActionner.createMenuItem("Nouveau produit", ProductForm::new);
         readProduct = switchActionner.createMenuItem("Afficher produits", ProductManager::new);
-        updateProduct = switchActionner.createEditProductMenuItem();
-        deleteProduct = switchActionner.createDeleteProductMenuItem();
+        updateProduct = switchActionner.createMenuItem("Modifier un produit", ProductManager::new);;
+        deleteProduct = switchActionner.createMenuItem("Supprimer un produit", ProductManager::new);;
         menu.add(productMenu);
         productMenu.add(createProduct);
         productMenu.addSeparator();
@@ -45,8 +45,8 @@ public class MenuBar {
         customerMenu = new JMenu("Gestion des clients");
         createCustomer = switchActionner.createMenuItem("Nouveau client", CustomerForm::new);
         readCustomer = switchActionner.createMenuItem("Afficher clients", CustomerManager::new);
-        updateCustomer = switchActionner.createEditCustomerMenuItem();
-        deleteCustomer = switchActionner.createDeleteCustomerMenuItem();
+        updateCustomer = switchActionner.createMenuItem("Modifier un client", CustomerManager::new);
+        deleteCustomer = switchActionner.createMenuItem("Supprimer un client", CustomerManager::new);
         loyaltyCardsInfos = switchActionner.createMenuItem("Infos clients intervalle pts fidélité", LoyaltyCardPanel::new);
         menu.add(customerMenu);
         customerMenu.add(createCustomer);

@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class CustomerTable extends TableConstruct {
     public CustomerTable() {
         super(new String[] {
-                "ID", "Nom", "Prénom", "Date de naissance", "Num Téléphone", "Email",
-                "Est abonné newsletter", "Numéro TVA", "Localité zip code",
-                "Nom localité", "Rue", "Numéro maison", "Type"
+                "ID", "Nom", "Prénom", "Date naissance", "Téléphone", "Email",
+                "Est abonné newsletter", "N° TVA", "Code postal",
+                "Localité", "Rue", "Numéro maison", "Type"
         });
         fillTable();
     }
@@ -23,7 +23,7 @@ public class CustomerTable extends TableConstruct {
                 for(Customer customer : customers) {
                     tableModel.addRow(new Object[] {
                             customer.getId(), customer.getLastName(), customer.getFirstName(), customer.getBirthdate(), customer.getPhone(),
-                            customer.getEmail(), customer.getSubscribedToNewsLetter(), customer.getVatNumber(), customer.getLocalityZipCode(),
+                            customer.getEmail(), customer.getSubscribedToNewsLetter() ? "Oui" : "Non", customer.getVatNumber(), customer.getLocalityZipCode(),
                             customer.getLocalityName(), customer.getAddressStreet(), customer.getHouseNumber(), customer.getTypeName()
                     });
                 }

@@ -23,7 +23,7 @@ public class Customer {
         setLocalityZipCode(localityZipCode);
         this.localityName = localityName;
         this.addressStreet = addressStreet;
-        this.houseNumber = houseNumber;
+        setHouseNumber(houseNumber);
         this.typeName = typeName;
     }
 
@@ -39,29 +39,29 @@ public class Customer {
     }
 
     public void setLastName(String lastName) throws InvalidValueException {
-        if (lastName == null || lastName.isEmpty()){
-            throw new InvalidValueException("Veuillez entrer un nom", lastName);
+        if (lastName == null || lastName.isEmpty() || lastName.length() > 50){
+            throw new InvalidValueException("Veuillez entrer un nom d'une longueur de maximum 50 caractères.", lastName);
         }
         this.lastName = lastName;
     }
 
     public void setFirstName(String firstName) throws InvalidValueException {
-        if (firstName == null || firstName.isEmpty()){
-            throw new InvalidValueException("Veuillez entre un prénom", firstName);
+        if (firstName == null || firstName.isEmpty() || firstName.length() > 30){
+            throw new InvalidValueException("Veuillez entrer un prénom d'une longueur de maximum 30 caractères.", firstName);
         }
         this.firstName = firstName;
     }
 
     public void setPhone(String phone) throws InvalidValueException {
         if (phone != null && phone.charAt(phone.length() - 1) == '_'){
-            throw new InvalidValueException("Veuillez entrez un numéro de téléphone valide", phone);
+            throw new InvalidValueException("Veuillez entrez un numéro de téléphone valide.", phone);
         }
         this.phone = phone;
     }
 
     public void setEmail(String email) throws InvalidValueException {
-        if (email != null && email.isEmpty()){
-            throw new InvalidValueException("Veuillez entrez une adresse email valide", email);
+        if (email != null && (email.isEmpty() || email.length() > 100 || !email.contains("@"))){
+            throw new InvalidValueException("Veuillez entrez une adresse email d'une longueur de maximum 100 caractères contenant un @.", email);
         }
         this.email = email;
     }
@@ -85,6 +85,11 @@ public class Customer {
         this.birthdate = birthdate;
     }
 
+    public void setHouseNumber(String houseNumber) throws InvalidValueException {
+        if (houseNumber == null || houseNumber.length() > 5)
+            throw new InvalidValueException("Le numéro de maison peut faire 5 caractères maximum et ne peut pas être vide.", birthdate);
+        this.houseNumber = houseNumber;
+    }
 
     public String getPhone() {
         return phone;

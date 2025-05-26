@@ -141,7 +141,7 @@ public class CustomerForm extends JPanel {
         formPanel.add(isSubscrideLabel);
         formPanel.add(isSubscrideCheckbox);
 
-        birthdayLabel = new JLabel("Date d'anniversaire :", SwingConstants.RIGHT);
+        birthdayLabel = new JLabel("Date de naissance :", SwingConstants.RIGHT);
         Date today = new Date();
         birthdaySpinner = new JSpinner(new SpinnerDateModel(today, null, today, Calendar.MONTH));
         birthdaySpinner.setEditor(new JSpinner.DateEditor(birthdaySpinner, "dd/MM/yyyy"));
@@ -205,7 +205,7 @@ public class CustomerForm extends JPanel {
                     controller.saveAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
                 }
                 controller.saveCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
-                controller.saveLoyaltyCard(controller.lastCustomerId()+1);
+                controller.saveLoyaltyCard(controller.lastCustomerId());
                 JOptionPane.showMessageDialog(null, "Client ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox, postalBoxNumberCheckBox, postalBoxNumberSpinner);
             } catch (DAOException | InvalidValueException ex) {

@@ -23,7 +23,7 @@ public class PurchaseManager extends JPanel {
     public PurchaseManager() {
         ApplicationController controller = new ApplicationController();
         setLayout(new BorderLayout(0, 50));
-        setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 100));
+        setBorder(BorderFactory.createEmptyBorder(0, 100, 50, 100));
         JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Date today = new Date();
         purchaseTable = new PurchaseTable();

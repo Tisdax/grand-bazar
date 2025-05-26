@@ -16,7 +16,7 @@ public class ProductManager extends JPanel {
         PanelSwitchActionner switchActionner = new PanelSwitchActionner();
         // Main Layout
         setLayout(new BorderLayout(0, 50));
-        setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 100));
+        setBorder(BorderFactory.createEmptyBorder(0, 100, 50, 100));
         // Buttons Layout
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         // Title Panel
