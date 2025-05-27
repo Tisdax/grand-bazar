@@ -186,18 +186,19 @@ public class ApplicationController {
     }
 
     // Employee
-    public boolean employeeExistsById(int employeeId) throws Exception {
+    public boolean employeeExistsById(int employeeId) throws DAOException {
         return employeeManager.existsById(employeeId);
     }
-    public ArrayList<Employee> findAllEmployee() throws Exception {
+
+    public ArrayList<Employee> findAllEmployee() throws DAOException, InvalidValueException {
         return employeeManager.findAll();
     }
 
     // Sale
-    public void saveSale(Sale sale) throws Exception {
+    public void saveSale(Sale sale) throws DAOException {
         saleManager.save(sale);
     }
-    public int lastSaleId() throws Exception {
+    public int lastSaleId() throws DAOException {
         return saleManager.lastId();
     }
 }
