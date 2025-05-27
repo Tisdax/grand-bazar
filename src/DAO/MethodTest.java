@@ -19,46 +19,13 @@ public class MethodTest {
         DAO dao = new DBAccess();
         CommandLineDAO commandLineDAO = new CommandLineDBAccess();
         StockDAO stockDAO = new StockDBAccess();
+        EmployeeDAO employeeDAO = new EmployeeDBAccess();
 
         try {
-            Sale sale = new Sale(saleDAO.lastId()+1, 1, LocalDate.now(), 1);
-            saleDAO.save(sale);
-
-            CommandLine commandLine = new CommandLine(saleDAO.lastId(), "P001", 5);
-            //choisir produit dans la liste
-            // vérifier qu'il y a pas déjà une ligne de commande avec ce produit et cette vente
-            if (!commandLineDAO.existsById(commandLine.getSale(), commandLine.getProduct())) {
-                // si non : demander la quantité et ajouter
-                commandLineDAO.save(commandLine);
-            } else {
-                // si oui : afficher une autre fenetre avec un jtextfield préremplit avec la qtt déjà présente pour ce produit et lui permettre de modif
-                System.out.println("fenetre avec jspinner préremplit avec la qtt " + commandLineDAO.findById(commandLine.getSale(), commandLine.getProduct()).getQuantity());
-                commandLineDAO.update(commandLine);
-            }
-            CommandLine commandLine2 = new CommandLine(saleDAO.lastId(), "P002", 3);
-            if (!commandLineDAO.existsById(commandLine2.getSale(), commandLine2.getProduct())) {
-                commandLineDAO.save(commandLine2);
-            } else {
-                System.out.println("fenetre avec jspinner préremplit avec la qtt " + commandLineDAO.findById(commandLine2.getSale(), commandLine2.getProduct()).getQuantity());
-                commandLineDAO.update(commandLine2);
-            }
-            CommandLine commandLine3 = new CommandLine(saleDAO.lastId(), "P002", 7);
-            if (!commandLineDAO.existsById(commandLine3.getSale(), commandLine3.getProduct())) {
-                commandLineDAO.save(commandLine3);
-            } else {
-                System.out.println("fenetre avec jspinner préremplit avec la qtt " + commandLineDAO.findById(commandLine3.getSale(), commandLine3.getProduct()).getQuantity());
-                commandLineDAO.update(commandLine3);
-            }
-
-            // une fois que l'utilisateur appuye sur le bouton "passer commande" ou un truc du genre
-            // afficher toutes les lignes de commande
-            ArrayList<CommandLine> commandLines = commandLineDAO.findBySale(saleDAO.lastId());
-            for (CommandLine commandLiiiine : commandLines)
-                System.out.println(commandLiiiine.getProduct() + " " + commandLiiiine.getQuantity());
-
-            System.out.println(stockDAO.findQuantityByProduct("P020"));
-
-            stockDAO.lowerStocks("P001", 89);
+            System.out.println(employeeDAO.existsById(2));
+            ArrayList<Employee> employees = employeeDAO.findAll();
+            for(Employee employee : employees)
+                System.out.println(employee.getId() + " " + employee.getLastName() + " " + employee.getFirstName() + " " + employee.getManagerId());
 
             dao.closeConnection();
         }
