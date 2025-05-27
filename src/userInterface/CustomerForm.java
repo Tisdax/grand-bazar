@@ -75,15 +75,6 @@ public class CustomerForm extends JPanel {
 
         localityLabel = new JLabel("Localité :", SwingConstants.RIGHT);
         localityComboBox = new JComboBox<>();
-        ArrayList<Locality> localities;
-        try {
-            localities = controller.findAllLocalities();
-            for (Locality locality : localities) {
-                localityComboBox.addItem(locality);
-            }
-        } catch (DAOException | InvalidValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
         formPanel.add(localityLabel);
         formPanel.add(localityComboBox);
 
@@ -259,7 +250,7 @@ public class CustomerForm extends JPanel {
         String localityName = locality.getName();
         String houseNumber = houseNumberField.getText();
         Boolean isSubscribedToNewsLetter = isSubscrideCheckbox.isSelected();
-        LocalDate birthday = ((Date) birthdaySpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();;
+        LocalDate birthday = ((Date) birthdaySpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String typeName = (String) typeComboBox.getSelectedItem();
 
         String phone;
@@ -295,8 +286,7 @@ public class CustomerForm extends JPanel {
             idField.setText(String.valueOf(customer.getId()));
             lastNameField.setText(customer.getLastName());
             firstNameField.setText(customer.getFirstName());
-            birthdaySpinner.setValue(Date.from(customer.getBirthdate()
-                    .atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            birthdaySpinner.setValue(Date.from(customer.getBirthdate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             isSubscrideCheckbox.setSelected(customer.getSubscribedToNewsLetter());
             addressStreetField.setText(address.getStreet());
             houseNumberField.setText(address.getHouseNumber());
