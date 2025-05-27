@@ -58,6 +58,6 @@ public class PurchaseManager extends JPanel {
         LocalDate startDateValue = ((Date) startDate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDateValue = ((Date) endDate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         purchaseTable.refreshTable();
-        purchaseTable.fillPurchaseTable(startDateValue, endDateValue);
+        purchaseTable.fillTable(startDateValue, endDateValue);
     }
 }

@@ -19,7 +19,6 @@ public class PanelSwitchActionner {
         controller = new ApplicationController();
     }
 
-
     // Buttons
     public JButton createButton(String buttonLabel, Callable<JPanel> callablePanel, int width, int height) {
         JButton button = new JButton(buttonLabel);

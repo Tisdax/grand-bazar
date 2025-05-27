@@ -13,7 +13,7 @@ public class PurchaseTable extends TableConstruct {
     public PurchaseTable() {
         super(new String[] {"ID Produit", "Nom", "Prix HTVA", "Qt", "ID Vente", "Date de Vente"});
     }
-    public void fillPurchaseTable(LocalDate startDate, LocalDate endDate) {
+    public void fillTable(LocalDate startDate, LocalDate endDate) {
         try {
             ArrayList<ProductOrderSummary> products = controller.findProductsBySaleDate(startDate, endDate);
             super.refreshTable();

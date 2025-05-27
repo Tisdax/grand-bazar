@@ -31,5 +31,4 @@ public class ProductTable extends TableConstruct {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }
