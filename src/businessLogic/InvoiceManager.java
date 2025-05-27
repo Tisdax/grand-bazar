@@ -11,16 +11,11 @@ import java.util.ArrayList;
 
 public class InvoiceManager {
     private ArrayList<CommandLine>  commandLines;
-    private ApplicationController controller;
-
-    public InvoiceManager (){
-
-    }
-
+    private ProductManager productManager;
 
     public InvoiceManager(ArrayList<CommandLine> commandLines) {
         this.commandLines = commandLines;
-        this.controller = new ApplicationController();
+        this.productManager = new ProductManager();
     }
 
     public ArrayList<Double> netPrice() throws DAOException, InvalidValueException {
@@ -30,7 +25,7 @@ public class InvoiceManager {
             return pricesExclVAT = null;
         } else {
             for (CommandLine commandLine : commandLines){
-                pricesExclVAT.add(controller.findProductById(commandLine.getProduct()).getNetPrice() * commandLine.getQuantity());
+                pricesExclVAT.add(productManager.findById(commandLine.getProduct()).getNetPrice() * commandLine.getQuantity());
             }
         }
         return pricesExclVAT;
@@ -41,7 +36,7 @@ public class InvoiceManager {
         Double totalPriceVatIncluded = 0.00;
         if (commandLines.size() > 0){
             for (CommandLine commandLine : commandLines){
-                Product product = controller.findProductById(commandLine.getProduct());
+                Product product = productManager.findById(commandLine.getProduct());
                 pricesExclVAT = product.getNetPrice() * commandLine.getQuantity();
                 totalPriceVatIncluded += pricesExclVAT * (1 + (product.getVatPercentage() / 100.0));
             }
