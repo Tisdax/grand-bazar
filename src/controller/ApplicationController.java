@@ -36,6 +36,7 @@ public class ApplicationController {
         customerTypeManager = new CustomerTypeManager();
         commandLineManager = new CommandLineManager();
         employeeManager = new EmployeeManager();
+        saleManager = new SaleManager();
     }
 
     public void closeConnection() throws DAOException {
