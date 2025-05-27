@@ -24,6 +24,7 @@ public class MenuBar {
         leave = new JMenuItem("Quitter");
         menu.add(applicationMenu);
         applicationMenu.add(welcomePage);
+        applicationMenu.addSeparator();
         applicationMenu.add(leave);
 
         // Product Menu
