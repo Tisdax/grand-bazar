@@ -119,21 +119,22 @@ public class CartManager extends JPanel {
                     buttonPanel.add(endSale);
                     buttonPanel.revalidate();
                     buttonPanel.repaint();
+
+
+                    // Sale
+                    saleId = controller.lastSaleId() + 1;
+                    sale = new Sale(saleId, customerIdOfSale, LocalDate.now(), employeeIdOfSale);
+                    controller.saveSale(sale);
+
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Cet identifiant n'existe pas veuillez choisir un identifiant de la liste", "Erreur",JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (DAOException ex) {
+            } catch (DAOException | InvalidValueException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        // Sale
-        try {
-            saleId = controller.lastSaleId() + 1;
-            sale = new Sale(saleId, customerIdOfSale, LocalDate.now(), employeeIdOfSale);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
 
         // Product Button
         addProduct = new JButton("Ajouter un produit");
