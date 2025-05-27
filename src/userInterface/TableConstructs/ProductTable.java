@@ -26,7 +26,6 @@ public class ProductTable extends TableConstruct {
                         product.getSaleDate(), product.getTimeBeforeRemoving(), product.getCategoryName()
                 });
             }
-
         } catch (DAOException | InvalidValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

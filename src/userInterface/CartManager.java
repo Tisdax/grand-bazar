@@ -15,6 +15,7 @@ public class CartManager extends JPanel {
     private JButton selectCustomer;
     private CustomerTable customerTable;
     private EmployeeTable employeeTable;
+    private ProductTable productTable;
 
 
     public CartManager() {
@@ -33,14 +34,26 @@ public class CartManager extends JPanel {
         // Tables
         customerTable = new CustomerTable();
         JScrollPane customerScrollTable = new JScrollPane(customerTable.getTable());
+        employeeTable = new EmployeeTable();
+        JScrollPane employeeScrollTable = new JScrollPane(employeeTable.getTable());
+        productTable = new ProductTable();
+        JScrollPane productScrollTable = new JScrollPane(productTable.getTable());
 
         selectEmployee = new JButton("Sélectionner un employé");
         selectEmployee.setPreferredSize(new Dimension(350, 80));
         buttonPanel.add(selectEmployee);
         selectEmployee.addActionListener(e -> {
-            this.remove(customerScrollTable);
+
+
+
+            this.remove(employeeScrollTable);
+            this.add(customerScrollTable, BorderLayout.SOUTH);
             this.revalidate();
             this.repaint();
+            buttonPanel.remove(selectEmployee);
+            buttonPanel.add(selectCustomer);
+            buttonPanel.revalidate();
+            buttonPanel.repaint();
         });
 
         selectCustomer = new JButton("Sélectionner un client");
@@ -53,7 +66,7 @@ public class CartManager extends JPanel {
 
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.CENTER);
-        this.add(customerScrollTable, BorderLayout.SOUTH);
+        this.add(employeeScrollTable, BorderLayout.SOUTH);
     }
 }
 
