@@ -5,6 +5,7 @@ import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.*;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -34,6 +35,14 @@ public class MethodTest {
         }
         catch (InvalidValueException e) {
             System.out.println(e.getMessage());
+        }
+
+
+        try {
+//            CommandLine commandLine1 = new CommandLine(1, "P001", 10);
+            System.out.println(productDAO.findById("P001"));
+        } catch (InvalidValueException | DAOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
