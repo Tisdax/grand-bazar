@@ -54,7 +54,7 @@ public class InvoiceManagerTest {
     @Test
     public void testNetPriceWithEmptyList() {
         try {
-            assertNull( invoiceManager.netPrice(new ArrayList<>()));
+            assertNull(invoiceManager.netPrice(new ArrayList<>()));
         } catch (DAOException | InvalidValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
