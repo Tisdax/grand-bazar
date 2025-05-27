@@ -1,5 +1,7 @@
 package userInterface;
 
+import controller.ApplicationController;
+import model.Sale;
 import userInterface.TableConstructs.CustomerTable;
 import userInterface.TableConstructs.EmployeeTable;
 import userInterface.TableConstructs.ProductTable;
@@ -10,6 +12,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class CartManager extends JPanel {
+    private ApplicationController controller;
     private JLabel titleLabel;
     private JButton selectEmployee;
     private JButton selectCustomer;
@@ -17,6 +20,7 @@ public class CartManager extends JPanel {
     private CustomerTable customerTable;
     private EmployeeTable employeeTable;
     private ProductTable productTable;
+    private Sale sale;
 
 
     public CartManager() {
@@ -28,6 +32,14 @@ public class CartManager extends JPanel {
         titleLabel = new JLabel("Gestion Achats");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
         titlePanel.add(titleLabel);
+
+        // Sale
+//        try {
+//            int saleId = controller.lastSaleId() + 1;
+//            sale = new Sale(saleId,);
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+//        }
 
         // Tables
         customerTable = new CustomerTable();
@@ -75,7 +87,6 @@ public class CartManager extends JPanel {
             buttonPanel.add(addProduct);
             buttonPanel.revalidate();
             buttonPanel.repaint();
-
         });
         // Product Button
         addProduct = new JButton("Ajouter un produit");
