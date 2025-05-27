@@ -16,12 +16,13 @@ public class InvoiceManager {
 
     public ArrayList<Double> netPrice(ArrayList<CommandLine> commandLines) throws DAOException, InvalidValueException {
         ArrayList<Double> pricesExclVAT = new ArrayList<>();
-
+        Product product;
         if (commandLines.size() == 0){
             return pricesExclVAT = null;
         } else {
             for (CommandLine commandLine : commandLines){
-                pricesExclVAT.add(productManager.findById(commandLine.getProduct()).getNetPrice() * commandLine.getQuantity());
+                product = productManager.findById(commandLine.getProduct());
+                pricesExclVAT.add(product.getNetPrice() * commandLine.getQuantity());
             }
         }
         return pricesExclVAT;
