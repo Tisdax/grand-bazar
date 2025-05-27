@@ -2,6 +2,7 @@ package DAO;
 
 import DAOinterfaces.CustomerTypeDAO;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.CustomerType;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerTypeDBAccess implements CustomerTypeDAO {
-    public ArrayList<CustomerType> findAll() throws DAOException {
+    public ArrayList<CustomerType> findAll() throws DAOException, InvalidValueException {
         String sqlInstruction = "select * from type";
         try {
             Connection connection = SingletonConnection.getInstance();

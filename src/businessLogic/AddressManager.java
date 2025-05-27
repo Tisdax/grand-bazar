@@ -24,4 +24,7 @@ public class AddressManager {
     public void save(Address address) throws DAOException {
         dao.save(address);
     }
+    public void update(Address address) throws DAOException {
+        dao.update(address);
+    }
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import DAOinterfaces.CustomerTypeDAO;
 import businessLogic.*;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
@@ -84,6 +83,10 @@ public class ApplicationController {
     public void saveAddress(Address address) throws DAOException {
         addressManager.save(address);
     }
+    public void updateAddress(Address address) throws DAOException {
+        addressManager.update(address);
+    }
+
 
     // Customer
     public void saveCustomer(Customer customer) throws DAOException {
@@ -102,7 +105,7 @@ public class ApplicationController {
     }
 
     public boolean customerExistsById(int customerId) throws DAOException {
-        return customerManager.customerExistsById(customerId);
+        return customerManager.existsById(customerId);
     }
 
     public ArrayList<Customer> findAllCustomers() throws DAOException, InvalidValueException {

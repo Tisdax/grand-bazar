@@ -37,7 +37,6 @@ public class ProductForm extends JPanel {
 
         UIManager.put("Spinner.editorAlignment", JTextField.LEFT);
 
-
         // TITLE PANEL
         titleLabel = new JLabel("Formulaire produit");
         Font font = new Font("Arial", Font.BOLD, 20);
@@ -221,12 +220,17 @@ public class ProductForm extends JPanel {
         nameField.setText(product.getName());
         netPriceSpinner.setValue(product.getNetPrice());
         loyaltyPointsSpinner.setValue(product.getLoyaltyPointsNb());
-        if (product.getMinQuantity() != null)
+        if (product.getMinQuantity() != null) {
             minQuantSpinner.setValue(product.getMinQuantity());
-        if (product.getPromotionMinQuantity() != null)
+            minquantCheckBox.setSelected(true);
+        }
+        if (product.getPromotionMinQuantity() != null) {
             promotionQuantSpinner.setValue(product.getPromotionMinQuantity());
+            promoMinQuantCheckBox.setSelected(true);
+        }
         if (product.getTimeBeforeRemoving() != null) {
             timeBeforeRemovingSpinner.setValue(product.getTimeBeforeRemoving());
+            timeBeforeRemovingCheckBox.setSelected(true);
         }
         isEdibleCheckBox.setSelected(product.getEdible());
         saleDateSpinner.setValue(Date.from(product.getSaleDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));

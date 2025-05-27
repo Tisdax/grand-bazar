@@ -42,6 +42,7 @@ public class CustomerForm extends JPanel {
         this.add(formPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
 
+        UIManager.put("Spinner.editorAlignment", JTextField.LEFT);
 
         // TITLE PANEL
         titleLabel = new JLabel("Formulaire de client", SwingConstants.RIGHT);
@@ -215,8 +216,11 @@ public class CustomerForm extends JPanel {
 
         updateButton.addActionListener(e -> {
             try {
-                if (!controller.addressExistsById(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
-                    controller.saveAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
+                Address address = transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner);
+                if (!controller.addressExistsById(address)){
+                    controller.saveAddress(address);
+                } else {
+                    controller.updateAddress(address);
                 }
                 controller.updateCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
                 JOptionPane.showMessageDialog(null, "Client modifié", "Réussite", JOptionPane.INFORMATION_MESSAGE);
@@ -264,7 +268,7 @@ public class CustomerForm extends JPanel {
         else
             phone = null;
 
-        String email = null;
+        String email;
         if (emailCheckBox.isSelected())
                 email = emailField.getText();
         else
@@ -297,6 +301,11 @@ public class CustomerForm extends JPanel {
             addressStreetField.setText(address.getStreet());
             houseNumberField.setText(address.getHouseNumber());
             localityComboBox.setSelectedItem(address.getLocalityZipCode() + " " +address.getLocalityName());
+
+            if (address.getPostalBoxNumber() != null) {
+                postalBoxNumberCheckBox.setSelected(true);
+                postalBoxNumberSpinner.setValue(address.getPostalBoxNumber());
+            }
 
             if (customer.getEmail() != null) {
                 emailCheckBox.setSelected(true);

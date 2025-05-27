@@ -43,7 +43,7 @@ public class CustomerManager {
         return dao.findByLoyaltyPoints(nbPointsMin, nbPointsMax);
     }
 
-    public boolean customerExistsById(int customerId) throws DAOException {
+    public boolean existsById(int customerId) throws DAOException {
         return dao.existsById(customerId);
     }
 }
