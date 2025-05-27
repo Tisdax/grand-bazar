@@ -45,8 +45,8 @@ public class Address {
     }
 
     public void setPostalBoxNumber(Integer postalBoxNumber) throws InvalidValueException {
-        if (postalBoxNumber != null && postalBoxNumber <= 0)
-            throw new InvalidValueException("La boite postale doit être décochée ou être un nombre positif.", postalBoxNumber);
+        if (postalBoxNumber != null && (postalBoxNumber <= 0 || postalBoxNumber > 100))
+            throw new InvalidValueException("La boite postale doit être décochée ou être un nombre positif, au maximum 100.", postalBoxNumber);
         this.postalBoxNumber = postalBoxNumber;
     }
 

@@ -27,6 +27,8 @@ public class MethodTest {
             for(Employee employee : employees)
                 System.out.println(employee.getId() + " " + employee.getLastName() + " " + employee.getFirstName() + " " + employee.getManagerId());
 
+            System.out.println(productDAO.findById("P001").getName());
+
             dao.closeConnection();
         }
         catch (DAOException e) {
