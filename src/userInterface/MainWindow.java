@@ -12,10 +12,7 @@ import java.text.ParseException;
 
 public class MainWindow extends JFrame {
     private static MainWindow instance;
-    private JMenuBar menuBar;
     private WelcomePanel welcomePanel;
-    private ProductForm productForm;
-    private JPanel mainPanel;
 
     private MainWindow(){
         super("Accueil");
@@ -25,7 +22,6 @@ public class MainWindow extends JFrame {
         addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
                 try {
-                    ProductForm productForm;
                     ApplicationController controller = new   ApplicationController();
                     controller.closeConnection();
                     System.exit(0);
@@ -36,12 +32,11 @@ public class MainWindow extends JFrame {
         } );
 
         setJMenuBar(MenuBar.CreateJMenuBar());
-
         welcomePanel = new WelcomePanel();
         add(welcomePanel);
-
         setVisible(true);
     }
+    // instance MainWindow
     public static MainWindow getInstance() {
         if (instance == null) {
             instance = new MainWindow();
@@ -49,6 +44,7 @@ public class MainWindow extends JFrame {
         return instance;
     }
 
+    // main
     public static void main(String[] args) throws DAOException, ParseException, InvalidValueException {
         MainWindow.getInstance();
     }

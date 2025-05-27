@@ -79,6 +79,9 @@ public class ApplicationController {
         return productManager.findBySaleDate(startDate, endDate);
     }
 
+    public ArrayList<ProductLowStockInfo> findProductsByLowStock() throws DAOException, InvalidValueException {
+        return productManager.findByLowStock();
+    }
     // Address
     public boolean addressExistsById(Address address) throws DAOException {
         return addressManager.existsById(address);
@@ -89,15 +92,16 @@ public class ApplicationController {
     public void saveAddress(Address address) throws DAOException {
         addressManager.save(address);
     }
+
     public void updateAddress(Address address) throws DAOException {
         addressManager.update(address);
     }
-
 
     // Customer
     public void saveCustomer(Customer customer) throws DAOException {
         customerManager.save(customer);
     }
+
     public Customer findCustomerById(int customerId) throws DAOException, InvalidValueException {
         return customerManager.findById(customerId);
     }
@@ -121,18 +125,18 @@ public class ApplicationController {
     public int lastCustomerId() throws DAOException {
         return customerManager.lastId();
     }
-
     public ArrayList<CustomerAddressInfo> findCustomersByLoyaltyPoints(int nbPointsMin, int nbPointsMax) throws DAOException, InvalidValueException {
         return customerManager.findByLoyaltyPoints(nbPointsMin, nbPointsMax);
     }
     // Locality
+
     public ArrayList<Locality> findAllLocalities() throws DAOException, InvalidValueException {
         return localityManager.findAll();
     }
-
     public void saveLoyaltyCard(int customerId) throws DAOException {
         loyaltyCardManager.save(customerId);
     }
+    // Stock
 
     public ArrayList<Shelf> findAllShelves() throws DAOException {
         return shelfManager.findAll();
@@ -154,8 +158,12 @@ public class ApplicationController {
         stockManager.update(stock);
     }
 
-    public ArrayList<ProductLowStockInfo> findProductsByLowStock() throws DAOException, InvalidValueException {
-        return productManager.findByLowStock();
+    public int findQuantityStockByProduct(String product) throws DAOException {
+        return stockManager.findQuantityByProduct(product);
+    }
+
+    public int lowerStocks(String product, int quantity) throws DAOException, InvalidValueException {
+        return stockManager.lowerStocks(product, quantity);
     }
 
     // CustomerType
@@ -164,7 +172,7 @@ public class ApplicationController {
     }
 
     // Command Line
-    public boolean CommandLineManagerexistsById(int sale, String product) throws DAOException {
+    public boolean CommandLineExistsById(int sale, String product) throws DAOException {
         return commandLineManager.existsById(sale, product);
     }
     public CommandLine findCommandLineById(int sale, String product) throws DAOException, InvalidValueException{
@@ -179,7 +187,7 @@ public class ApplicationController {
     public int deleteByProduct(String productId) throws DAOException {
         return commandLineManager.deleteByProduct(productId);
     }
-    public void update(CommandLine commandLine) throws DAOException {
+    public void commandLineUpdate(CommandLine commandLine) throws DAOException {
         commandLineManager.update(commandLine);
     }
     public ArrayList<CommandLine> findBySale(int sale) throws DAOException, InvalidValueException {

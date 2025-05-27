@@ -3,6 +3,7 @@ package businessLogic;
 import DAO.StockDBAccess;
 import DAOinterfaces.StockDAO;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.Stock;
 
 public class StockManager {
@@ -27,4 +28,13 @@ public class StockManager {
     public void update(Stock stock) throws DAOException{
         dao.update(stock);
     }
+
+    public int findQuantityByProduct(String product) throws DAOException {
+        return dao.findQuantityByProduct(product);
+    }
+
+    public int lowerStocks(String product, int quantity) throws DAOException, InvalidValueException {
+        return dao.lowerStocks(product, quantity);
+    }
+
 }

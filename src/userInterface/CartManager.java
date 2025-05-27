@@ -1,16 +1,14 @@
 package userInterface;
 
 import businessLogic.CommandLineManager;
+import businessLogic.SaleManager;
 import controller.ApplicationController;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.CommandLine;
 import model.Product;
 import model.Sale;
-import userInterface.TableConstructs.CustomerTable;
-import userInterface.TableConstructs.EmployeeTable;
-import userInterface.TableConstructs.ProductTable;
-import userInterface.TableConstructs.TableConstruct;
+import userInterface.TableConstructs.*;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -27,6 +25,7 @@ public class CartManager extends JPanel {
     private CustomerTable customerTable;
     private EmployeeTable employeeTable;
     private ProductTable productTable;
+    private SaleTable saleTable;
     private Sale sale;
     private int saleId;
     private int customerIdOfSale;
@@ -120,12 +119,10 @@ public class CartManager extends JPanel {
                     buttonPanel.revalidate();
                     buttonPanel.repaint();
 
-
                     // Sale
                     saleId = controller.lastSaleId() + 1;
                     sale = new Sale(saleId, customerIdOfSale, LocalDate.now(), employeeIdOfSale);
                     controller.saveSale(sale);
-
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Cet identifiant n'existe pas veuillez choisir un identifiant de la liste", "Erreur",JOptionPane.ERROR_MESSAGE);
@@ -147,15 +144,26 @@ public class CartManager extends JPanel {
 
             try {
                 if (controller.productExistsById(inputID)) {
-                    String inputQuantity = JOptionPane.showInputDialog("ID du client:");
+                    String inputQuantity = JOptionPane.showInputDialog("Quantité du produit :");
                     int inputQuantityInt;
+
                     try {
                         inputQuantityInt = Integer.parseInt(inputQuantity);
                     } catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(null, "Veuillez entrer un quantité ne contenant que des chiffres entiers", "Erreur", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
+
+
                     commandLine = new CommandLine(saleId, inputID, inputQuantityInt);
+                    if (controller.CommandLineExistsById(saleId, inputID)) {
+                        
+                        controller.commandLineUpdate(commandLine);
+                    } else {
+                        controller.saveCommandLine(commandLine);
+                    }
+
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Cet identifiant n'existe pas veuillez choisir un identifiant dans la liste", "Erreur",JOptionPane.ERROR_MESSAGE);
                 }
@@ -164,11 +172,23 @@ public class CartManager extends JPanel {
             }
         });
 
+        saleTable = new SaleTable();
+        JScrollPane saleScrollTable = new JScrollPane(saleTable.getTable());
+
         // endSale button
         endSale = new JButton("Terminer l'achat");
         endSale.setPreferredSize(new Dimension(350, 80));
+        endSale.addActionListener(e -> {
 
-
+            saleTable.fillTable(saleId);
+            this.remove(productScrollTable);
+            this.add(saleScrollTable, BorderLayout.SOUTH);
+            this.revalidate();
+            this.repaint();
+            buttonPanel.removeAll();
+            buttonPanel.revalidate();
+            buttonPanel.repaint();
+        });
 
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.CENTER);
