@@ -5,6 +5,7 @@ import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.Address;
 import model.Customer;
+import model.CustomerType;
 import model.Locality;
 
 import javax.swing.*;
@@ -41,6 +42,7 @@ public class CustomerForm extends JPanel {
         this.add(formPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
 
+        UIManager.put("Spinner.editorAlignment", JTextField.LEFT);
 
         // TITLE PANEL
         titleLabel = new JLabel("Formulaire de client", SwingConstants.RIGHT);
@@ -50,7 +52,7 @@ public class CustomerForm extends JPanel {
 
 
         // FORM PANEL
-        idLabel = new JLabel("Identifiant client :", SwingConstants.RIGHT);
+        idLabel = new JLabel("Identifiant :", SwingConstants.RIGHT);
         idField = new JTextField();
         try {
             idField.setText(String.valueOf(controller.lastCustomerId() + 1));
@@ -71,22 +73,12 @@ public class CustomerForm extends JPanel {
         formPanel.add(firstNameLabel);
         formPanel.add(firstNameField);
 
-        localityLabel = new JLabel("Catégorie du client :", SwingConstants.RIGHT);
+        localityLabel = new JLabel("Localité :", SwingConstants.RIGHT);
         localityComboBox = new JComboBox<>();
-        ArrayList<Locality> localities = null;
-        try {
-            localities = controller.findAllLocalities();
-        } catch (DAOException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidValueException e) {
-        }
-        for (Locality locality : localities) {
-            localityComboBox.addItem(locality);
-        }
         formPanel.add(localityLabel);
         formPanel.add(localityComboBox);
 
-        addressStreetLabel = new JLabel("Nom de la rue :", SwingConstants.RIGHT);
+        addressStreetLabel = new JLabel("Rue :", SwingConstants.RIGHT);
         addressStreetField = new JTextField();
         formPanel.add(addressStreetLabel);
         formPanel.add(addressStreetField);
@@ -96,7 +88,7 @@ public class CustomerForm extends JPanel {
         formPanel.add(houseNumberLabel);
         formPanel.add(houseNumberField);
 
-        postalBoxNumberCBLabel = new JLabel("Définir numéro de boite postale :", SwingConstants.RIGHT);
+        postalBoxNumberCBLabel = new JLabel("A un numéro de boite postale :", SwingConstants.RIGHT);
         postalBoxNumberCheckBox = new JCheckBox();
         formPanel.add(postalBoxNumberCBLabel);
         formPanel.add(postalBoxNumberCheckBox);
@@ -107,7 +99,7 @@ public class CustomerForm extends JPanel {
         formPanel.add(postalBoxNumberLabel);
         formPanel.add(postalBoxNumberSpinner);
 
-        phoneNumberCBLabel = new JLabel("Définir numéro de téléphone :", SwingConstants.RIGHT);
+        phoneNumberCBLabel = new JLabel("Communiquer un numéro de téléphone :", SwingConstants.RIGHT);
         phoneNumberCheckBox = new JCheckBox();
         formPanel.add(phoneNumberCBLabel);
         formPanel.add(phoneNumberCheckBox);
@@ -125,12 +117,12 @@ public class CustomerForm extends JPanel {
         formPanel.add(phoneLabel);
         formPanel.add(phoneNumberField);
 
-        emailCBLabel = new JLabel("Définir email :", SwingConstants.RIGHT);
+        emailCBLabel = new JLabel("Communiquer un email :", SwingConstants.RIGHT);
         emailCheckBox = new JCheckBox();
         formPanel.add(emailCBLabel);
         formPanel.add(emailCheckBox);
 
-        emailLabel = new JLabel("adresse mail :", SwingConstants.RIGHT);
+        emailLabel = new JLabel("Email :", SwingConstants.RIGHT);
         emailField = new JTextField();
         emailField.setEnabled(false);
         formPanel.add(emailLabel);
@@ -141,15 +133,24 @@ public class CustomerForm extends JPanel {
         formPanel.add(isSubscrideLabel);
         formPanel.add(isSubscrideCheckbox);
 
-        birthdayLabel = new JLabel("Date d'anniversaire :", SwingConstants.RIGHT);
+        birthdayLabel = new JLabel("Date de naissance :", SwingConstants.RIGHT);
         Date today = new Date();
         birthdaySpinner = new JSpinner(new SpinnerDateModel(today, null, today, Calendar.MONTH));
         birthdaySpinner.setEditor(new JSpinner.DateEditor(birthdaySpinner, "dd/MM/yyyy"));
         formPanel.add(birthdayLabel);
         formPanel.add(birthdaySpinner);
 
-        typeLabel = new JLabel("Type de client :", SwingConstants.RIGHT);
-        typeComboBox = new JComboBox<>(new String[]{"particulier", "professionnel"});
+        typeLabel = new JLabel("Type :", SwingConstants.RIGHT);
+        typeComboBox = new JComboBox<>();
+        ArrayList<CustomerType> types;
+        try {
+            types = controller.findAllCustomerTypes();
+            for (CustomerType type : types) {
+                typeComboBox.addItem(type.getName());
+            }
+        } catch (DAOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         formPanel.add(typeLabel);
         formPanel.add(typeComboBox);
 
@@ -187,10 +188,7 @@ public class CustomerForm extends JPanel {
         });
 
         typeComboBox.addItemListener(e -> {
-            if (Objects.equals(typeComboBox.getSelectedItem(), "professionnel"))
-                vatNumberField.setEnabled(true);
-            else
-                vatNumberField.setEnabled(false);
+            vatNumberField.setEnabled(Objects.equals(typeComboBox.getSelectedItem(), "professionnel"));
         });
 
         addButton.addActionListener(e -> {
@@ -199,7 +197,7 @@ public class CustomerForm extends JPanel {
                     controller.saveAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
                 }
                 controller.saveCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
-                controller.saveLoyaltyCard(controller.lastCustomerId()+1);
+                controller.saveLoyaltyCard(controller.lastCustomerId());
                 JOptionPane.showMessageDialog(null, "Client ajouté", "Réussite", JOptionPane.INFORMATION_MESSAGE);
                 emptyForm(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox, postalBoxNumberCheckBox, postalBoxNumberSpinner);
             } catch (DAOException | InvalidValueException ex) {
@@ -209,8 +207,11 @@ public class CustomerForm extends JPanel {
 
         updateButton.addActionListener(e -> {
             try {
-                if (!controller.addressExistsById(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner))){
-                    controller.saveAddress(transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner));
+                Address address = transformAddress(addressStreetField, localityComboBox, houseNumberField, postalBoxNumberSpinner);
+                if (!controller.addressExistsById(address)){
+                    controller.saveAddress(address);
+                } else {
+                    controller.updateAddress(address);
                 }
                 controller.updateCustomer(transformCustomer(idField, lastNameField, firstNameField, addressStreetField, localityComboBox, houseNumberField, emailField, vatNumberField, phoneNumberField, birthdaySpinner, isSubscrideCheckbox, typeComboBox));
                 JOptionPane.showMessageDialog(null, "Client modifié", "Réussite", JOptionPane.INFORMATION_MESSAGE);
@@ -258,7 +259,7 @@ public class CustomerForm extends JPanel {
         else
             phone = null;
 
-        String email = null;
+        String email;
         if (emailCheckBox.isSelected())
                 email = emailField.getText();
         else
@@ -290,6 +291,11 @@ public class CustomerForm extends JPanel {
             addressStreetField.setText(address.getStreet());
             houseNumberField.setText(address.getHouseNumber());
             localityComboBox.setSelectedItem(address.getLocalityZipCode() + " " +address.getLocalityName());
+
+            if (address.getPostalBoxNumber() != null) {
+                postalBoxNumberCheckBox.setSelected(true);
+                postalBoxNumberSpinner.setValue(address.getPostalBoxNumber());
+            }
 
             if (customer.getEmail() != null) {
                 emailCheckBox.setSelected(true);

@@ -18,7 +18,7 @@ public class LoyaltyCardPanel extends JPanel {
 
     public LoyaltyCardPanel() {
         setLayout(new BorderLayout(0, 50));
-        setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 100));
+        setBorder(BorderFactory.createEmptyBorder(0, 100, 50, 100));
         JPanel pointsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         loyaltyCardTable = new LoyaltyCardTable();
 

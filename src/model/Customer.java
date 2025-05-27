@@ -21,9 +21,9 @@ public class Customer {
         this.isSubscribedToNewsLetter = isSubscribedToNewsLetter;
         setVatNumber(vatNumber);
         setLocalityZipCode(localityZipCode);
-        this.localityName = localityName;
-        this.addressStreet = addressStreet;
-        this.houseNumber = houseNumber;
+        setLocalityName(localityName);
+        setAddressStreet(addressStreet);
+        setHouseNumber(houseNumber);
         this.typeName = typeName;
     }
 
@@ -39,29 +39,29 @@ public class Customer {
     }
 
     public void setLastName(String lastName) throws InvalidValueException {
-        if (lastName == null || lastName.isEmpty()){
-            throw new InvalidValueException("Veuillez entrer un nom", lastName);
+        if (lastName == null || lastName.isEmpty() || lastName.length() > 50){
+            throw new InvalidValueException("Le nom de famille est obligatoire et peut faire maximum 50 caractères de long.", lastName);
         }
         this.lastName = lastName;
     }
 
     public void setFirstName(String firstName) throws InvalidValueException {
-        if (firstName == null || firstName.isEmpty()){
-            throw new InvalidValueException("Veuillez entre un prénom", firstName);
+        if (firstName == null || firstName.isEmpty() || firstName.length() > 30){
+            throw new InvalidValueException("Le prénom est obligatoire et peut faire maximum 30 caractères de long.", firstName);
         }
         this.firstName = firstName;
     }
 
     public void setPhone(String phone) throws InvalidValueException {
         if (phone != null && phone.charAt(phone.length() - 1) == '_'){
-            throw new InvalidValueException("Veuillez entrez un numéro de téléphone valide", phone);
+            throw new InvalidValueException("Veuillez entrez un numéro de téléphone valide.", phone);
         }
         this.phone = phone;
     }
 
     public void setEmail(String email) throws InvalidValueException {
-        if (email != null && email.isEmpty()){
-            throw new InvalidValueException("Veuillez entrez une adresse email valide", email);
+        if (email != null && (email.isEmpty() || email.length() > 100 || !email.contains("@"))){
+            throw new InvalidValueException("Veuillez entrez une adresse email d'une longueur de maximum 100 caractères contenant un @.", email);
         }
         this.email = email;
     }
@@ -85,6 +85,31 @@ public class Customer {
         this.birthdate = birthdate;
     }
 
+    public void setAddressStreet(String addressStreet) throws InvalidValueException {
+        if (addressStreet == null || addressStreet.isEmpty() || addressStreet.length() > 50){
+            throw new InvalidValueException("Le nom de rue est obligatoire et peut faire maximum 50 caractères de long.", addressStreet);
+        }
+        this.addressStreet = addressStreet;
+    }
+
+    public void setHouseNumber(String houseNumber) throws InvalidValueException {
+        if (houseNumber == null || houseNumber.isEmpty() || houseNumber.length() > 5) {
+            throw new InvalidValueException("Le numéro de maison est obligatoire et peut faire maximum 5 caractères de long.", houseNumber);
+        }
+        this.houseNumber = houseNumber;
+    }
+
+    public void setLocalityName(String localityName) throws InvalidValueException {
+        if (localityName == null || localityName.length() > 30)
+            throw new InvalidValueException("Le nom de localité est obligatoire et peut faire maximum 30 caractères de long.", localityName);
+        this.localityName = localityName;
+    }
+
+    public void setTypeName(String typeName) throws InvalidValueException {
+        if (typeName == null || typeName.length() > 20)
+            throw new InvalidValueException("Le nom de type de client est obligatoire et peut faire maximum 20 caractères de long.", typeName);
+        this.typeName = typeName;
+    }
 
     public String getPhone() {
         return phone;

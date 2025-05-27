@@ -9,7 +9,7 @@ public class Address {
     public Address(String street, Integer localityZipCode, String localityName, String houseNumber, Integer postalBoxNumber) throws InvalidValueException {
         setStreet(street);
         setLocalityZipCode(localityZipCode);
-        this.localityName = localityName;
+        setLocalityName(localityName);
         setHouseNumber(houseNumber);
         setPostalBoxNumber(postalBoxNumber);
     }
@@ -19,17 +19,23 @@ public class Address {
     }
 
     public void setStreet(String street) throws InvalidValueException {
-        if (street == null || street.isEmpty()){
-            throw new InvalidValueException("Veuillez entrez une adresse valide", street);
+        if (street == null || street.isEmpty() || street.length() > 50){
+            throw new InvalidValueException("Le nom de rue est obligatoire et peut faire maximum 50 caractères de long.", street);
         }
         this.street = street;
     }
 
     public void setHouseNumber(String houseNumber) throws InvalidValueException {
-        if (houseNumber == null || houseNumber.isEmpty()){
-            throw new InvalidValueException("Veuillez entrez un numéro de maison valide", houseNumber);
+        if (houseNumber == null || houseNumber.isEmpty() || houseNumber.length() > 5) {
+            throw new InvalidValueException("Le numéro de maison est obligatoire et peut faire maximum 5 caractères de long.", houseNumber);
         }
         this.houseNumber = houseNumber;
+    }
+
+    public void setLocalityName(String localityName) throws InvalidValueException {
+        if (localityName == null || localityName.length() > 30)
+            throw new InvalidValueException("Le nom de localité est obligatoire et peut faire maximum 30 caractères de long.", localityName);
+        this.localityName = localityName;
     }
 
     public void setLocalityZipCode(Integer localityZipCode) throws InvalidValueException {

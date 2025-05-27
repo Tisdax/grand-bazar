@@ -17,6 +17,12 @@ public class Locality {
         this.zipCode = zipCode;
     }
 
+    public void setName(String name) throws InvalidValueException {
+        if (name == null || name.length() > 30)
+            throw new InvalidValueException("Le nom de localité est obligatoire et peut faire maximum 30 caractères de long..", name);
+        this.name = name;
+    }
+
     public Integer getZipCode() {
         return zipCode;
     }

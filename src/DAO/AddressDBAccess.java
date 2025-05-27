@@ -92,4 +92,23 @@ public class AddressDBAccess implements AddressDAO {
             throw new DAOException(e.getMessage(), "Erreur lors de l'ajout de l'adresse " + address);
         }
     }
+
+    public void update(Address address) throws DAOException {
+        String sqlInstruction = "update address set postal_box_number = ? where locality_zip_code = ? and locality_name = ? and street = ? and house_number = ?";
+        try {
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
+            preparedStatement.setInt(1, address.getPostalBoxNumber());
+            preparedStatement.setInt(2, address.getLocalityZipCode());
+            preparedStatement.setString(3, address.getLocalityName());
+            preparedStatement.setString(4, address.getStreet());
+            preparedStatement.setString(5, address.getHouseNumber());
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DAOException(e.getMessage(), "Erreur lors de la modification de l'adresse " + address + ".");
+        }
+    }
 }
