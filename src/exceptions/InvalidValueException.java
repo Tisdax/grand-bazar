@@ -7,8 +7,4 @@ public class InvalidValueException extends Exception {
         super("La valeur " + (invalidValue.toString().isEmpty() ? "vide" : invalidValue) + " n'est pas valide. " + message);
         this.invalidValue = invalidValue;
     }
-
-    public Object getInvalidValue() {
-        return invalidValue;
-    }
 }

@@ -1,7 +1,5 @@
 package model;
 
-import exceptions.InvalidValueException;
-
 public class Shelf {
     private Integer idShelf;
     private Boolean isRefrigirated;
