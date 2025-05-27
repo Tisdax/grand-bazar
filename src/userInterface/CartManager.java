@@ -13,6 +13,7 @@ public class CartManager extends JPanel {
     private JLabel titleLabel;
     private JButton selectEmployee;
     private JButton selectCustomer;
+    private JButton addProduct;
     private CustomerTable customerTable;
     private EmployeeTable employeeTable;
     private ProductTable productTable;
@@ -28,9 +29,6 @@ public class CartManager extends JPanel {
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
         titlePanel.add(titleLabel);
 
-        // Buttons
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
         // Tables
         customerTable = new CustomerTable();
         JScrollPane customerScrollTable = new JScrollPane(customerTable.getTable());
@@ -39,12 +37,17 @@ public class CartManager extends JPanel {
         productTable = new ProductTable();
         JScrollPane productScrollTable = new JScrollPane(productTable.getTable());
 
+        // Button Panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        // Employee Button
         selectEmployee = new JButton("Sélectionner un employé");
         selectEmployee.setPreferredSize(new Dimension(350, 80));
         buttonPanel.add(selectEmployee);
         selectEmployee.addActionListener(e -> {
-
-
+            String inputID = JOptionPane.showInputDialog("ID de l'employé:");
+            if (inputID == null){
+                return;
+            }
 
             this.remove(employeeScrollTable);
             this.add(customerScrollTable, BorderLayout.SOUTH);
@@ -55,10 +58,29 @@ public class CartManager extends JPanel {
             buttonPanel.revalidate();
             buttonPanel.repaint();
         });
-
+        // Customer Button
         selectCustomer = new JButton("Sélectionner un client");
         selectCustomer.setPreferredSize(new Dimension(350, 80));
         selectCustomer.addActionListener(e -> {
+            String inputID = JOptionPane.showInputDialog("ID du client:");
+            if (inputID == null){
+                return;
+            }
+
+            this.remove(customerScrollTable);
+            this.add(productScrollTable, BorderLayout.SOUTH);
+            this.revalidate();
+            this.repaint();
+            buttonPanel.remove(selectCustomer);
+            buttonPanel.add(addProduct);
+            buttonPanel.revalidate();
+            buttonPanel.repaint();
+
+        });
+        // Product Button
+        addProduct = new JButton("Ajouter un produit");
+        addProduct.setPreferredSize(new Dimension(350, 80));
+        addProduct.addActionListener(e -> {
 
         });
 
