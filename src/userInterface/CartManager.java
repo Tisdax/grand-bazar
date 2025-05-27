@@ -95,8 +95,6 @@ public class CartManager extends JPanel {
 
         });
 
-
-
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.CENTER);
         this.add(employeeScrollTable, BorderLayout.SOUTH);
