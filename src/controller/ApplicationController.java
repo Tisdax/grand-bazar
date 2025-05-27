@@ -19,6 +19,7 @@ public class ApplicationController {
     private ShelfManager shelfManager;
     private StockManager stockManager;
     private CustomerTypeManager customerTypeManager;
+    private CommandLineManager commandLineManager;
 
     public ApplicationController(){
         connectionManager = new ConnectionManager();
@@ -31,6 +32,7 @@ public class ApplicationController {
         shelfManager = new ShelfManager();
         stockManager = new StockManager();
         customerTypeManager = new CustomerTypeManager();
+        commandLineManager = new CommandLineManager();
     }
 
     public void closeConnection() throws DAOException {
@@ -153,7 +155,29 @@ public class ApplicationController {
     }
 
     // CustomerType
-    public ArrayList<CustomerType> findAllCustomerTypes() throws DAOException {
+    public ArrayList<CustomerType> findAllCustomerTypes() throws DAOException, InvalidValueException {
         return customerTypeManager.findAll();
+    }
+
+    public boolean CommandLineManagerexistsById(int sale, String product) throws DAOException {
+        return commandLineManager.existsById(sale, product);
+    }
+    public CommandLine findCommandLineById(int sale, String product) throws DAOException, InvalidValueException{
+        return commandLineManager.findById(sale, product);
+    }
+    public void saveCommandLine(CommandLine commandLine) throws DAOException {
+        commandLineManager.save(commandLine);
+    }
+    public int deleteBySale(int saleId) throws DAOException {
+        return commandLineManager.deleteBySale(saleId);
+    }
+    public int deleteByProduct(String productId) throws DAOException {
+        return commandLineManager.deleteByProduct(productId);
+    }
+    public void update(CommandLine commandLine) throws DAOException {
+        commandLineManager.update(commandLine);
+    }
+    public ArrayList<CommandLine> findBySale(int sale) throws DAOException, InvalidValueException {
+        return commandLineManager.findBySale(sale);
     }
 }

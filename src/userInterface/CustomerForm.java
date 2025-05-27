@@ -75,6 +75,16 @@ public class CustomerForm extends JPanel {
 
         localityLabel = new JLabel("Localité :", SwingConstants.RIGHT);
         localityComboBox = new JComboBox<>();
+        ArrayList<Locality> localities;
+        try {
+            localities = controller.findAllLocalities();
+
+            for (Locality locality : localities) {
+                localityComboBox.addItem(locality);
+            }
+        } catch (DAOException | InvalidValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         formPanel.add(localityLabel);
         formPanel.add(localityComboBox);
 
@@ -148,7 +158,7 @@ public class CustomerForm extends JPanel {
             for (CustomerType type : types) {
                 typeComboBox.addItem(type.getName());
             }
-        } catch (DAOException e) {
+        } catch (DAOException | InvalidValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         formPanel.add(typeLabel);
