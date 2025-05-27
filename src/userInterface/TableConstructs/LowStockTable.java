@@ -22,7 +22,7 @@ public class LowStockTable extends TableConstruct {
                 double qtPercentage;
 
                 qtBasedOnTotal = product.getStockQuantity() +" / "+ product.getProductMinQuantity();
-                qtPercentage = ((double)product.getStockQuantity() / product.getProductMinQuantity()) * 100;
+                qtPercentage = Math.floor(((double)product.getStockQuantity() / product.getProductMinQuantity()) * 100) * 100 / 100;
                 nbMissingProducts = (product.getProductMinQuantity() - product.getStockQuantity()) + " produits manquants";
 
                 tableModel.addRow(new Object[]{
