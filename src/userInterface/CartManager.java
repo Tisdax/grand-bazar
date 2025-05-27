@@ -160,17 +160,23 @@ public class CartManager extends JPanel {
                         return;
                     }
 
-
-                    if (controller.CommandLineExistsById(saleId, inputID)) {
-                        int newQuant = controller.findCommandLineById(saleId, inputID).getQuantity() + inputQuantityInt;
-                        commandLine = new CommandLine(saleId, inputID, newQuant);
-                        controller.commandLineUpdate(commandLine);
+                    int quantityInStock = controller.findQuantityStockByProduct(inputID);
+                    if (inputQuantityInt > quantityInStock){
+                        JOptionPane.showMessageDialog(null, "Il n'y a que " + quantityInStock + " produit en stock veuillez diminuer la quantité", "Erreur", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        commandLine = new CommandLine(saleId, inputID, inputQuantityInt);
-                        controller.saveCommandLine(commandLine);
-                    }
 
-                    controller.lowerStocks(inputID, inputQuantityInt);
+
+                        if (controller.CommandLineExistsById(saleId, inputID)) {
+                            int newQuant = controller.findCommandLineById(saleId, inputID).getQuantity() + inputQuantityInt;
+                            commandLine = new CommandLine(saleId, inputID, newQuant);
+                            controller.commandLineUpdate(commandLine);
+                        } else {
+                            commandLine = new CommandLine(saleId, inputID, inputQuantityInt);
+                            controller.saveCommandLine(commandLine);
+                        }
+
+                        controller.lowerStocks(inputID, inputQuantityInt);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Cet identifiant n'existe pas veuillez choisir un identifiant dans la liste", "Erreur",JOptionPane.ERROR_MESSAGE);
                 }
@@ -191,7 +197,7 @@ public class CartManager extends JPanel {
             ArrayList<CommandLine> commandLines = new ArrayList<>();
             try {
                 commandLines = controller.findBySale(saleId);
-                VATPriceLabel = new JLabel("Prix total à payer " + String.valueOf(invoiceManager.totalPriceVATIncl(commandLines)), SwingConstants.RIGHT);
+                VATPriceLabel = new JLabel("Prix total à payer : " + String.valueOf(Math.floor(invoiceManager.totalPriceVATIncl(commandLines)*100) /100), SwingConstants.RIGHT);
                 VATPriceLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
             } catch (DAOException | InvalidValueException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -200,7 +206,7 @@ public class CartManager extends JPanel {
             try {
                 Customer customer = controller.findCustomerById(customerIdOfSale);
                 customerInformationLabel = new JLabel(customer.getFirstName() + " " + customer.getLastName() + " - " +
-                        customer.getHouseNumber() + " " + customer.getAddressStreet() + " " + customer.getLocalityZipCode() + " " + customer.getLocalityName(), SwingConstants.LEFT);
+                        customer.getHouseNumber() + " " + customer.getAddressStreet() + " " + customer.getLocalityZipCode() + " " + customer.getLocalityName(), SwingConstants.RIGHT);
                 customerInformationLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
             } catch (DAOException | InvalidValueException exe) {
                 JOptionPane.showMessageDialog(null, exe.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -211,6 +217,7 @@ public class CartManager extends JPanel {
             this.add(saleScrollTable, BorderLayout.SOUTH);
             this.revalidate();
             this.repaint();
+            buttonPanel.setLayout(new GridLayout(0,1));
             buttonPanel.removeAll();
             buttonPanel.add(newSale);
             buttonPanel.add(customerInformationLabel);
