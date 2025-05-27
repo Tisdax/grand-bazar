@@ -1,24 +1,20 @@
 package businessLogic;
 
-import controller.ApplicationController;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
 import model.CommandLine;
 import model.Product;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class InvoiceManager {
-    private ArrayList<CommandLine>  commandLines;
     private ProductManager productManager;
 
-    public InvoiceManager(ArrayList<CommandLine> commandLines) {
-        this.commandLines = commandLines;
+    public InvoiceManager() {
         this.productManager = new ProductManager();
     }
 
-    public ArrayList<Double> netPrice() throws DAOException, InvalidValueException {
+    public ArrayList<Double> netPrice(ArrayList<CommandLine> commandLines) throws DAOException, InvalidValueException {
         ArrayList<Double> pricesExclVAT = new ArrayList<>();
 
         if (commandLines.size() == 0){
@@ -31,12 +27,13 @@ public class InvoiceManager {
         return pricesExclVAT;
     }
 
-    public Double totalPriceVATIncl() throws DAOException, InvalidValueException {
+    public Double totalPriceVATIncl(ArrayList<CommandLine> commandLines) throws DAOException, InvalidValueException {
         Double pricesExclVAT;
         Double totalPriceVatIncluded = 0.00;
+        Product product;
         if (commandLines.size() > 0){
             for (CommandLine commandLine : commandLines){
-                Product product = productManager.findById(commandLine.getProduct());
+                product = productManager.findById(commandLine.getProduct());
                 pricesExclVAT = product.getNetPrice() * commandLine.getQuantity();
                 totalPriceVatIncluded += pricesExclVAT * (1 + (product.getVatPercentage() / 100.0));
             }
