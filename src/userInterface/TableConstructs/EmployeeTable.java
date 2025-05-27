@@ -10,8 +10,5 @@ public class EmployeeTable extends TableConstruct {
         fillTable();
     }
     public void fillTable() {
-        try {
-            ArrayList<Employee> employees = controller.
-        }
     }
 }
