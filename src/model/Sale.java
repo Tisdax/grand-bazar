@@ -15,10 +15,6 @@ public class Sale {
         setEmployee(employee);
     }
 
-    public Sale(Integer id, LocalDate date, Integer employee) throws InvalidValueException {
-        this(id, null, date, employee);
-    }
-
     public void setId(Integer id) throws InvalidValueException {
         if (id == null || id <= 0)
             throw new InvalidValueException("L'id est obligatoire et doit être un nombre positif.", id);

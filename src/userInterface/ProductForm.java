@@ -117,7 +117,7 @@ public class ProductForm extends JPanel {
             for (ProductCategory category : categories) {
                 categoryComboBox.addItem(category.getName());
             }
-        } catch (DAOException e) {
+        } catch (DAOException | InvalidValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         formPanel.add(categoryLabel);
