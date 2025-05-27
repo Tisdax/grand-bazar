@@ -199,8 +199,7 @@ public class PanelSwitchActionner {
         try {
             if (controller.customerExistsById(inputIdInt)) {
                 try {
-                    int choice = JOptionPane.showOptionDialog(null, "Il y a potentiellement des achats liés à ce client",
-                            "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    int choice = JOptionPane.showOptionDialog(null, "Il y a potentiellement des achats liés à ce client", "Attention", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
                     if (choice == 0) {
                         deletionMode = CustomerDeletionMode.REMOVE_FROM_SALES;

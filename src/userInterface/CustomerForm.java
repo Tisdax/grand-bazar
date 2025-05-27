@@ -79,7 +79,6 @@ public class CustomerForm extends JPanel {
         } catch (DAOException e) {
             throw new RuntimeException(e);
         } catch (InvalidValueException e) {
-            throw new RuntimeException(e);
         }
         for (Locality locality : localities) {
             localityComboBox.addItem(locality);
@@ -250,7 +249,7 @@ public class CustomerForm extends JPanel {
         String localityName = locality.getName();
         String houseNumber = houseNumberField.getText();
         Boolean isSubscribedToNewsLetter = isSubscrideCheckbox.isSelected();
-        LocalDate birthday = ((Date) birthdaySpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();;
+        LocalDate birthday = ((Date) birthdaySpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String typeName = (String) typeComboBox.getSelectedItem();
 
         String phone;
@@ -286,8 +285,7 @@ public class CustomerForm extends JPanel {
             idField.setText(String.valueOf(customer.getId()));
             lastNameField.setText(customer.getLastName());
             firstNameField.setText(customer.getFirstName());
-            birthdaySpinner.setValue(Date.from(customer.getBirthdate()
-                    .atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            birthdaySpinner.setValue(Date.from(customer.getBirthdate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             isSubscrideCheckbox.setSelected(customer.getSubscribedToNewsLetter());
             addressStreetField.setText(address.getStreet());
             houseNumberField.setText(address.getHouseNumber());
