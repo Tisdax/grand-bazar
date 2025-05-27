@@ -20,16 +20,21 @@ public class CartManager extends JPanel {
     private JLabel titleLabel;
     private JLabel customerInformationLabel;
     private JLabel VATPriceLabel;
+
     private JButton selectEmployee;
     private JButton selectCustomer;
     private JButton addProduct;
     private JButton endSale;
     private JButton newSale;
+    private JButton stockReport;
+
     private InvoiceManager invoiceManager;
     private CustomerTable customerTable;
     private EmployeeTable employeeTable;
     private ProductTable productTable;
+    private LowStockTable lowStockTable;
     private SaleTable saleTable;
+
     private Sale sale;
     private int saleId;
     private int customerIdOfSale;
@@ -58,6 +63,8 @@ public class CartManager extends JPanel {
         JScrollPane employeeScrollTable = new JScrollPane(employeeTable.getTable());
         productTable = new ProductTable();
         JScrollPane productScrollTable = new JScrollPane(productTable.getTable());
+        lowStockTable = new LowStockTable();
+        JScrollPane lowStockScrollTable = new JScrollPane(lowStockTable.getTable());
 
         // Button Panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -219,9 +226,24 @@ public class CartManager extends JPanel {
             this.repaint();
             buttonPanel.setLayout(new GridLayout(0,1));
             buttonPanel.removeAll();
-            buttonPanel.add(newSale);
+            buttonPanel.add(stockReport);
             buttonPanel.add(customerInformationLabel);
             buttonPanel.add(VATPriceLabel);
+            buttonPanel.revalidate();
+            buttonPanel.repaint();
+        });
+
+        // next (= stock report) button
+        stockReport = new JButton("Suivant");
+        stockReport.setPreferredSize(new Dimension(350, 80));
+        stockReport.addActionListener(e -> {
+            lowStockTable.fillTable();
+            this.remove(saleScrollTable);
+            this.add(lowStockScrollTable, BorderLayout.SOUTH);
+            this.revalidate();
+            this.repaint();
+            buttonPanel.removeAll();
+            buttonPanel.add(newSale);
             buttonPanel.revalidate();
             buttonPanel.repaint();
         });
