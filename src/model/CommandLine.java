@@ -8,7 +8,7 @@ public class CommandLine {
 
     public CommandLine(Integer sale, String product, Integer quantity) throws InvalidValueException {
         setSale(sale);
-        this.product = product;
+        setProduct(product);
         setQuantity(quantity);
     }
 
@@ -16,6 +16,12 @@ public class CommandLine {
         if (sale == null || sale <= 0)
             throw new InvalidValueException("L'id de la vente liée est obligatoire et doit être un nombre positif.", sale);
         this.sale = sale;
+    }
+
+    public void setProduct(String product) throws InvalidValueException {
+        if (product == null || product.isEmpty() || product.length() > 13)
+            throw new InvalidValueException("L'identifiant du produit est obligatoire et peut faire maximum 13 caractères de long.", product);
+        this.product = product;
     }
 
     public void setQuantity(Integer quantity) throws InvalidValueException {

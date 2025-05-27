@@ -31,7 +31,9 @@ public class Stock {
         this.quantity = quantity;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(String productId) throws InvalidValueException {
+        if (productId == null || productId.isEmpty() || productId.length() > 13)
+            throw new InvalidValueException("L'identifiant du produit est obligatoire et peut faire maximum 13 caractères de long.", productId);
         this.productId = productId;
     }
 
