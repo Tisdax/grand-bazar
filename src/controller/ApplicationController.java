@@ -20,6 +20,7 @@ public class ApplicationController {
     private StockManager stockManager;
     private CustomerTypeManager customerTypeManager;
     private CommandLineManager commandLineManager;
+    private EmployeeManager employeeManager;
 
     public ApplicationController(){
         connectionManager = new ConnectionManager();
@@ -33,6 +34,7 @@ public class ApplicationController {
         stockManager = new StockManager();
         customerTypeManager = new CustomerTypeManager();
         commandLineManager = new CommandLineManager();
+        employeeManager = new EmployeeManager();
     }
 
     public void closeConnection() throws DAOException {
@@ -159,6 +161,7 @@ public class ApplicationController {
         return customerTypeManager.findAll();
     }
 
+    // Command Line
     public boolean CommandLineManagerexistsById(int sale, String product) throws DAOException {
         return commandLineManager.existsById(sale, product);
     }
@@ -179,5 +182,13 @@ public class ApplicationController {
     }
     public ArrayList<CommandLine> findBySale(int sale) throws DAOException, InvalidValueException {
         return commandLineManager.findBySale(sale);
+    }
+
+    // Employee
+    public boolean employeeExistsById(int employeeId) throws Exception {
+        return employeeManager.existsById(employeeId);
+    }
+    public ArrayList<Employee> findAllEmployee() throws Exception {
+        return employeeManager.findAll();
     }
 }
