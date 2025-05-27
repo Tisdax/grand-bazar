@@ -153,7 +153,7 @@ public class ApplicationController {
     }
 
     // CustomerType
-    public ArrayList<CustomerType> findAllCustomerTypes() throws DAOException {
+    public ArrayList<CustomerType> findAllCustomerTypes() throws DAOException, InvalidValueException {
         return customerTypeManager.findAll();
     }
 }
