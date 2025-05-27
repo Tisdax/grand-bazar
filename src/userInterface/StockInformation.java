@@ -2,6 +2,7 @@ package userInterface;
 
 import controller.ApplicationController;
 import exceptions.DAOException;
+import exceptions.InvalidValueException;
 import model.ProductCategory;
 import userInterface.TableConstructs.StockTable;
 import userInterface.TableConstructs.TableConstruct;
@@ -30,7 +31,7 @@ public class StockInformation extends JPanel {
             for (ProductCategory category : categories) {
                 categoryComboBox.addItem(category.getName());
             }
-        } catch (DAOException ex){
+        } catch (DAOException | InvalidValueException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur lors de la recherche de catégorie", JOptionPane.ERROR_MESSAGE);
         }
 

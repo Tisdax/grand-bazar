@@ -1,7 +1,5 @@
 package model;
 
-import controller.ApplicationController;
-import exceptions.DAOException;
 import exceptions.InvalidValueException;
 
 import java.time.LocalDate;
@@ -23,8 +21,8 @@ public class Product {
         setPromotionMinQuantity(promotionMinQuantity);
         setTimeBeforeRemoving(timeBeforeRemoving);
         this.isEdible = isEdible;
-        setSaleDate(saleDate);
-        this.categoryName = categoryName;
+        this.saleDate = saleDate;
+        setCategoryName(categoryName);
     }
 
     public Product(String id, String name, Double netPrice, Integer vatPercentage, Integer loyaltyPointsNb, Boolean isEdible, LocalDate saleDate, String categoryName) throws InvalidValueException {
@@ -32,21 +30,19 @@ public class Product {
     }
 
     public void setId(String id) throws InvalidValueException {
-        if (id == null || id.isEmpty())
-            throw new InvalidValueException("Veuillez entrez un identifiant", id);
-
-        if (id.length() > 13)
-            throw new InvalidValueException("L'identifiant doit avoir maximum 13 caractères", id);
+        if (id == null || id.isEmpty() || id.length() > 13)
+            throw new InvalidValueException("L'identifiant est obligatoire et peut faire maximum 13 caractères de long.", id);
 
         this.id = id;
     }
 
     public void setName(String name) throws InvalidValueException {
-        if (name == null || name.isEmpty()){
-            throw new InvalidValueException("Veuillez entrez un nom au produit", name);
+        if (name == null || name.isEmpty() || name.length() > 30){
+            throw new InvalidValueException("Le nom du produit est obligatoire et peut faire maximum 30 caractères de long.", name);
         }
         this.name = name;
     }
+
     public void setNetPrice(Double netPrice) throws InvalidValueException {
         if (netPrice == null || netPrice <= 0)
             throw new InvalidValueException("Le prix est obligatoire et doit être un nombre positif.", netPrice);
@@ -77,8 +73,10 @@ public class Product {
         this.timeBeforeRemoving = timeBeforeRemoving;
     }
 
-    public void setSaleDate(LocalDate saleDate) {
-        this.saleDate = saleDate;
+    public void setCategoryName(String categoryName) throws InvalidValueException {
+        if (categoryName == null || categoryName.length() > 30)
+            throw new InvalidValueException("Le nom de la catégorie produit est obligatoire et peut faire maximum 30 caractères de long.", categoryName);
+        this.categoryName = categoryName;
     }
 
     public String getId() {

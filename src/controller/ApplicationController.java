@@ -38,7 +38,7 @@ public class ApplicationController {
     }
 
     // Category
-    public ArrayList<ProductCategory> findAllCategories() throws DAOException {
+    public ArrayList<ProductCategory> findAllCategories() throws DAOException, InvalidValueException {
         return categoryManager.findAll();
     }
 
@@ -153,7 +153,7 @@ public class ApplicationController {
     }
 
     // CustomerType
-    public ArrayList<CustomerType> findAllCustomerTypes() throws DAOException {
+    public ArrayList<CustomerType> findAllCustomerTypes() throws DAOException, InvalidValueException {
         return customerTypeManager.findAll();
     }
 }

@@ -14,7 +14,7 @@ public class MenuBar {
         PanelSwitchActionner switchActionner = new PanelSwitchActionner();
         // Menu & Menu Items
         JMenuBar menu = new JMenuBar();
-        JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu;
+        JMenu applicationMenu, productMenu, customerMenu, shoppingCartMenu, stockMenu, searchesMenu;
         JMenuItem welcomePage, leave, createProduct, readProduct, updateProduct, deleteProduct, createCustomer, readCustomer,
                 updateCustomer, deleteCustomer, newPurchase, stockReport, lowStockProductReport, productStockForm, purchaseInfos, loyaltyCardsInfos;
 
@@ -47,7 +47,6 @@ public class MenuBar {
         readCustomer = switchActionner.createMenuItem("Afficher clients", CustomerManager::new);
         updateCustomer = switchActionner.createMenuItem("Modifier un client", CustomerManager::new);
         deleteCustomer = switchActionner.createMenuItem("Supprimer un client", CustomerManager::new);
-        loyaltyCardsInfos = switchActionner.createMenuItem("Infos clients intervalle pts fidélité", LoyaltyCardPanel::new);
         menu.add(customerMenu);
         customerMenu.add(createCustomer);
         customerMenu.addSeparator();
@@ -56,29 +55,33 @@ public class MenuBar {
         customerMenu.add(updateCustomer);
         customerMenu.addSeparator();
         customerMenu.add(deleteCustomer);
-        customerMenu.addSeparator();
-        customerMenu.add(loyaltyCardsInfos);
 
         // Cart Menu
         shoppingCartMenu = new JMenu("Achats");
         newPurchase = switchActionner.createMenuItem("Nouvelle commande", CartManager::new);
-        purchaseInfos = switchActionner.createMenuItem("Infos Achats entre deux dates", PurchaseManager::new);
         menu.add(shoppingCartMenu);
         shoppingCartMenu.add(newPurchase);
-        shoppingCartMenu.addSeparator();
-        shoppingCartMenu.add(purchaseInfos);
 
         // Stock Menu
         stockMenu = new JMenu("Stocks");
-        stockReport = switchActionner.createMenuItem("Rapport de stocks selon catégorie produit", StockInformation::new);
         lowStockProductReport = switchActionner.createMenuItem("Produits ayant un stock insuffisant", LowStockProductPanel::new);
         productStockForm = switchActionner.createMenuItem("Ajout/Mise à jour stock produit", ProductStockForm::new);
         menu.add(stockMenu);
-        stockMenu.add(stockReport);
-        stockMenu.addSeparator();
         stockMenu.add(productStockForm);
         stockMenu.addSeparator();
         stockMenu.add(lowStockProductReport);
+
+        // Searches Menu
+        searchesMenu = new JMenu("Recherches");
+        purchaseInfos = switchActionner.createMenuItem("Infos Achats entre deux dates", PurchaseManager::new);
+        stockReport = switchActionner.createMenuItem("Rapport de stocks selon catégorie produit", StockInformation::new);
+        loyaltyCardsInfos = switchActionner.createMenuItem("Infos clients intervalle pts fidélité", LoyaltyCardPanel::new);
+        menu.add(searchesMenu);
+        searchesMenu.add(purchaseInfos);
+        searchesMenu.addSeparator();
+        searchesMenu.add(stockReport);
+        searchesMenu.addSeparator();
+        searchesMenu.add(loyaltyCardsInfos);
 
         // exit
         leave.addActionListener(e -> {
