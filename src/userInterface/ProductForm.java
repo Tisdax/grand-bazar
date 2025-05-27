@@ -84,7 +84,7 @@ public class ProductForm extends JPanel {
         formPanel.add(minQuantCBLabel);
         formPanel.add(minquantCheckBox);
         minQuantLabel = new JLabel("Quantité minimale :", SwingConstants.RIGHT);
-        minQuantSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 10));
+        minQuantSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 10));
         minQuantSpinner.setEnabled(false);
         formPanel.add(minQuantLabel);
         formPanel.add(minQuantSpinner);
@@ -94,7 +94,7 @@ public class ProductForm extends JPanel {
         formPanel.add(promoMinQuantCBLabel);
         formPanel.add(promoMinQuantCheckBox);
         promotionQuantLabel = new JLabel("Quantité minimale en cas de promotion :", SwingConstants.RIGHT);
-        promotionQuantSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 10));
+        promotionQuantSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 10));
         promotionQuantSpinner.setEnabled(false);
         formPanel.add(promotionQuantLabel);
         formPanel.add(promotionQuantSpinner);
@@ -104,7 +104,7 @@ public class ProductForm extends JPanel {
         formPanel.add(timeBeforeRemovingCBLabel);
         formPanel.add(timeBeforeRemovingCheckBox);
         timeBeforeRemovingLabel = new JLabel("Temps avant suppression des rayons :", SwingConstants.RIGHT);
-        timeBeforeRemovingSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 10));
+        timeBeforeRemovingSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 10));
         timeBeforeRemovingSpinner.setEnabled(false);
         formPanel.add(timeBeforeRemovingLabel);
         formPanel.add(timeBeforeRemovingSpinner);

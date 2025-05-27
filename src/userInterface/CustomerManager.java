@@ -32,7 +32,7 @@ public class CustomerManager extends JPanel {
 
         // Buttons
         addCustomerButton = switchActionner.createButton("Ajouter un client", CustomerForm::new);
-        removeCustomerButton = switchActionner.createDeleteCustomerButton();
+        removeCustomerButton = switchActionner.createDeleteCustomerButton(customerTable);
         editCustomerButton = switchActionner.createEditCustomerButton();
         buttonPanel.add(addCustomerButton);
         buttonPanel.add(removeCustomerButton);

@@ -14,8 +14,7 @@ public class WelcomePanel extends JPanel {
         this.add(titlePanel, BorderLayout.NORTH);
 
         titleLabel = new JLabel("Bienvenue sur l'application du Grand Bazar");
-        Font font = new Font("Arial", Font.BOLD, 30);
-        titleLabel.setFont(font);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
         titlePanel.add(titleLabel);
 
         this.groceryBag = new GroceryBag();

@@ -3,7 +3,6 @@ package DAO;
 import DAOinterfaces.EmployeeDAO;
 import exceptions.DAOException;
 import exceptions.InvalidValueException;
-import model.Customer;
 import model.Employee;
 
 import java.sql.Connection;

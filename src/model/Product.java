@@ -56,20 +56,20 @@ public class Product {
     }
 
     public void setMinQuantity(Integer minQuantity) throws InvalidValueException {
-        if (minQuantity != null && minQuantity <= 0)
-            throw new InvalidValueException("La quantité minimale doit être décochée ou être un nombre positif.", minQuantity);
+        if (minQuantity != null && (minQuantity <= 0 || minQuantity > 1000))
+            throw new InvalidValueException("La quantité minimale doit être décochée ou être un nombre positif, au maximum 1000.", minQuantity);
         this.minQuantity = minQuantity;
     }
 
     public void setPromotionMinQuantity(Integer promotionMinQuantity) throws InvalidValueException {
-        if (promotionMinQuantity != null && promotionMinQuantity <= 0)
-            throw new InvalidValueException("La quantité minimale en promotion doit être décochée ou être un nombre positif.", promotionMinQuantity);
+        if (promotionMinQuantity != null && (promotionMinQuantity <= 0 || promotionMinQuantity > 1000))
+            throw new InvalidValueException("La quantité minimale en promotion doit être décochée ou être un nombre positif, au maximum 1000.", promotionMinQuantity);
         this.promotionMinQuantity = promotionMinQuantity;
     }
 
     public void setTimeBeforeRemoving(Integer timeBeforeRemoving) throws InvalidValueException {
-        if (timeBeforeRemoving != null && timeBeforeRemoving <= 0)
-            throw new InvalidValueException("Le temps avant de retirer des rayons doit être laissé vide ou être un nombre positif.", timeBeforeRemoving);
+        if (timeBeforeRemoving != null && (timeBeforeRemoving <= 0 || timeBeforeRemoving > 9999))
+            throw new InvalidValueException("Le temps avant de retirer des rayons doit être laissé vide ou être un nombre positif, au maximum 9999.", timeBeforeRemoving);
         this.timeBeforeRemoving = timeBeforeRemoving;
     }
 

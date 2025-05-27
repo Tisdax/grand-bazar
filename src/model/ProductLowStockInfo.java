@@ -1,6 +1,5 @@
 package model;
 
-import exceptions.DAOException;
 import exceptions.InvalidValueException;
 
 public class ProductLowStockInfo {

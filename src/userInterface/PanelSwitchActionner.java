@@ -5,6 +5,9 @@ import exceptions.DAOException;
 import model.Customer;
 import model.CustomerDeletionMode;
 import model.Product;
+import userInterface.TableConstructs.CustomerTable;
+import userInterface.TableConstructs.ProductTable;
+import userInterface.TableConstructs.TableConstruct;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,16 +54,16 @@ public class PanelSwitchActionner {
         return createEditCustomerButton(BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
-    public JButton createDeleteCustomerButton(int width, int height) {
+    public JButton createDeleteCustomerButton(CustomerTable table, int width, int height) {
         JButton button = new JButton("Supprimer un client");
         button.setPreferredSize(new Dimension(width, height));
         button.addActionListener(e -> {
-            deleteCustomerActionner();
+            deleteCustomerActionner(table);
         });
         return button;
     }
-    public JButton createDeleteCustomerButton() {
-        return createDeleteCustomerButton(BUTTON_WIDTH, BUTTON_HEIGHT);
+    public JButton createDeleteCustomerButton(CustomerTable table) {
+        return createDeleteCustomerButton(table, BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
     // Product buttons :
@@ -76,16 +79,16 @@ public class PanelSwitchActionner {
         return createEditProductButton(BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
-    public JButton createDeleteProductButton(int width, int height) {
+    public JButton createDeleteProductButton(ProductTable table,int width, int height) {
         JButton button = new JButton("Supprimer un produit");
         button.setPreferredSize(new Dimension(width, height));
         button.addActionListener(e -> {
-            deleteProductActionner();
+            deleteProductActionner(table);
         });
         return button;
     }
-    public JButton createDeleteProductButton() {
-        return createDeleteProductButton(BUTTON_WIDTH, BUTTON_HEIGHT);
+    public JButton createDeleteProductButton(ProductTable table) {
+        return createDeleteProductButton(table, BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
 
@@ -112,10 +115,10 @@ public class PanelSwitchActionner {
         });
         return menuItem;
     }
-    public JMenuItem createDeleteCustomerMenuItem() {
+    public JMenuItem createDeleteCustomerMenuItem(CustomerTable table) {
         JMenuItem menuItem = new JMenuItem("Supprimer un client");
         menuItem.addActionListener(e -> {
-            deleteCustomerActionner();
+            deleteCustomerActionner(table);
         });
         return menuItem;
     }
@@ -128,10 +131,10 @@ public class PanelSwitchActionner {
         });
         return menuItem;
     }
-    public JMenuItem createDeleteProductMenuItem() {
+    public JMenuItem createDeleteProductMenuItem(ProductTable table) {
         JMenuItem menuItem = new JMenuItem("Supprimer un produit");
         menuItem.addActionListener(e -> {
-            deleteProductActionner();
+            deleteProductActionner(table);
         });
         return menuItem;
     }
@@ -179,7 +182,7 @@ public class PanelSwitchActionner {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private void deleteCustomerActionner() {
+    private void deleteCustomerActionner(CustomerTable table) {
         CustomerDeletionMode deletionMode;
         Object[] options = {"Supprimer uniquement client", "Supprimmer client et ses achats", "Annuler"};
         String inputID = JOptionPane.showInputDialog("ID du client à supprimer :");
@@ -207,6 +210,8 @@ public class PanelSwitchActionner {
                         deletionMode = CustomerDeletionMode.DELETE_SALES;
                         controller.deleteCustomer(inputIdInt, deletionMode);
                     }
+                    table.refreshTable();
+                    table.fillTable();
                 } catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
@@ -241,7 +246,7 @@ public class PanelSwitchActionner {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private void deleteProductActionner() {
+    private void deleteProductActionner(ProductTable table) {
         Object[] options = {"Supprimer produit", "Annuler"};
         String inputID = JOptionPane.showInputDialog("ID du produit à supprimer :");
         if (inputID == null){
@@ -255,6 +260,8 @@ public class PanelSwitchActionner {
                 if(choice == 0) {
                     try {
                         controller.deleteProduct(inputID);
+                        table.refreshTable();
+                        table.fillTable();
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }

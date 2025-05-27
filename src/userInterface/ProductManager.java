@@ -31,7 +31,7 @@ public class ProductManager extends JPanel {
 
         // Buttons
         addProductButton = switchActionner.createButton("Ajouter un produit", ProductForm::new);
-        removeProductButton = switchActionner.createDeleteProductButton();
+        removeProductButton = switchActionner.createDeleteProductButton(productTable);
         editProductButton = switchActionner.createEditProductButton();
         buttonPanel.add(addProductButton);
         buttonPanel.add(removeProductButton);

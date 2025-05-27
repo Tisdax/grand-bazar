@@ -2,6 +2,7 @@ package businessLogic;
 
 import DAO.SaleDBAccess;
 import DAOinterfaces.SaleDAO;
+import exceptions.DAOException;
 import model.Sale;
 
 public class SaleManager {
@@ -10,10 +11,11 @@ public class SaleManager {
     public SaleManager(){
         dao = new SaleDBAccess();
     }
-    public void save(Sale sale) throws Exception {
+
+    public void save(Sale sale) throws DAOException {
         dao.save(sale);
     }
-    public int lastId() throws Exception {
+    public int lastId() throws DAOException {
         return dao.lastId();
     }
 }

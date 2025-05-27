@@ -104,7 +104,7 @@ public class CustomerForm extends JPanel {
         formPanel.add(postalBoxNumberCheckBox);
 
         postalBoxNumberLabel = new JLabel("Numéro de boite postale :", SwingConstants.RIGHT);
-        postalBoxNumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+        postalBoxNumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
         postalBoxNumberSpinner.setEnabled(false);
         formPanel.add(postalBoxNumberLabel);
         formPanel.add(postalBoxNumberSpinner);

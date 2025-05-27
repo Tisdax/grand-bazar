@@ -58,7 +58,7 @@ public class ProductStockForm extends JPanel {
         formPanel.add(productQuantityLabel, gbc);
 
         gbc.gridx = 1;
-        productQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 99999, 1));
+        productQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 500, 1));
         formPanel.add(productQuantitySpinner, gbc);
 
         gbc.gridx = 0;
