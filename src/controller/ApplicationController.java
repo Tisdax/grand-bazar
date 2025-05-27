@@ -21,6 +21,7 @@ public class ApplicationController {
     private CustomerTypeManager customerTypeManager;
     private CommandLineManager commandLineManager;
     private EmployeeManager employeeManager;
+    private SaleManager saleManager;
 
     public ApplicationController(){
         connectionManager = new ConnectionManager();
@@ -190,5 +191,13 @@ public class ApplicationController {
     }
     public ArrayList<Employee> findAllEmployee() throws Exception {
         return employeeManager.findAll();
+    }
+
+    // Sale
+    public void saveSale(Sale sale) throws Exception {
+        saleManager.save(sale);
+    }
+    public int lastSaleId() throws Exception {
+        return saleManager.lastId();
     }
 }
